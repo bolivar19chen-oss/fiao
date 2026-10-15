@@ -1,18 +1,21 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { House, Info, LayoutGrid, LogIn, Menu, ShieldCheck, X } from "lucide-react"
+import { Dock, DockItem } from "@/components/ui/dock"
 import { Logo } from "./logo"
 
 const nav = [
   { href: "/", label: "Home", icon: House },
-  { href: "/#about", label: "About Us", icon: Info },
-  { href: "/#services", label: "Services", icon: LayoutGrid },
+  { href: "/about", label: "About Us", icon: Info },
+  { href: "/services", label: "Services", icon: LayoutGrid },
   { href: "/privacy", label: "Privacy Policy", icon: ShieldCheck },
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -34,17 +37,12 @@ export function SiteHeader() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
-          {nav.map(({ href, label, icon: Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-marron/75 transition hover:bg-marron/[0.04] hover:text-marron"
-            >
-              <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-              {label}
-            </Link>
-          ))}
+        <nav className="hidden md:block" aria-label="Main">
+          <Dock>
+            {nav.map((item) => (
+              <DockItem key={item.href} {...item} active={pathname === item.href} />
+            ))}
+          </Dock>
         </nav>
 
         <div className="flex items-center gap-2">

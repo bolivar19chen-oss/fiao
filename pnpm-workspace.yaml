@@ -1,3 +1,7 @@
 allowBuilds:
   unrs-resolver: true
   supabase: true
+
+# Next 15 fija postcss 8.4.31, con avisos de seguridad. Se fuerza la version parcheada.
+overrides:
+  next>postcss: ^8.5.23
