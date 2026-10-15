@@ -14,6 +14,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
   description: "Inventory, credit sales, payment history and customer credit scores for corner stores.",
+  // UI siempre en ingles: evita que Chrome ofrezca o aplique traduccion automatica.
+  other: { google: "notranslate" },
 };
 
 export default function RootLayout({
@@ -22,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" translate="no">
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         <SiteHeader />
         {children}
