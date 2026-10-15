@@ -9,10 +9,10 @@ Mas control, menos riesgos, mas ventas.
 
 ## Estado
 
-Fase 0 (setup). Repo creado con la documentacion. Sin codigo de aplicacion todavia.
+Fase 0 (setup). Esqueleto Next.js 14 + TypeScript + Tailwind con pnpm. Schema inicial de
+Supabase con RLS en `supabase/migrations/`.
 
-Siguiente paso: esqueleto Next.js 14 + TypeScript + Tailwind, y el schema de Supabase
-con politicas RLS.
+Siguiente paso: especificacion escrita del algoritmo de puntaje.
 
 ### Entorno de desarrollo
 

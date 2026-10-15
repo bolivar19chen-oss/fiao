@@ -6,7 +6,8 @@
 |---|---|---|
 | Rojo principal | `#b91c1c` | Acciones principales, botones, marca |
 | Amarillo | `#ffbf32` | Elementos destacados, acentos, detalles de marca |
-| Crema | `#fef3c7` | Fondo general |
+| Crema | `#fef3c7` | Acentos suaves, resplandor del globo |
+| Blanco | `#ffffff` | Fondo general |
 | Marron oscuro | `#482d1f` | Texto y jerarquia tipografica |
 
 Pendientes de definir (el poster los menciona sin valor):
@@ -21,6 +22,10 @@ Pendientes de definir (el poster los menciona sin valor):
 
 ## Principios de interfaz
 
+- **Toda la interfaz en ingles.** Landing y app. Cero texto en espanol en la UI.
+- **Fondo blanco.** El color de marca entra como luz difusa (`Aurora`) detras de superficies de
+  cristal: blur + relleno translucido + borde especular (`.glass`, `.btn-glass`, `.btn-glass-red`
+  en `src/app/globals.css`). Sin luz detras, el cristal no se ve sobre blanco.
 - Interfaz limpia y minimalista. Simple, moderno y claro.
 - Responsive: movil, tablet y PC. El movil manda, el publico usa celulares de gama baja.
 - Microinteracciones discretas.

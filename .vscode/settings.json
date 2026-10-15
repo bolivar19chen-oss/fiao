@@ -1,0 +1,31 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Carpetas en tonos pastel, una por area del proyecto.
+  "material-icon-theme.folders.customClones": [
+    { "name": "fiao-src", "base": "src", "color": "#A7C7E7", "folderNames": ["src"] },
+    { "name": "fiao-app", "base": "app", "color": "#C3B1E1", "folderNames": ["app"] },
+    { "name": "fiao-routes", "base": "routes", "color": "#D9CCF2", "folderNames": ["login", "privacy"] },
+    { "name": "fiao-components", "base": "components", "color": "#F8C8DC", "folderNames": ["components"] },
+    { "name": "fiao-landing", "base": "components", "color": "#FFE5A8", "folderNames": ["landing"] },
+    { "name": "fiao-layout", "base": "layout", "color": "#FFD3B6", "folderNames": ["layout"] },
+    { "name": "fiao-ui", "base": "ui", "color": "#B5EAD7", "folderNames": ["ui"] },
+    { "name": "fiao-data", "base": "database", "color": "#FFDAC1", "folderNames": ["data"] },
+    { "name": "fiao-lib", "base": "lib", "color": "#DCEDC1", "folderNames": ["lib"] },
+    { "name": "fiao-docs", "base": "docs", "color": "#FFB7B2", "folderNames": ["docs"] },
+    { "name": "fiao-supabase", "base": "supabase", "color": "#A8E6CF", "folderNames": ["supabase"] },
+    { "name": "fiao-migrations", "base": "database", "color": "#BDE0FE", "folderNames": ["migrations"] }
+  ],
+
+  // Los archivos de configuracion deben vivir en la raiz (Next.js, Tailwind, pnpm),
+  // asi que se agrupan visualmente bajo package.json en vez de moverlos.
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml, tsconfig.json, next.config.mjs, next-env.d.ts, postcss.config.mjs, tailwind.config.ts, .eslintrc.json, .gitignore",
+    "README.md": "CLAUDE.md"
+  },
+  "files.exclude": {
+    "**/.next": true
+  }
+}

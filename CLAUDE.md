@@ -14,6 +14,8 @@ descartados a proposito; el motivo esta en PLAN.md seccion 2.2.
 
 ## Reglas innegociables
 
+- **UI en ingles.** Todo texto visible al usuario va en ingles. Docs y comentarios internos
+  pueden ir en espanol.
 - **Dinero en centavos, siempre enteros.** Nunca float para montos. Se revisa en code
   review.
 - **RLS desde el dia uno.** El multi-tenancy se garantiza en la base de datos, no en la
