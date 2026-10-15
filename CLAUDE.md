@@ -5,7 +5,7 @@ Contexto completo en [docs/PLAN.md](docs/PLAN.md). Diseno en [docs/DISENO.md](do
 
 ## Stack
 
-TypeScript de extremo a extremo. Next.js 14 (App Router) + Tailwind en el frontend,
+TypeScript de extremo a extremo. Next.js 15 (App Router) + Tailwind en el frontend,
 Supabase Edge Functions en el backend, Supabase/PostgreSQL con RLS como base de datos,
 Recharts para graficas, Vitest + Playwright + Testing Library para pruebas.
 

@@ -9,7 +9,7 @@ Mas control, menos riesgos, mas ventas.
 
 ## Estado
 
-Fase 0 (setup). Esqueleto Next.js 14 + TypeScript + Tailwind con pnpm. Schema inicial de
+Fase 0 (setup). Esqueleto Next.js 15 + React 19 + TypeScript + Tailwind con pnpm. Schema inicial de
 Supabase con RLS en `supabase/migrations/`.
 
 Siguiente paso: especificacion escrita del algoritmo de puntaje.
@@ -38,7 +38,7 @@ la instalacion global por npm no esta soportada y no figura en winget.
 
 | Capa | Tecnologia |
 |---|---|
-| Frontend | Next.js 14 (App Router) + TypeScript + Tailwind CSS |
+| Frontend | Next.js 15 (App Router) + TypeScript + Tailwind CSS |
 | Backend | Supabase Edge Functions (TypeScript) |
 | Base de datos | Supabase (PostgreSQL + Auth + Row Level Security) |
 | Dinero | Enteros en centavos / decimal.js |

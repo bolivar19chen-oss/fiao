@@ -3,8 +3,8 @@ import { Logo } from "./logo"
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/#about", label: "About Us" },
-  { href: "/#services", label: "Services" },
+  { href: "/about", label: "About Us" },
+  { href: "/services", label: "Services" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/login", label: "Log in" },
 ]

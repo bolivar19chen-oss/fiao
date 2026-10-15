@@ -84,7 +84,7 @@ un solo linter y un solo pipeline de CI/CD.
 
 | Componente | Poster original | Recomendacion final | Motivo |
 |---|---|---|---|
-| Frontend | React + TS + Tailwind | Next.js 14 (App Router) + TS + Tailwind | Un solo proyecto con routing y server actions |
+| Frontend | React + TS + Tailwind | Next.js 15 (App Router) + TS + Tailwind | Un solo proyecto con routing y server actions |
 | Backend | Java + Spring Boot | Supabase Edge Functions (TS) | Cero servidores; logica junto a los datos |
 | Base de datos | Supabase | Supabase (igual) | Postgres + Auth + RLS ya resuelto |
 | Calculo de dinero | Python + Pandas/NumPy | Enteros en centavos / decimal.js | Precision exacta, sin servicio extra |
