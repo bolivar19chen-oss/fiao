@@ -9,7 +9,22 @@ Mas control, menos riesgos, mas ventas.
 
 ## Estado
 
-Fase 0 (setup). Repo recien creado, sin codigo de aplicacion todavia.
+Fase 0 (setup). Repo creado con la documentacion. Sin codigo de aplicacion todavia.
+
+Siguiente paso: esqueleto Next.js 14 + TypeScript + Tailwind, y el schema de Supabase
+con politicas RLS.
+
+### Entorno de desarrollo
+
+Instalado y verificado: Node v24.18.0, pnpm 11.17.0, git 2.54.0, GitHub CLI 2.102.0,
+JDK Temurin 25 (ajeno a este proyecto).
+
+Pendiente: Docker Desktop y WSL2, necesarios solo para `supabase start` (base local).
+Requieren permisos de administrador. Hasta entonces se trabaja contra un proyecto
+Supabase en la nube.
+
+El CLI de Supabase va como devDependency del proyecto (`pnpm supabase`), no global:
+la instalacion global por npm no esta soportada y no figura en winget.
 
 ## Documentacion
 
