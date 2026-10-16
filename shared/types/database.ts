@@ -135,6 +135,38 @@ export type Database = {
           },
         ]
       }
+      panama_divisions: {
+        Row: {
+          code: string
+          kind: string
+          name: string
+          parent_code: string | null
+          source_version: string
+        }
+        Insert: {
+          code: string
+          kind: string
+          name: string
+          parent_code?: string | null
+          source_version: string
+        }
+        Update: {
+          code?: string
+          kind?: string
+          name?: string
+          parent_code?: string | null
+          source_version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "panama_divisions_parent_code_fkey"
+            columns: ["parent_code"]
+            isOneToOne: false
+            referencedRelation: "panama_divisions"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount_cents: number
@@ -214,6 +246,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          date_of_birth: string
+          full_name: string
+          national_id: string
+          phone: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date_of_birth: string
+          full_name: string
+          national_id: string
+          phone: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date_of_birth?: string
+          full_name?: string
+          national_id?: string
+          phone?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       sale_items: {
         Row: {
