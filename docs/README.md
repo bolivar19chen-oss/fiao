@@ -17,6 +17,7 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 | [APLICACION.md](APLICACION.md)                   | El cuerpo de la app: dos tipos de usuario, pantallas, pagos y tema    |
 | [MODELO-CREDITO.md](MODELO-CREDITO.md)           | Intereses, libro inmutable, idempotencia, estados y cambios de schema |
 | [DISENO.md](DISENO.md)                           | Paleta, colores de estado, tipografia y criterios de interfaz         |
+| [UI-DASHBOARD.md](UI-DASHBOARD.md)               | Medidas concretas: espaciado, tipografia, graficos, modo oscuro       |
 | [HERRAMIENTAS-PYTHON.md](HERRAMIENTAS-PYTHON.md) | El oraculo de verificacion y el generador de datos de demo            |
 
 ## Decisiones de arquitectura
