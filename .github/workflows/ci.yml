@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, fase-0-setup]
+  pull_request:
+
+# Cancela la corrida anterior de la misma rama: en una rama activa solo importa el ultimo push.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # Valores de relleno, no secretos. El build necesita que las variables existan para
+      # construir los clientes de Supabase; las paginas que consultan la base son dinamicas
+      # y no se prerenderizan, asi que nunca se usan de verdad.
+      # El dia que haga falta una base real en CI, van como secrets del repositorio.
+      NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Cada paso corre aunque el anterior falle: una corrida informa todos los problemas,
+      # no solo el primero.
+      - name: Formato
+        if: always()
+        run: pnpm format:check
+
+      - name: Lint
+        if: always()
+        run: pnpm lint
+
+      - name: Tipos
+        if: always()
+        run: pnpm typecheck
+
+      - name: Pruebas
+        if: always()
+        run: pnpm test
+
+      # Va al final y es el que mas tarda, pero es el que atrapa lo que los otros no ven:
+      # el build de produccion fallaba con lint, tipos y pruebas en verde.
+      - name: Build
+        if: always()
+        run: pnpm build
