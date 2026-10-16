@@ -1,8 +1,7 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReceiptText, Wallet } from "lucide-react"
-import { Card, CardTitle, EmptyState, PageHeader, Stat, Table } from "@/components/app/ui"
+import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -53,11 +52,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
             <Table head={["Date", "Total", "Balance"]}>
               {sales.map((s) => (
                 <tr key={s.id} className="hover:bg-white/50">
-                  <td className="px-2 py-3">
-                    <Link href={`/app/sales/${s.id}`} className="font-medium text-marron hover:text-rojo">
-                      {formatDate(s.created_at)}
-                    </Link>
-                  </td>
+                  <PrimaryCell href={`/app/sales/${s.id}`} title={formatDate(s.created_at)} />
                   <td className="px-2 py-3 text-right tabular-nums">{formatCents(s.total_cents)}</td>
                   <td className="px-2 py-3 text-right font-semibold tabular-nums">{formatCents(s.balance_cents)}</td>
                 </tr>

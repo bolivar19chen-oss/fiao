@@ -74,11 +74,13 @@ export function ButtonLink({ href, children }: { href: string; children: React.R
   )
 }
 
-// En pantallas angostas la tabla se desplaza en horizontal dentro de su tarjeta.
+// Primera columna de texto, el resto numericas y alineadas a la derecha. Sin ancho minimo:
+// en un celular el saldo tiene que verse sin desplazar. Los datos secundarios (telefono,
+// fecha) van debajo del nombre, no en columnas propias.
 export function Table({ head, children }: { head: string[]; children: React.ReactNode }) {
   return (
     <div className="-mx-2 overflow-x-auto">
-      <table className="w-full min-w-[32rem] text-left text-sm">
+      <table className="w-full text-left text-sm">
         <thead>
           <tr className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/50">
             {head.map((h, i) => (
@@ -124,12 +126,36 @@ export function Field({
   )
 }
 
-export function Stat({ label, value, note }: { label: string; value: string; note?: string }) {
+export function Stat({
+  label,
+  value,
+  note,
+  className = "",
+}: {
+  label: string
+  value: string
+  note?: string
+  className?: string
+}) {
   return (
-    <Card>
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/55">{label}</p>
-      <p className="mt-2 font-display text-3xl font-semibold tracking-tight text-marron">{value}</p>
+    <Card className={className}>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-marron/55 sm:text-xs">{label}</p>
+      <p className="mt-2 font-display text-2xl font-semibold tracking-tight text-marron tabular-nums sm:text-3xl">
+        {value}
+      </p>
       {note && <p className="mt-1 text-xs text-marron/55">{note}</p>}
     </Card>
+  )
+}
+
+// Celda principal de una fila: enlace al detalle y una linea secundaria debajo.
+export function PrimaryCell({ href, title, sub }: { href: string; title: string; sub?: string }) {
+  return (
+    <td className="px-2 py-3">
+      <Link href={href} className="font-medium text-marron hover:text-rojo">
+        {title}
+      </Link>
+      {sub && <span className="block text-xs text-marron/55">{sub}</span>}
+    </td>
   )
 }

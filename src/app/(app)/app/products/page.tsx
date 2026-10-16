@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { Package, Plus } from "lucide-react"
-import { ButtonLink, Card, EmptyState, PageHeader, Table } from "@/components/app/ui"
+import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatCount } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -45,14 +44,10 @@ export default async function ProductsPage() {
           <Table head={["Product", "Price", "Stock"]}>
             {products.map((p) => (
               <tr key={p.id} className="hover:bg-white/50">
-                <td className="px-2 py-3">
-                  <Link href={`/app/products/${p.id}`} className="font-medium text-marron hover:text-rojo">
-                    {p.name}
-                  </Link>
-                </td>
+                <PrimaryCell href={`/app/products/${p.id}`} title={p.name} />
                 <td className="px-2 py-3 text-right tabular-nums">{formatCents(p.price_cents)}</td>
                 <td className="px-2 py-3 text-right">
-                  <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
                     <StockBadge stock={p.stock} threshold={p.low_stock_threshold} />
                     <span className="font-semibold tabular-nums">{formatCount(p.stock)}</span>
                   </span>

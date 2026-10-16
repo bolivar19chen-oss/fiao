@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { Plus, Users } from "lucide-react"
-import { ButtonLink, Card, EmptyState, PageHeader, Table } from "@/components/app/ui"
+import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 import { requireBusiness } from "@/lib/business"
 import { formatCents } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -45,15 +44,10 @@ export default async function CustomersPage() {
             action={{ href: "/app/customers/new", label: "Add your first customer" }}
           />
         ) : (
-          <Table head={["Name", "Phone", "Balance"]}>
+          <Table head={["Customer", "Balance"]}>
             {customers.map((c) => (
               <tr key={c.id} className="hover:bg-white/50">
-                <td className="px-2 py-3">
-                  <Link href={`/app/customers/${c.id}`} className="font-medium text-marron hover:text-rojo">
-                    {c.name}
-                  </Link>
-                </td>
-                <td className="px-2 py-3 text-right text-marron/70">{c.phone ?? "-"}</td>
+                <PrimaryCell href={`/app/customers/${c.id}`} title={c.name} sub={c.phone ?? undefined} />
                 <td
                   className={`px-2 py-3 text-right font-semibold tabular-nums ${c.balance > 0 ? "text-rojo" : "text-marron/60"}`}
                 >
