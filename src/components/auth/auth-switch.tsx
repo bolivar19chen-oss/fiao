@@ -1,44 +1,57 @@
 "use client"
 
 import Link from "next/link"
-import { useState, type FormEvent } from "react"
+import { useActionState, useState } from "react"
 import { Lock, Mail, UserRound, type LucideIcon } from "lucide-react"
+import { logIn, signUp, type AuthState } from "./actions"
 import s from "./auth-switch.module.css"
 
-// UI solamente. Supabase Auth se conecta en la Fase 2.
+// Conectado a Supabase Auth via Server Actions. El aspecto es UI aprobada: no tocar el CSS.
 export function AuthSwitch() {
   const [isSignUp, setIsSignUp] = useState(false)
-  const [notice, setNotice] = useState(false)
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setNotice(true)
-  }
-
-  const switchMode = (signUp: boolean) => {
-    setIsSignUp(signUp)
-    setNotice(false)
-  }
+  const [logInState, logInAction, loggingIn] = useActionState(logIn, null)
+  const [signUpState, signUpAction, signingUp] = useActionState(signUp, null)
 
   return (
     <div className={isSignUp ? `${s.container} ${s.signUpMode}` : s.container}>
       <div className={s.formsContainer}>
         <div className={s.signinSignup}>
           {/* inert: el formulario oculto no recibe foco ni clics */}
-          <form className={`${s.form} ${s.signInForm}`} onSubmit={onSubmit} inert={isSignUp}>
+          <form className={`${s.form} ${s.signInForm}`} action={logInAction} inert={isSignUp} aria-busy={loggingIn}>
             <h2 className={s.title}>Log in</h2>
-            <Field icon={Mail} label="Email" type="email" name="email" autoComplete="email" />
+            <Field
+              icon={Mail}
+              label="Email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              defaultValue={logInState?.email}
+            />
             <Field icon={Lock} label="Password" type="password" name="password" autoComplete="current-password" />
-            <button type="submit" className={s.submit}>
-              Log in
+            <button type="submit" className={s.submit} disabled={loggingIn}>
+              {loggingIn ? "Logging in..." : "Log in"}
             </button>
-            {notice && !isSignUp && <Notice />}
+            <Notice state={logInState} />
           </form>
 
-          <form className={`${s.form} ${s.signUpForm}`} onSubmit={onSubmit} inert={!isSignUp}>
+          <form className={`${s.form} ${s.signUpForm}`} action={signUpAction} inert={!isSignUp} aria-busy={signingUp}>
             <h2 className={s.title}>Create account</h2>
-            <Field icon={UserRound} label="Your name" type="text" name="name" autoComplete="name" />
-            <Field icon={Mail} label="Email" type="email" name="email" autoComplete="email" />
+            <Field
+              icon={UserRound}
+              label="Your name"
+              type="text"
+              name="name"
+              autoComplete="name"
+              defaultValue={signUpState?.name}
+            />
+            <Field
+              icon={Mail}
+              label="Email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              defaultValue={signUpState?.email}
+            />
             <Field
               icon={Lock}
               label="Password (8+ characters)"
@@ -47,13 +60,13 @@ export function AuthSwitch() {
               autoComplete="new-password"
               minLength={8}
             />
-            <button type="submit" className={s.submit}>
-              Sign up
+            <button type="submit" className={s.submit} disabled={signingUp}>
+              {signingUp ? "Signing up..." : "Sign up"}
             </button>
             <p className={s.hint}>
               By signing up you agree to our <Link href="/privacy">Privacy Policy</Link>.
             </p>
-            {notice && isSignUp && <Notice />}
+            <Notice state={signUpState} />
           </form>
         </div>
       </div>
@@ -63,7 +76,7 @@ export function AuthSwitch() {
           <div className={s.content}>
             <h2>New to FIA&apos;O?</h2>
             <p>Create your store&apos;s account in minutes and bring your notebook online.</p>
-            <button type="button" className={s.ghost} onClick={() => switchMode(true)}>
+            <button type="button" className={s.ghost} onClick={() => setIsSignUp(true)}>
               Sign up
             </button>
           </div>
@@ -73,7 +86,7 @@ export function AuthSwitch() {
           <div className={s.content}>
             <h2>Welcome back</h2>
             <p>Already have an account? Log in to manage your store.</p>
-            <button type="button" className={s.ghost} onClick={() => switchMode(false)}>
+            <button type="button" className={s.ghost} onClick={() => setIsSignUp(false)}>
               Log in
             </button>
           </div>
@@ -90,6 +103,7 @@ interface FieldProps {
   name: string
   autoComplete: string
   minLength?: number
+  defaultValue?: string
 }
 
 function Field({ icon: Icon, label, ...input }: FieldProps) {
@@ -102,10 +116,13 @@ function Field({ icon: Icon, label, ...input }: FieldProps) {
   )
 }
 
-function Notice() {
+// Mismo globo de aviso que tenia la UI aprobada, ahora con el error o mensaje real.
+function Notice({ state }: { state: AuthState }) {
+  const text = state?.error ?? state?.message
+  if (!text) return null
   return (
-    <p role="status" className={s.notice}>
-      Accounts open with the beta. Thanks for your interest.
+    <p role={state?.error ? "alert" : "status"} className={s.notice}>
+      {text}
     </p>
   )
 }
