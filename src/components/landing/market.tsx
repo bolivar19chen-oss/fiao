@@ -1,4 +1,5 @@
 import { CategoryChart } from "@/components/landing/category-chart"
+import { SectionHeading } from "@/components/ui/section-heading"
 import { SourceNote } from "@/components/ui/source-note"
 import { maxStores, provinces, totalStores } from "@/data/panama"
 import { formatCount } from "@/lib/format"
@@ -6,16 +7,14 @@ import { formatCount } from "@/lib/format"
 export function Market() {
   return (
     <section id="market" className="container-x py-28">
-      <div className="max-w-2xl">
-        <p className="eyebrow">Market</p>
-        <h2 className="section-title mt-3">The market at a glance.</h2>
-        <p className="mt-4 text-lg leading-relaxed text-marron/70">
+      <SectionHeading index="03" label="Market" title="The market at a glance.">
+        <p>
           {formatCount(totalStores)} food stores with a sanitary registration from the Ministry of Health, by province
           and type of store.
         </p>
-      </div>
+      </SectionHeading>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
+      <div className="mt-14 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
         <div className="overflow-hidden rounded-3xl border border-marron/10">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[34rem] text-left text-sm">
