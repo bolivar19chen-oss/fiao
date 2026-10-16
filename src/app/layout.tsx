@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
-import { SiteFooter } from "@/components/layout/site-footer"
-import { SiteHeader } from "@/components/layout/site-header"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -25,11 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" translate="no">
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-      </body>
+      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>{children}</body>
     </html>
   )
 }
