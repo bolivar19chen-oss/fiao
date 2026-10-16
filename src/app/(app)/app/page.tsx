@@ -28,12 +28,16 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <header className="mb-6">
-        <p className="eyebrow">{business.name}</p>
-        <h1 className="section-title mt-1">Dashboard</h1>
-      </header>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Outstanding credit" value={formatCents(portfolio)} note="Total owed across open sales" />
+      {/* El nombre del negocio ya esta en el shell: no se repite aca. */}
+      <h1 className="section-title mb-6">Dashboard</h1>
+      {/* En movil la cartera ocupa todo el ancho y las otras dos van lado a lado. */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+        <Stat
+          className="col-span-2 sm:col-span-1"
+          label="Outstanding credit"
+          value={formatCents(portfolio)}
+          note="Total owed across open sales"
+        />
         <Stat label="Customers with debt" value={formatCount(debtors)} />
         <Stat label="Collected this week" value={formatCents(collected)} note="Payments in the last 7 days" />
       </div>

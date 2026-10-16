@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { Plus, ReceiptText } from "lucide-react"
-import { Badge, ButtonLink, Card, EmptyState, PageHeader, Table } from "@/components/app/ui"
+import { Badge, ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -38,15 +37,10 @@ export default async function SalesPage() {
             body="Credit sales you record will show here with their balance."
           />
         ) : (
-          <Table head={["Customer", "Date", "Total", "Balance"]}>
+          <Table head={["Customer", "Total", "Balance"]}>
             {sales.map((s) => (
               <tr key={s.id} className="hover:bg-white/50">
-                <td className="px-2 py-3">
-                  <Link href={`/app/sales/${s.id}`} className="font-medium text-marron hover:text-rojo">
-                    {s.customers.name}
-                  </Link>
-                </td>
-                <td className="px-2 py-3 text-right text-marron/70">{formatDate(s.created_at)}</td>
+                <PrimaryCell href={`/app/sales/${s.id}`} title={s.customers.name} sub={formatDate(s.created_at)} />
                 <td className="px-2 py-3 text-right tabular-nums">{formatCents(s.total_cents)}</td>
                 <td className="px-2 py-3 text-right">
                   {s.balance_cents === 0 ? (
