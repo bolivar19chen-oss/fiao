@@ -1,0 +1,385 @@
+/* Login / registro con panel deslizante. Base: componente "auth-switch" de 21st.dev,
+   adaptado a la marca. CSS Module: las clases quedan aisladas del resto del sitio. */
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 940px;
+  height: 580px;
+  margin: 0 auto;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.8);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    0 30px 70px -30px rgb(72 45 31 / 0.35);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* Circulo de marca que barre la tarjeta al cambiar de modo. */
+.container::before {
+  content: "";
+  position: absolute;
+  height: 2000px;
+  width: 2000px;
+  top: -10%;
+  right: 48%;
+  transform: translateY(-50%);
+  background:
+    radial-gradient(circle at 78% 62%, rgb(255 191 50 / 0.38), transparent 22%),
+    linear-gradient(-45deg, #7f1d1d 0%, #b91c1c 55%, #d64545 100%);
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+.formsContainer {
+  position: absolute;
+  inset: 0;
+}
+
+.signinSignup {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  width: 50%;
+  transform: translate(-50%, -50%);
+  transition: 1s 0.7s ease-in-out;
+  display: grid;
+  grid-template-columns: 1fr;
+  z-index: 5;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 4rem;
+  transition: all 0.2s 0.7s;
+  overflow: hidden;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.signInForm {
+  z-index: 2;
+}
+
+.signUpForm {
+  opacity: 0;
+  z-index: 1;
+}
+
+.title {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #482d1f;
+  margin-bottom: 1rem;
+}
+
+.field {
+  width: 100%;
+  max-width: 360px;
+  height: 52px;
+  margin: 0.4rem 0;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  border-radius: 999px;
+  background: rgb(72 45 31 / 0.04);
+  border: 1px solid rgb(72 45 31 / 0.1);
+  transition: 0.25s;
+}
+
+.field:focus-within {
+  background: #fff;
+  border-color: rgb(185 28 28 / 0.4);
+  box-shadow: 0 0 0 4px rgb(185 28 28 / 0.1);
+}
+
+.fieldIcon {
+  justify-self: center;
+  width: 18px;
+  height: 18px;
+  color: rgb(72 45 31 / 0.5);
+}
+
+.field:focus-within .fieldIcon {
+  color: #b91c1c;
+}
+
+.field input {
+  width: 100%;
+  padding-right: 1.25rem;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #482d1f;
+}
+
+.field input::placeholder {
+  color: rgb(72 45 31 / 0.4);
+  font-weight: 400;
+}
+
+.submit {
+  width: 160px;
+  height: 48px;
+  margin: 1rem 0 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, rgb(205 38 38 / 0.95), rgb(185 28 28));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    inset 0 -2px 6px rgb(127 29 29 / 0.35),
+    0 10px 28px -10px rgb(185 28 28 / 0.65);
+  transition: 0.3s;
+}
+
+.submit:hover {
+  transform: translateY(-1px);
+}
+
+.submit:focus-visible,
+.ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgb(255 191 50 / 0.6);
+}
+
+.hint {
+  max-width: 320px;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgb(72 45 31 / 0.55);
+}
+
+.hint a {
+  color: #b91c1c;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.notice {
+  max-width: 360px;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  background: rgb(255 191 50 / 0.18);
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgb(72 45 31 / 0.85);
+}
+
+.panelsContainer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 6;
+}
+
+.leftPanel {
+  pointer-events: all;
+  padding: 3rem 17% 2rem 12%;
+}
+
+.rightPanel {
+  pointer-events: none;
+  padding: 3rem 12% 2rem 17%;
+}
+
+.content {
+  color: #fff;
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.6s;
+}
+
+.content h2 {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.content p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: 0.5rem 0 1.25rem;
+  color: rgb(255 255 255 / 0.85);
+}
+
+.ghost {
+  width: 140px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  background: rgb(255 255 255 / 0.12);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ghost:hover {
+  background: rgb(255 255 255 / 0.22);
+  transform: translateY(-1px);
+}
+
+.rightPanel .content {
+  transform: translateX(800px);
+}
+
+/* Modo registro */
+.signUpMode::before {
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.signUpMode .leftPanel .content {
+  transform: translateX(-800px);
+}
+
+.signUpMode .signinSignup {
+  left: 25%;
+}
+
+.signUpMode .signUpForm {
+  opacity: 1;
+  z-index: 2;
+}
+
+.signUpMode .signInForm {
+  opacity: 0;
+  z-index: 1;
+}
+
+.signUpMode .rightPanel .content {
+  transform: translateX(0);
+}
+
+.signUpMode .leftPanel {
+  pointer-events: none;
+}
+
+.signUpMode .rightPanel {
+  pointer-events: all;
+}
+
+@media (max-width: 870px) {
+  .container {
+    height: 740px;
+  }
+  .signinSignup {
+    width: 100%;
+    top: 95%;
+    transform: translate(-50%, -100%);
+    transition: 1s 0.8s ease-in-out;
+  }
+  .signinSignup,
+  .signUpMode .signinSignup {
+    left: 50%;
+  }
+  .panelsContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+  .panel {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2.5rem 8%;
+    grid-column: 1 / 2;
+  }
+  .rightPanel {
+    grid-row: 3 / 4;
+  }
+  .leftPanel {
+    grid-row: 1 / 2;
+  }
+  .content {
+    padding-right: 15%;
+    transition-delay: 0.8s;
+  }
+  .content h2 {
+    font-size: 1.25rem;
+  }
+  .content p {
+    font-size: 0.8rem;
+    padding: 0.4rem 0 0.8rem;
+  }
+  .ghost {
+    width: 120px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+  .container::before {
+    width: 1500px;
+    height: 1500px;
+    transform: translateX(-50%);
+    left: 30%;
+    bottom: 68%;
+    right: initial;
+    top: initial;
+    transition: 2s ease-in-out;
+  }
+  .signUpMode::before {
+    transform: translate(-50%, 100%);
+    bottom: 32%;
+    right: initial;
+  }
+  .signUpMode .leftPanel .content {
+    transform: translateY(-300px);
+  }
+  .signUpMode .rightPanel .content {
+    transform: translateY(0);
+  }
+  .rightPanel .content {
+    transform: translateY(300px);
+  }
+  .signUpMode .signinSignup {
+    top: 5%;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 570px) {
+  .form {
+    padding: 0 1.5rem;
+  }
+  .content {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container::before,
+  .container * {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
