@@ -38,8 +38,13 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
   if (problem) return { error: problem }
 
   const supabase = await createClient()
+  const { data: auth } = await supabase.auth.getClaims()
+  // El middleware ya exige sesion, pero sin esto user_id viajaba como undefined y el
+  // insert fallaba con un mensaje que no dice nada.
+  if (!auth) return { error: "Your session expired. Log in again." }
+
   const { error } = await supabase.from("profiles").insert({
-    user_id: (await supabase.auth.getClaims()).data?.claims.sub as string,
+    user_id: auth.claims.sub,
     role: "customer",
     full_name: field(data, "full_name"),
     national_id: field(data, "national_id"),

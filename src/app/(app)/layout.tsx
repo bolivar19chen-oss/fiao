@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 import { AppShell } from "@/components/app/app-shell"
+import { CookieNotice } from "@/components/layout/cookie-notice"
 import { getCurrentBusiness } from "@/lib/business"
 
 // La sesion ya la exige el middleware. La pertenencia a un negocio se comprueba aca y no
@@ -8,5 +9,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const business = await getCurrentBusiness()
   if (!business) redirect("/onboarding")
 
-  return <AppShell businessName={business.name}>{children}</AppShell>
+  return (
+    <>
+      <AppShell businessName={business.name}>{children}</AppShell>
+      <CookieNotice />
+    </>
+  )
 }
