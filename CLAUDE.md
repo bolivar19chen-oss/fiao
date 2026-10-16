@@ -5,12 +5,17 @@ Contexto completo en [docs/PLAN.md](docs/PLAN.md). Diseno en [docs/DISENO.md](do
 
 ## Stack
 
-TypeScript de extremo a extremo. Next.js 15 (App Router) + Tailwind en el frontend,
-Supabase Edge Functions en el backend, Supabase/PostgreSQL con RLS como base de datos,
-Recharts para graficas, Vitest + Playwright + Testing Library para pruebas.
+Aplicacion en TypeScript: Next.js 15 (App Router) + Tailwind en el frontend, Supabase Edge
+Functions en el backend, Supabase/PostgreSQL con RLS como base de datos, Recharts para
+graficas, Vitest + Playwright + Testing Library para pruebas.
 
-No agregar lenguajes ni servicios nuevos al stack. Java, Spring Boot y Python quedaron
-descartados a proposito; el motivo esta en PLAN.md seccion 2.2.
+Motor financiero en Python, en `engine/`: intereses, verificacion de saldos y puntaje de
+credito. Es **puro y sin estado**: no toca la base de datos ni conoce al usuario. Contrato
+en [docs/MOTOR-FINANCIERO.md](docs/MOTOR-FINANCIERO.md), decision en
+[ADR 0004](docs/adr/0004-motor-financiero-python.md).
+
+No agregar mas lenguajes ni servicios. Java, Spring Boot y C++ quedaron descartados a
+proposito; el motivo esta en PLAN.md seccion 2.2 y en [ADR 0003](docs/adr/0003-sin-cpp.md).
 
 ## Reglas innegociables
 
