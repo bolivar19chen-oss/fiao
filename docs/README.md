@@ -14,8 +14,9 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 
 | Documento                                        | Que es                                                                |
 | ------------------------------------------------ | --------------------------------------------------------------------- |
+| [APLICACION.md](APLICACION.md)                   | El cuerpo de la app: dos tipos de usuario, pantallas, pagos y tema    |
 | [MODELO-CREDITO.md](MODELO-CREDITO.md)           | Intereses, libro inmutable, idempotencia, estados y cambios de schema |
-| [DISENO.md](DISENO.md)                           | Paleta, tipografia y criterios de interfaz                            |
+| [DISENO.md](DISENO.md)                           | Paleta, colores de estado, tipografia y criterios de interfaz         |
 | [HERRAMIENTAS-PYTHON.md](HERRAMIENTAS-PYTHON.md) | El oraculo de verificacion y el generador de datos de demo            |
 
 ## Decisiones de arquitectura
@@ -30,6 +31,8 @@ antes de proponer cambiarlo.
 | [0003](adr/0003-sin-cpp.md)                                       | Sin C++ ni modulo nativo                   | Aceptado              |
 | [0004](adr/0004-motor-financiero-python.md)                       | Motor financiero como servicio Python      | **Superado por 0005** |
 | [0005](adr/0005-calculo-en-typescript-python-como-herramienta.md) | Calculo en TypeScript; Python como oraculo | Aceptado              |
+| [0006](adr/0006-cuentas-de-cliente.md)                            | Cuentas de cliente por invitacion          | Aceptado              |
+| [0007](adr/0007-pagos-sin-custodia.md)                            | Pagos sin custodia de fondos               | Aceptado              |
 
 ## Superado
 

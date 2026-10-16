@@ -4,7 +4,8 @@ Lo que ve el usuario despues del login. Amplia el mapa de rutas de
 [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md) con dos tipos de usuario, pagos, ajustes y
 tema.
 
-Tres decisiones nuevas estan marcadas **DECIDIR**. Ninguna se construye hasta resolverla.
+Las dos decisiones que este documento planteaba ya estan tomadas:
+[ADR 0006](adr/0006-cuentas-de-cliente.md) y [ADR 0007](adr/0007-pagos-sin-custodia.md).
 
 ## 1. Dos tipos de usuario
 
@@ -37,7 +38,7 @@ El flujo: el negocio abre la ficha del cliente, genera una invitacion (codigo co
 que se muestra en el mostrador), el cliente se registra y la canjea. Recien ahi
 `customers.user_id` queda escrito.
 
-**DECIDIR (ADR 0006):** cuentas de cliente. Arrastra:
+**Decidido en [ADR 0006](adr/0006-cuentas-de-cliente.md).** Arrastra:
 
 - `customers.user_id uuid references auth.users (id)`, nulo hasta que se canjea.
 - Tabla `customer_invites` con codigo, vencimiento y un solo uso.
@@ -59,12 +60,12 @@ el dueno se hace al abrir. No es un grafico.
 
 **Fila de indicadores**, cuatro fichas con valor y variacion:
 
-| Ficha | Que dice |
-|---|---|
-| Outstanding | Cartera total por cobrar |
-| Overdue | Cuanto esta en mora |
-| Due this week | Lo que vence en siete dias |
-| Customers with debt | Cuantos deben |
+| Ficha               | Que dice                   |
+| ------------------- | -------------------------- |
+| Outstanding         | Cartera total por cobrar   |
+| Overdue             | Cuanto esta en mora        |
+| Due this week       | Lo que vence en siete dias |
+| Customers with debt | Cuantos deben              |
 
 **Hoy:** lista corta de cobros del dia y clientes que acaban de entrar en mora. Accionable,
 no decorativa: cada fila lleva a registrar el abono.
@@ -73,12 +74,12 @@ no decorativa: cada fila lleva a registrar el abono.
 
 Cuatro, no mas. Cada uno tiene un trabajo distinto; si dos cuentan lo mismo, sobra uno.
 
-| Grafico | Forma | Por que esa |
-|---|---|---|
-| Cartera por estado | Barra apilada horizontal | Es parte-de-un-todo con tres clases. **Nunca una torta** |
-| Cobros de la semana | Columnas por dia | Comparar magnitud entre siete dias |
-| Evolucion de la cartera | Linea, una sola serie | Tendencia en el tiempo |
-| Top deudores | Barras horizontales | Comparar magnitud con nombres largos |
+| Grafico                 | Forma                    | Por que esa                                              |
+| ----------------------- | ------------------------ | -------------------------------------------------------- |
+| Cartera por estado      | Barra apilada horizontal | Es parte-de-un-todo con tres clases. **Nunca una torta** |
+| Cobros de la semana     | Columnas por dia         | Comparar magnitud entre siete dias                       |
+| Evolucion de la cartera | Linea, una sola serie    | Tendencia en el tiempo                                   |
+| Top deudores            | Barras horizontales      | Comparar magnitud con nombres largos                     |
 
 Reglas que no se negocian:
 
@@ -103,12 +104,12 @@ inventario, ventas, reportes y ajustes.
 
 Una aplicacion mucho mas chica. El cliente entra a saber cuanto debe y a pagar.
 
-| Ruta | Pantalla |
-|---|---|
-| `/me` | Mis cuentas: una tarjeta por negocio donde tengo credito, con saldo y proximo vencimiento |
-| `/me/[businessId]` | Estado de cuenta en ese negocio: compras, abonos, cuotas, mi puntaje en **esa** tienda |
-| `/me/[businessId]/pay` | Pagar |
-| `/me/settings` | Mis datos, contrasena, tema |
+| Ruta                   | Pantalla                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------------------- |
+| `/me`                  | Mis cuentas: una tarjeta por negocio donde tengo credito, con saldo y proximo vencimiento |
+| `/me/[businessId]`     | Estado de cuenta en ese negocio: compras, abonos, cuotas, mi puntaje en **esa** tienda    |
+| `/me/[businessId]/pay` | Pagar                                                                                     |
+| `/me/settings`         | Mis datos, contrasena, tema                                                               |
 
 El puntaje se muestra con su desglose: puntualidad, deuda, antiguedad, frecuencia. Si el
 cliente no entiende por que tiene 72, el numero no sirve para nada.
@@ -130,11 +131,11 @@ financiera. Es ademas como funciona cualquier SaaS que cobra por cuenta de sus c
 
 ### Los tres medios
 
-| Medio | Como funciona | Que mueve el dinero |
-|---|---|---|
-| **Presencial** | El negocio registra el abono en efectivo | Nada. Solo se anota |
-| **Yappy** | El cliente paga al comercio; la app refleja y concilia | Yappy, entre cliente y negocio |
-| **Tarjeta** | Campos alojados por la pasarela, dentro de la app | La pasarela, a la cuenta del negocio |
+| Medio          | Como funciona                                          | Que mueve el dinero                  |
+| -------------- | ------------------------------------------------------ | ------------------------------------ |
+| **Presencial** | El negocio registra el abono en efectivo               | Nada. Solo se anota                  |
+| **Yappy**      | El cliente paga al comercio; la app refleja y concilia | Yappy, entre cliente y negocio       |
+| **Tarjeta**    | Campos alojados por la pasarela, dentro de la app      | La pasarela, a la cuenta del negocio |
 
 **La tarjeta, en una regla:** el numero no toca nunca tu servidor ni tu base de datos.
 Se usan los campos alojados o el redireccionamiento de la pasarela, y vos guardas
@@ -148,11 +149,10 @@ digitos, pero ese dibujo es presentacion: lo que hay guardado es un token de la 
 integracion real** antes de disenar contra ella: que expone, como confirma el pago, si hay
 webhook. No se escribe una linea asumiendo como funciona.
 
-**DECIDIR (ADR 0007):** pagos a distancia. Hasta resolverlo, la Fase 2 y 3 construyen solo
-el registro de abonos presenciales, que no depende de nadie.
-
-Mi recomendacion: el MVP registra, no cobra. Es legal, se termina, y se demuestra. La
-pasarela entra despues, con un negocio real que ya tenga su cuenta de comercio.
+**Decidido en [ADR 0007](adr/0007-pagos-sin-custodia.md):** el MVP registra, no cobra.
+Solo abonos presenciales, que no dependen de nadie externo. Es legal, se termina y se
+demuestra. La pasarela entra despues, con un negocio real que ya tenga su cuenta de
+comercio.
 
 ### Idempotencia, otra vez
 
