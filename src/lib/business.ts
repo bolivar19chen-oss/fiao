@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation"
 import { cache } from "react"
 import { createClient } from "@/lib/supabase/server"
 
@@ -19,5 +20,13 @@ export const getCurrentBusiness = cache(async () => {
     .maybeSingle()
 
   if (!data?.businesses) return null
-  return { ...data.businesses, role: data.role }
+  return { ...data.businesses, role: data.role, userId: auth.claims.sub }
 })
+
+// Para paginas y actions de (app). El layout ya redirige, pero layout y pagina se
+// renderizan en paralelo: la pagina no puede asumir que el negocio existe.
+export async function requireBusiness() {
+  const business = await getCurrentBusiness()
+  if (!business) redirect("/onboarding")
+  return business
+}
