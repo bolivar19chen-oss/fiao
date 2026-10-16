@@ -1,7 +1,13 @@
 # FIA'O - Motor financiero
 
-Servicio Python que calcula intereses, saldos y puntaje de credito.
-Decision y justificacion en [adr/0004-motor-financiero-python.md](adr/0004-motor-financiero-python.md).
+> **Documento superado.** El motor no es un servicio HTTP: el calculo vive en
+> `src/lib/credit/`, en TypeScript, dentro de la aplicacion. Ver
+> [ADR 0005](adr/0005-calculo-en-typescript-python-como-herramienta.md).
+>
+> Lo que sigue vigente de este documento son **las reglas de dominio, el diseno de las
+> operaciones y la lista de pruebas**: se trasladan tal cual al modulo TypeScript. Lo que
+> ya no aplica son las rutas HTTP, el formato JSON y el despliegue del servicio.
+
 Reglas del dominio en [MODELO-CREDITO.md](MODELO-CREDITO.md).
 
 ## Regla unica

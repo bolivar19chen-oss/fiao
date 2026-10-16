@@ -1,7 +1,12 @@
 # ADR 0004 - Motor financiero en Python, puro y sin estado
 
-Fecha: 2026-10-16. Estado: aceptado.
-Modifica el alcance de [ADR 0003](0003-sin-cpp.md) y de PLAN.md seccion 3.
+Fecha: 2026-10-16. Estado: **superado** por
+[ADR 0005](0005-calculo-en-typescript-python-como-herramienta.md) el mismo dia.
+
+Se escribio asumiendo que el calculo podia vivir en un servicio fuera de la aplicacion.
+El equipo aclaro despues que todo corre dentro de la misma web, lo que invalida la
+premisa. Se conserva por el registro de la decision y porque su analisis del problema
+offline y del riesgo sobre el RLS sigue siendo valido.
 
 ## Contexto
 
