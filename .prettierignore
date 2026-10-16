@@ -1,0 +1,2 @@
+# Prettier solo lee el .gitignore de la raiz; este es estado local de la CLI de Supabase.
+supabase/.temp
