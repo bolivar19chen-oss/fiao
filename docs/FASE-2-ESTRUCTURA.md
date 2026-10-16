@@ -42,13 +42,13 @@ refrescos de token no se escriben en la respuesta.
 
 Archivos a crear:
 
-| Archivo | Rol |
-|---|---|
-| `src/lib/supabase/client.ts` | `createBrowserClient` para componentes cliente |
-| `src/lib/supabase/server.ts` | `createServerClient` por request, con `getAll`/`setAll` |
-| `src/lib/supabase/middleware.ts` | Refresco de sesion, usado por el middleware raiz |
-| `middleware.ts` (raiz) | Refresca sesion y protege `/app` y `/onboarding` |
-| `.env.example` | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+| Archivo                          | Rol                                                         |
+| -------------------------------- | ----------------------------------------------------------- |
+| `src/lib/supabase/client.ts`     | `createBrowserClient` para componentes cliente              |
+| `src/lib/supabase/server.ts`     | `createServerClient` por request, con `getAll`/`setAll`     |
+| `src/lib/supabase/middleware.ts` | Refresco de sesion, usado por el middleware raiz            |
+| `middleware.ts` (raiz)           | Refresca sesion y protege `/app` y `/onboarding`            |
+| `.env.example`                   | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
 
 Next 15: `cookies()` es asincrono, hay que `await`. Ver ADR 0001.
 
@@ -62,12 +62,12 @@ aprobada; solo se le conecta el comportamiento.
 
 El middleware decide con una sola regla por caso:
 
-| Situacion | Destino |
-|---|---|
-| Sin sesion y pide `/app/*` o `/onboarding` | `/login` |
-| Con sesion y pide `/login` | `/app` |
+| Situacion                                                    | Destino       |
+| ------------------------------------------------------------ | ------------- |
+| Sin sesion y pide `/app/*` o `/onboarding`                   | `/login`      |
+| Con sesion y pide `/login`                                   | `/app`        |
 | Con sesion, sin negocio en `business_members`, pide `/app/*` | `/onboarding` |
-| Con sesion, con negocio, pide `/onboarding` | `/app` |
+| Con sesion, con negocio, pide `/onboarding`                  | `/app`        |
 
 La consulta de pertenencia a negocio no va en el middleware si eso obliga a un viaje a la
 base en cada request de assets. Hacer la comprobacion en el layout de `(app)` y dejar el
@@ -99,21 +99,21 @@ tiene hoy. No tocar su `pt-28` ni su `Aurora`.
 
 Rutas de la aplicacion:
 
-| Ruta | Pantalla | Contenido en esta fase |
-|---|---|---|
-| `/app` | Dashboard | Tarjetas de cartera total, clientes con deuda, cobros de la semana. Valores reales por consulta, cero si no hay datos |
-| `/app/customers` | Lista de clientes | Tabla con nombre, telefono, saldo. Estado vacio con llamada a crear |
-| `/app/customers/new` | Alta de cliente | Formulario real que inserta |
-| `/app/customers/[id]` | Estado de cuenta | Datos del cliente, lista de ventas y abonos. Sin puntaje todavia |
-| `/app/products` | Inventario | Tabla con nombre, precio, stock, aviso de stock bajo |
-| `/app/products/new` | Alta de producto | Formulario real que inserta |
-| `/app/products/[id]` | Detalle de producto | Edicion de precio y stock |
-| `/app/sales` | Ventas a credito | Lista con cliente, total, saldo, fecha |
-| `/app/sales/new` | Nueva venta | Contenedor con los pasos marcados. El flujo completo es de la fase siguiente |
-| `/app/sales/[id]` | Detalle de venta | Items, cuotas, abonos. Sin registrar abonos todavia |
-| `/app/reports` | Reportes | Contenedor vacio con nota de proxima fase |
-| `/app/settings` | Ajustes | Nombre del negocio y miembros. Tasas cuando exista el schema de intereses |
-| `/onboarding` | Crear negocio | Llama a `create_business(text)` y redirige a `/app` |
+| Ruta                  | Pantalla            | Contenido en esta fase                                                                                                |
+| --------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `/app`                | Dashboard           | Tarjetas de cartera total, clientes con deuda, cobros de la semana. Valores reales por consulta, cero si no hay datos |
+| `/app/customers`      | Lista de clientes   | Tabla con nombre, telefono, saldo. Estado vacio con llamada a crear                                                   |
+| `/app/customers/new`  | Alta de cliente     | Formulario real que inserta                                                                                           |
+| `/app/customers/[id]` | Estado de cuenta    | Datos del cliente, lista de ventas y abonos. Sin puntaje todavia                                                      |
+| `/app/products`       | Inventario          | Tabla con nombre, precio, stock, aviso de stock bajo                                                                  |
+| `/app/products/new`   | Alta de producto    | Formulario real que inserta                                                                                           |
+| `/app/products/[id]`  | Detalle de producto | Edicion de precio y stock                                                                                             |
+| `/app/sales`          | Ventas a credito    | Lista con cliente, total, saldo, fecha                                                                                |
+| `/app/sales/new`      | Nueva venta         | Contenedor con los pasos marcados. El flujo completo es de la fase siguiente                                          |
+| `/app/sales/[id]`     | Detalle de venta    | Items, cuotas, abonos. Sin registrar abonos todavia                                                                   |
+| `/app/reports`        | Reportes            | Contenedor vacio con nota de proxima fase                                                                             |
+| `/app/settings`       | Ajustes             | Nombre del negocio y miembros. Tasas cuando exista el schema de intereses                                             |
+| `/onboarding`         | Crear negocio       | Llama a `create_business(text)` y redirige a `/app`                                                                   |
 
 ## 5. Shell autenticado
 

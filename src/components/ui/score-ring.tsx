@@ -15,7 +15,14 @@ export function ScoreRing({ score, className = "h-11 w-11" }: { score: number; c
         strokeDasharray={c}
         strokeDashoffset={c * (1 - score / 100)}
       />
-      <text x="20" y="20" className="rotate-90 fill-marron text-[11px] font-bold" style={{ transformOrigin: "20px 20px" }} textAnchor="middle" dominantBaseline="central">
+      <text
+        x="20"
+        y="20"
+        className="rotate-90 fill-marron text-[11px] font-bold"
+        style={{ transformOrigin: "20px 20px" }}
+        textAnchor="middle"
+        dominantBaseline="central"
+      >
         {score}
       </text>
     </svg>

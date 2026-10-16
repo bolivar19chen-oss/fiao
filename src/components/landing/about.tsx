@@ -4,8 +4,16 @@ import { SectionHeading } from "@/components/ui/section-heading"
 
 const principles = [
   { icon: Check, title: "Exact to the cent", body: "Every amount is stored as whole cents. No rounding drift, ever." },
-  { icon: Lock, title: "Private by design", body: "Each store's data is isolated at the database level, not just hidden in the interface." },
-  { icon: Store, title: "Made for the counter", body: "Fast on low-end phones, installable from the browser, readable at a glance." },
+  {
+    icon: Lock,
+    title: "Private by design",
+    body: "Each store's data is isolated at the database level, not just hidden in the interface.",
+  },
+  {
+    icon: Store,
+    title: "Made for the counter",
+    body: "Fast on low-end phones, installable from the browser, readable at a glance.",
+  },
 ]
 
 export function About() {

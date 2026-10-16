@@ -9,22 +9,46 @@ export const metadata: Metadata = {
 }
 
 const values = [
-  { icon: HeartHandshake, title: "Respect the relationship", body: "Credit at the corner store is built on trust between neighbors. Our tools protect that trust instead of replacing it." },
-  { icon: Coins, title: "Every cent counts", body: "Small margins leave no room for rounding errors. Every balance is exact, every time." },
-  { icon: Sparkles, title: "Simple beats clever", body: "If it takes a manual to sell on credit, we failed. Every screen is designed to be used at a busy counter." },
-  { icon: KeyRound, title: "Your data is yours", body: "Each store owns its records. We never sell them, and no other store can see them." },
+  {
+    icon: HeartHandshake,
+    title: "Respect the relationship",
+    body: "Credit at the corner store is built on trust between neighbors. Our tools protect that trust instead of replacing it.",
+  },
+  {
+    icon: Coins,
+    title: "Every cent counts",
+    body: "Small margins leave no room for rounding errors. Every balance is exact, every time.",
+  },
+  {
+    icon: Sparkles,
+    title: "Simple beats clever",
+    body: "If it takes a manual to sell on credit, we failed. Every screen is designed to be used at a busy counter.",
+  },
+  {
+    icon: KeyRound,
+    title: "Your data is yours",
+    body: "Each store owns its records. We never sell them, and no other store can see them.",
+  },
 ]
 
 const roadmap = [
   {
     stage: "Now",
     title: "The digital ledger",
-    items: ["Customer profiles and payment history", "Inventory with low-stock alerts", "Credit sales with installments and partial payments"],
+    items: [
+      "Customer profiles and payment history",
+      "Inventory with low-stock alerts",
+      "Credit sales with installments and partial payments",
+    ],
   },
   {
     stage: "Next",
     title: "Anywhere, any signal",
-    items: ["Installable app for any phone", "Offline mode with automatic sync", "Reports on portfolio, overdue accounts and cash flow"],
+    items: [
+      "Installable app for any phone",
+      "Offline mode with automatic sync",
+      "Reports on portfolio, overdue accounts and cash flow",
+    ],
   },
   {
     stage: "Later",
@@ -56,8 +80,8 @@ export default function AboutPage() {
             <div>
               <p className="eyebrow">Where the name comes from</p>
               <p className="mt-3 text-xl leading-relaxed text-marron/80">
-                In Panama, buying <em>fiao</em> means taking it now and paying later. No paperwork, just a name written in
-                the store&apos;s notebook. FIA&apos;O keeps that tradition and gives it the tools it never had.
+                In Panama, buying <em>fiao</em> means taking it now and paying later. No paperwork, just a name written
+                in the store&apos;s notebook. FIA&apos;O keeps that tradition and gives it the tools it never had.
               </p>
             </div>
           </div>
@@ -67,8 +91,16 @@ export default function AboutPage() {
       {/* Mission and vision */}
       <section className="container-x grid gap-6 pb-24 md:grid-cols-2">
         {[
-          { icon: Compass, label: "Mission", text: "Give every small store the same control over credit that large retailers have, with a tool anyone can use on the phone they already own." },
-          { icon: Eye, label: "Vision", text: "A Panama where selling on credit is a growth tool for small businesses, not a risk they carry alone." },
+          {
+            icon: Compass,
+            label: "Mission",
+            text: "Give every small store the same control over credit that large retailers have, with a tool anyone can use on the phone they already own.",
+          },
+          {
+            icon: Eye,
+            label: "Vision",
+            text: "A Panama where selling on credit is a growth tool for small businesses, not a risk they carry alone.",
+          },
         ].map(({ icon, label, text }) => (
           <div key={label} className="rounded-3xl border border-marron/10 p-8 sm:p-10">
             <IconTile icon={icon} />
@@ -87,7 +119,9 @@ export default function AboutPage() {
             {values.map(({ icon, title, body }, i) => (
               <div key={title} className="bg-white p-8">
                 <div className="flex items-center gap-4">
-                  <span className="font-display text-sm font-semibold tabular-nums text-rojo">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-display text-sm font-semibold tabular-nums text-rojo">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <IconTile icon={icon} />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-semibold">{title}</h3>
@@ -104,7 +138,10 @@ export default function AboutPage() {
         <h2 className="section-title mt-3 max-w-2xl">Where we are and where we&apos;re going.</h2>
         <ol className="mt-14 grid gap-6 lg:grid-cols-3">
           {roadmap.map((step, i) => (
-            <li key={step.stage} className={`relative rounded-3xl p-8 ${i === 0 ? "glass ring-1 ring-rojo/20" : "border border-marron/10"}`}>
+            <li
+              key={step.stage}
+              className={`relative rounded-3xl p-8 ${i === 0 ? "glass ring-1 ring-rojo/20" : "border border-marron/10"}`}
+            >
               <span
                 className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${
                   i === 0 ? "bg-rojo text-white" : "bg-marron/[0.06] text-marron/70"

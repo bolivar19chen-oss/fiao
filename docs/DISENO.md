@@ -2,13 +2,13 @@
 
 ## Paleta de colores
 
-| Rol | Hex | Uso |
-|---|---|---|
-| Rojo principal | `#b91c1c` | Acciones principales, botones, marca |
-| Amarillo | `#ffbf32` | Elementos destacados, acentos, detalles de marca |
-| Crema | `#fef3c7` | Acentos suaves, resplandor del globo |
-| Blanco | `#ffffff` | Fondo general |
-| Marron oscuro | `#482d1f` | Texto y jerarquia tipografica |
+| Rol            | Hex       | Uso                                              |
+| -------------- | --------- | ------------------------------------------------ |
+| Rojo principal | `#b91c1c` | Acciones principales, botones, marca             |
+| Amarillo       | `#ffbf32` | Elementos destacados, acentos, detalles de marca |
+| Crema          | `#fef3c7` | Acentos suaves, resplandor del globo             |
+| Blanco         | `#ffffff` | Fondo general                                    |
+| Marron oscuro  | `#482d1f` | Texto y jerarquia tipografica                    |
 
 Pendientes de definir (el poster los menciona sin valor):
 

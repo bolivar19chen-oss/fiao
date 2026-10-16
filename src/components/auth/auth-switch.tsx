@@ -39,7 +39,14 @@ export function AuthSwitch() {
             <h2 className={s.title}>Create account</h2>
             <Field icon={UserRound} label="Your name" type="text" name="name" autoComplete="name" />
             <Field icon={Mail} label="Email" type="email" name="email" autoComplete="email" />
-            <Field icon={Lock} label="Password (8+ characters)" type="password" name="password" autoComplete="new-password" minLength={8} />
+            <Field
+              icon={Lock}
+              label="Password (8+ characters)"
+              type="password"
+              name="password"
+              autoComplete="new-password"
+              minLength={8}
+            />
             <button type="submit" className={s.submit}>
               Sign up
             </button>
