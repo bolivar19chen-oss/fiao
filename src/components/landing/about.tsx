@@ -1,5 +1,6 @@
 import { Check, Lock, Store } from "lucide-react"
 import { IconTile } from "@/components/ui/icon-tile"
+import { SectionHeading } from "@/components/ui/section-heading"
 
 const principles = [
   { icon: Check, title: "Exact to the cent", body: "Every amount is stored as whole cents. No rounding drift, ever." },
@@ -9,27 +10,21 @@ const principles = [
 
 export function About() {
   return (
-    <section id="about" className="container-x grid gap-14 py-28 lg:grid-cols-2">
-      <div>
-        <p className="eyebrow">About us</p>
-        <h2 className="section-title mt-3">The corner-store notebook, rebuilt.</h2>
-        <p className="mt-6 text-lg leading-relaxed text-marron/70">
+    <section id="about" className="container-x py-28">
+      <SectionHeading index="01" label="About us" title="The corner-store notebook, rebuilt.">
+        <p>
           In Panama, buying on credit at the neighborhood store is a tradition built on trust. It usually lives in a
-          paper notebook: easy to lose, hard to read and impossible to measure.
+          paper notebook: easy to lose, hard to read and impossible to measure. We keep the trust and replace the
+          notebook.
         </p>
-        <p className="mt-4 text-lg leading-relaxed text-marron/70">
-          We keep the trust and replace the notebook. FIA&apos;O gives small businesses the same control over credit
-          that large retailers have, without the complexity.
-        </p>
-      </div>
-      <div className="space-y-4">
-        {principles.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="flex gap-5 rounded-3xl border border-marron/10 p-6 transition hover:border-rojo/25 hover:shadow-[0_18px_40px_-24px_rgb(185_28_28/0.35)]">
-            <IconTile icon={Icon} />
-            <div>
-              <h3 className="font-display text-lg font-semibold">{title}</h3>
-              <p className="mt-1 text-marron/65">{body}</p>
-            </div>
+      </SectionHeading>
+
+      <div className="mt-16 grid gap-10 md:grid-cols-3 lg:ml-[240px]">
+        {principles.map(({ icon, title, body }) => (
+          <div key={title}>
+            <IconTile icon={icon} />
+            <h3 className="mt-5 font-display text-lg font-semibold">{title}</h3>
+            <p className="mt-2 leading-relaxed text-marron/65">{body}</p>
           </div>
         ))}
       </div>

@@ -1,48 +1,60 @@
 import Link from "next/link"
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowDownRight, ArrowRight, Check } from "lucide-react"
 import { Aurora } from "@/components/ui/aurora"
 import { ScoreRing } from "@/components/ui/score-ring"
+import { provinces, totalStores } from "@/data/panama"
 import { formatCents } from "@/lib/format"
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden pb-24 pt-32 sm:pt-40">
-      <Aurora />
-      <div className="container-x grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
-        <div>
-          <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-marron/80">
-            <span className="h-1.5 w-1.5 rounded-full bg-rojo" />
-            Built for Panama&apos;s corner stores
-          </span>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.04] tracking-tight text-marron sm:text-6xl lg:text-7xl">
-            Credit sales,
-            <br />
-            <span className="text-rojo">finally under control.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-marron/70">
-            FIA&apos;O turns the store notebook into a secure ledger: inventory, credit sales, payment history and a
-            credit score for every customer, on any phone.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/login" className="btn btn-glass-red h-12 px-6 text-[15px]">
-              Get started
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-            <Link href="/#services" className="btn btn-glass h-12 px-6 text-[15px]">
-              Explore services
-            </Link>
-          </div>
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-marron/65">
-            {["Works offline", "Installs on any phone", "Data isolated per store"].map((item) => (
-              <li key={item} className="inline-flex items-center gap-2">
-                <Check className="h-4 w-4 text-rojo" strokeWidth={2.5} aria-hidden />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
+    <section className="px-3 pt-3">
+      {/* Panel con bordes redondeados y margen: el hero se lee como una pieza propia. */}
+      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-[#fff8ea] to-white pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
+        <Aurora />
+        <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
+          <div>
+            <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-marron/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-rojo" />
+              Built for Panama&apos;s corner stores
+            </span>
+            <h1 className="mt-7 font-display text-5xl leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-[5.4rem]">
+              <span className="font-light text-marron">Credit sales,</span>
+              <br />
+              <span className="font-semibold text-rojo">finally under control.</span>
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-marron/70">
+              FIA&apos;O turns the store notebook into a secure ledger: inventory, credit sales, payment history and a
+              credit score for every customer, on any phone.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href="/login" className="btn btn-glass-red h-12 px-6 text-[15px]">
+                Get started
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link href="/services" className="btn btn-glass h-12 px-6 text-[15px]">
+                Explore services
+              </Link>
+            </div>
 
-        <HeroPreview />
+            <div className="mt-12 flex flex-wrap items-end gap-x-10 gap-y-6">
+              <div>
+                <ArrowDownRight className="h-5 w-5 text-rojo" strokeWidth={1.75} aria-hidden />
+                <div className="mt-1 font-display text-5xl font-light tabular-nums tracking-[-0.04em]">{totalStores}</div>
+                <div className="mt-1 text-sm text-marron/60">Food stores registered across {provinces.length} provinces</div>
+              </div>
+              <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/65">
+                {["Works offline", "Installs on any phone", "Data isolated per store"].map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-rojo" strokeWidth={2.5} aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <HeroPreview />
+        </div>
       </div>
     </section>
   )

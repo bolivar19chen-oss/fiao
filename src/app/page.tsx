@@ -5,17 +5,30 @@ import { Hero } from "@/components/landing/hero"
 import { KpiBand } from "@/components/landing/kpi-band"
 import { Market } from "@/components/landing/market"
 import { Services } from "@/components/landing/services"
+import { Reveal } from "@/components/ui/reveal"
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <KpiBand />
-      <About />
-      <Services />
-      <Market />
-      <Coverage />
-      <Cta />
+      <Reveal>
+        <KpiBand />
+      </Reveal>
+      <Reveal>
+        <About />
+      </Reveal>
+      <Reveal>
+        <Services />
+      </Reveal>
+      <Reveal>
+        <Market />
+      </Reveal>
+      <Reveal>
+        <Coverage />
+      </Reveal>
+      <Reveal>
+        <Cta />
+      </Reveal>
     </main>
   )
 }
