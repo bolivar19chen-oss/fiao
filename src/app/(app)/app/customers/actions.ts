@@ -14,6 +14,7 @@ export async function createCustomer(_prev: FormState, formData: FormData): Prom
   if (!name) return { error: "Enter the customer's name." }
   if (name.length > 120) return { error: "Keep the name under 120 characters." }
   if (phone && !/^[\d\s()+-]{6,20}$/.test(phone)) return { error: "Enter a valid phone number." }
+  if (notes.length > 500) return { error: "Keep the notes under 500 characters." }
 
   const supabase = await createClient()
   const { data, error } = await supabase
