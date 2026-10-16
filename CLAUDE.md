@@ -9,13 +9,17 @@ Aplicacion en TypeScript: Next.js 15 (App Router) + Tailwind en el frontend, Sup
 Functions en el backend, Supabase/PostgreSQL con RLS como base de datos, Recharts para
 graficas, Vitest + Playwright + Testing Library para pruebas.
 
-Motor financiero en Python, en `engine/`: intereses, verificacion de saldos y puntaje de
-credito. Es **puro y sin estado**: no toca la base de datos ni conoce al usuario. Contrato
-en [docs/MOTOR-FINANCIERO.md](docs/MOTOR-FINANCIERO.md), decision en
-[ADR 0004](docs/adr/0004-motor-financiero-python.md).
+El calculo de credito (intereses, saldos, estados, puntaje) va en `src/lib/credit/`, en
+TypeScript, como modulo puro: sin base de datos, sin leer el reloj, sin dependencias. La
+fecha entra como argumento. Reglas en [docs/MODELO-CREDITO.md](docs/MODELO-CREDITO.md).
+
+Python vive en `tools/`, fuera del camino de ejecucion: un oraculo que verifica ese
+calculo en CI y un generador de datos de demostracion. Nunca se importa desde `src/`.
+Ver [docs/HERRAMIENTAS-PYTHON.md](docs/HERRAMIENTAS-PYTHON.md).
 
 No agregar mas lenguajes ni servicios. Java, Spring Boot y C++ quedaron descartados a
-proposito; el motivo esta en PLAN.md seccion 2.2 y en [ADR 0003](docs/adr/0003-sin-cpp.md).
+proposito: PLAN.md seccion 2.2, [ADR 0003](docs/adr/0003-sin-cpp.md) y
+[ADR 0005](docs/adr/0005-calculo-en-typescript-python-como-herramienta.md).
 
 ## Reglas innegociables
 
