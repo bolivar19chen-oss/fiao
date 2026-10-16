@@ -16,7 +16,8 @@ export default async function DashboardPage() {
 
   // Sin agregados en PostgREST: se traen solo las filas con saldo y se suman aca, en
   // centavos enteros.
-  const [{ data: openSales }, { data: weekPayments }] = await Promise.all([
+  const [{ count: salesCount }, { data: openSales }, { data: weekPayments }] = await Promise.all([
+    supabase.from("sales").select("id", { count: "exact", head: true }).eq("business_id", business.id),
     supabase.from("sales").select("customer_id, balance_cents").eq("business_id", business.id).gt("balance_cents", 0),
     supabase.from("payments").select("amount_cents").eq("business_id", business.id).gte("paid_at", since),
   ])
@@ -36,7 +37,7 @@ export default async function DashboardPage() {
         <Stat label="Customers with debt" value={formatCount(debtors)} />
         <Stat label="Collected this week" value={formatCents(collected)} note="Payments in the last 7 days" />
       </div>
-      {portfolio === 0 && (
+      {salesCount === 0 && (
         <Card className="mt-4">
           <CardTitle>Getting started</CardTitle>
           <EmptyState

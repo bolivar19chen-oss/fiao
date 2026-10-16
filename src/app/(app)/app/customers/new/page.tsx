@@ -13,7 +13,13 @@ export default function NewCustomerPage() {
         <ActionForm action={createCustomer} submitLabel="Save customer" pendingLabel="Saving...">
           <Field label="Name" name="name" required maxLength={120} autoComplete="off" />
           <Field label="Phone" name="phone" type="tel" inputMode="tel" autoComplete="off" hint="Optional" />
-          <Field label="Notes" name="notes" autoComplete="off" hint="Optional. For example, where they live." />
+          <Field
+            label="Notes"
+            name="notes"
+            maxLength={500}
+            autoComplete="off"
+            hint="Optional. For example, where they live."
+          />
         </ActionForm>
       </Card>
     </div>

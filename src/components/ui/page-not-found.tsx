@@ -15,7 +15,7 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
-export default function NotFoundPage() {
+export function NotFoundPage() {
   return (
     <div className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-rojo">
       <CircleAnimation />
