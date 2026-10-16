@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
-import { CookieNotice } from "@/components/layout/cookie-notice"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -24,10 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" translate="no">
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
-        {children}
-        <CookieNotice />
-      </body>
+      {/*
+        CookieNotice NO va aca. Un componente cliente en el layout raiz, junto con el
+        not-found.tsx raiz, rompe el build de produccion:
+        "Invariant: no direct app page entry found for /_not-found".
+        Verificado aislandolo: sin el, el build pasa. Vive en los layouts de grupo.
+      */}
+      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>{children}</body>
     </html>
   )
 }

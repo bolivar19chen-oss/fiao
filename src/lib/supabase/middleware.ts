@@ -40,7 +40,10 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/onboarding/")
 
   if (!signedIn && isProtected) return redirect(request, response, "/login")
-  if (signedIn && pathname === "/login") return redirect(request, response, "/app")
+  // A /onboarding y no a /app: es la unica pagina que sabe enrutar por rol, y aca no se
+  // puede saber cual es sin consultar la base. Mandar a /app hacia que un cliente diera
+  // tres saltos (/app -> /onboarding -> /me) antes de llegar.
+  if (signedIn && pathname === "/login") return redirect(request, response, "/onboarding")
 
   return response
 }

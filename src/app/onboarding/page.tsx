@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { Logo } from "@/components/layout/logo"
 import { Aurora } from "@/components/ui/aurora"
+import { getCurrentBusiness } from "@/lib/business"
 import { getCurrentProfile } from "@/lib/profile"
 import { createClient } from "@/lib/supabase/server"
 import { OnboardingFlow } from "./onboarding-flow"
@@ -11,7 +12,14 @@ export const metadata: Metadata = { title: "Welcome - FIA'O" }
 export default async function OnboardingPage() {
   // Quien ya eligio rol no vuelve a ver la tarjeta.
   const profile = await getCurrentProfile()
-  if (profile) redirect(profile.role === "business" ? "/app" : "/me")
+  if (profile?.role === "customer") redirect("/me")
+
+  // El perfil de negocio solo sale de aca si ademas TIENE negocio. Sin esta condicion
+  // hay un bucle sin salida: (app) manda aca por no tener negocio y aca se devolvia a
+  // /app por tener perfil. El perfil huerfano es alcanzable (ver la migracion
+  // 20261016231500), y en ese caso lo que corresponde es volver a mostrar el formulario:
+  // complete_business_onboarding es reentrante y lo completa sin duplicar nada.
+  if (profile?.role === "business" && (await getCurrentBusiness())) redirect("/app")
 
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()
