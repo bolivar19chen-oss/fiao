@@ -10,10 +10,26 @@
 | Blanco         | `#ffffff` | Fondo general                                    |
 | Marron oscuro  | `#482d1f` | Texto y jerarquia tipografica                    |
 
-Pendientes de definir (el poster los menciona sin valor):
+## Colores de estado
 
-- Verde: pagos completados / estado al dia.
-- Rojo oscuro: alertas y mora.
+Reservados para estado de cuenta. **Nunca se reutilizan como color de serie en un
+grafico.** El poster los mencionaba sin valor; estos salen de validar la paleta con el
+script de la guia de visualizacion, no de elegirlos a ojo.
+
+| Estado     | Claro     | Oscuro    | Uso                       |
+| ---------- | --------- | --------- | ------------------------- |
+| Al dia     | `#047857` | `#059669` | Pagado, cuenta sin atraso |
+| Por vencer | `#d97706` | `#c08309` | Cuota proxima a vencer    |
+| En mora    | `#b91c1c` | `#f43f5e` | Atraso pasada la gracia   |
+
+Dos hallazgos de esa validacion, y los dos cambian como se dibuja:
+
+- **El amarillo de marca `#ffbf32` no sirve como relleno de grafico.** Contraste 1.6:1
+  sobre blanco, muy por debajo del minimo de 3:1. Queda para acentos de marca, nunca para
+  un dato.
+- **En modo oscuro, ambar y rojo no se separan lo suficiente para daltonismo** dentro de
+  la banda de luminosidad que exige el fondo oscuro. Es una restriccion geometrica, no una
+  mala eleccion. Por eso **todo estado va siempre con icono y etiqueta, jamas solo color**.
 
 ## Tipografia
 
