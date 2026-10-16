@@ -1,0 +1,38 @@
+# Documentacion de FIA'O
+
+Indice. Si llegaste aca sin contexto, lee en este orden.
+
+## Empezar por aca
+
+| Documento | Que es |
+|---|---|
+| [../CLAUDE.md](../CLAUDE.md) | Reglas de trabajo, stack y convenciones. Se lee solo al abrir el proyecto |
+| [PLAN.md](PLAN.md) | El plan completo: modulos, stack, 27 semanas, riesgos |
+| **[FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)** | **El trabajo que viene ahora.** Auth, rutas y pantallas |
+
+## Reglas del producto
+
+| Documento | Que es |
+|---|---|
+| [MODELO-CREDITO.md](MODELO-CREDITO.md) | Intereses, libro inmutable, idempotencia, estados y cambios de schema |
+| [DISENO.md](DISENO.md) | Paleta, tipografia y criterios de interfaz |
+| [HERRAMIENTAS-PYTHON.md](HERRAMIENTAS-PYTHON.md) | El oraculo de verificacion y el generador de datos de demo |
+
+## Decisiones de arquitectura
+
+Una por decision que cambia el rumbo. Se leen para entender **por que** algo es como es,
+antes de proponer cambiarlo.
+
+| ADR | Decision | Estado |
+|---|---|---|
+| [0001](adr/0001-next-15.md) | Next.js 15 en lugar de 14 | Aceptado |
+| [0002](adr/0002-credito-por-tienda.md) | Credito por tienda, no buro nacional | Aceptado |
+| [0003](adr/0003-sin-cpp.md) | Sin C++ ni modulo nativo | Aceptado |
+| [0004](adr/0004-motor-financiero-python.md) | Motor financiero como servicio Python | **Superado por 0005** |
+| [0005](adr/0005-calculo-en-typescript-python-como-herramienta.md) | Calculo en TypeScript; Python como oraculo | Aceptado |
+
+## Superado
+
+| Documento | Por que sigue aca |
+|---|---|
+| [MOTOR-FINANCIERO.md](MOTOR-FINANCIERO.md) | El contrato HTTP ya no aplica. Sus reglas de dominio y su lista de pruebas se trasladan al modulo TypeScript |
