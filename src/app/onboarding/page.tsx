@@ -2,26 +2,26 @@ import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { Logo } from "@/components/layout/logo"
 import { Aurora } from "@/components/ui/aurora"
-import { getCurrentBusiness } from "@/lib/business"
-import { OnboardingForm } from "./onboarding-form"
+import { getCurrentProfile } from "@/lib/profile"
+import { createClient } from "@/lib/supabase/server"
+import { OnboardingFlow } from "./onboarding-flow"
 
-export const metadata: Metadata = { title: "Set up your store - FIA'O" }
+export const metadata: Metadata = { title: "Welcome - FIA'O" }
 
 export default async function OnboardingPage() {
-  if (await getCurrentBusiness()) redirect("/app")
+  // Quien ya eligio rol no vuelve a ver la tarjeta.
+  const profile = await getCurrentProfile()
+  if (profile) redirect(profile.role === "business" ? "/app" : "/me")
+
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getClaims()
+  const email = (data?.claims.email as string | undefined) ?? ""
 
   return (
-    <main className="relative isolate flex min-h-[100dvh] items-center justify-center overflow-hidden px-4 py-16">
+    <main className="relative isolate flex min-h-[100dvh] flex-col items-center overflow-hidden px-4 py-14">
       <Aurora />
-      <div className="glass w-full max-w-md rounded-[2rem] p-8 sm:p-10">
-        <Logo />
-        <p className="eyebrow mt-8">Welcome</p>
-        <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-marron">Name your store</h1>
-        <p className="mt-2 text-[15px] text-marron/70">
-          This is how your store shows up in FIA&apos;O. You can change it later in Settings.
-        </p>
-        <OnboardingForm />
-      </div>
+      <Logo className="mb-10" />
+      <OnboardingFlow email={email} />
     </main>
   )
 }

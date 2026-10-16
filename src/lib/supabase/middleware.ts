@@ -31,7 +31,13 @@ export async function updateSession(request: NextRequest) {
   const signedIn = Boolean(data?.claims)
 
   const { pathname } = request.nextUrl
-  const isProtected = pathname === "/app" || pathname.startsWith("/app/") || pathname === "/onboarding"
+  const isProtected =
+    pathname === "/app" ||
+    pathname.startsWith("/app/") ||
+    pathname === "/me" ||
+    pathname.startsWith("/me/") ||
+    pathname === "/onboarding" ||
+    pathname.startsWith("/onboarding/")
 
   if (!signedIn && isProtected) return redirect(request, response, "/login")
   if (signedIn && pathname === "/login") return redirect(request, response, "/app")
