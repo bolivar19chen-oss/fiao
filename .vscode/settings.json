@@ -5,10 +5,11 @@
   "material-icon-theme.folders.customClones": [
     { "name": "fiao-src", "base": "src", "color": "#A7C7E7", "folderNames": ["src"] },
     { "name": "fiao-app", "base": "app", "color": "#C3B1E1", "folderNames": ["app"] },
-    { "name": "fiao-routes", "base": "routes", "color": "#D9CCF2", "folderNames": ["login", "privacy"] },
+    { "name": "fiao-routes", "base": "routes", "color": "#D9CCF2", "folderNames": ["login", "privacy", "about", "services"] },
     { "name": "fiao-components", "base": "components", "color": "#F8C8DC", "folderNames": ["components"] },
     { "name": "fiao-landing", "base": "components", "color": "#FFE5A8", "folderNames": ["landing"] },
     { "name": "fiao-layout", "base": "layout", "color": "#FFD3B6", "folderNames": ["layout"] },
+    { "name": "fiao-auth", "base": "secure", "color": "#F4C2C2", "folderNames": ["auth"] },
     { "name": "fiao-ui", "base": "ui", "color": "#B5EAD7", "folderNames": ["ui"] },
     { "name": "fiao-data", "base": "database", "color": "#FFDAC1", "folderNames": ["data"] },
     { "name": "fiao-lib", "base": "lib", "color": "#DCEDC1", "folderNames": ["lib"] },
