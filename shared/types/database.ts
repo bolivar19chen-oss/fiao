@@ -39,21 +39,105 @@ export type Database = {
       }
       businesses: {
         Row: {
+          address: string | null
+          corregimiento_code: string | null
           created_at: string
+          district_code: string | null
           id: string
+          legal_name: string | null
+          legal_rep_id: string | null
+          legal_rep_name: string | null
+          legal_structure: string | null
           name: string
+          operating_notice: string | null
+          province_code: string | null
+          ruc: string | null
+          ruc_dv: string | null
         }
         Insert: {
+          address?: string | null
+          corregimiento_code?: string | null
           created_at?: string
+          district_code?: string | null
           id?: string
+          legal_name?: string | null
+          legal_rep_id?: string | null
+          legal_rep_name?: string | null
+          legal_structure?: string | null
           name: string
+          operating_notice?: string | null
+          province_code?: string | null
+          ruc?: string | null
+          ruc_dv?: string | null
         }
         Update: {
+          address?: string | null
+          corregimiento_code?: string | null
           created_at?: string
+          district_code?: string | null
           id?: string
+          legal_name?: string | null
+          legal_rep_id?: string | null
+          legal_rep_name?: string | null
+          legal_structure?: string | null
           name?: string
+          operating_notice?: string | null
+          province_code?: string | null
+          ruc?: string | null
+          ruc_dv?: string | null
         }
         Relationships: []
+      }
+      customer_invites: {
+        Row: {
+          business_id: string
+          code_hash: string
+          created_at: string
+          created_by: string | null
+          customer_id: string
+          expires_at: string
+          id: string
+          redeemed_at: string | null
+          redeemed_by: string | null
+        }
+        Insert: {
+          business_id: string
+          code_hash: string
+          created_at?: string
+          created_by?: string | null
+          customer_id: string
+          expires_at: string
+          id?: string
+          redeemed_at?: string | null
+          redeemed_by?: string | null
+        }
+        Update: {
+          business_id?: string
+          code_hash?: string
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string
+          expires_at?: string
+          id?: string
+          redeemed_at?: string | null
+          redeemed_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_invites_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_invites_customer_id_business_id_fkey"
+            columns: ["customer_id", "business_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id", "business_id"]
+          },
+        ]
       }
       customers: {
         Row: {
@@ -64,6 +148,7 @@ export type Database = {
           name: string
           notes: string | null
           phone: string | null
+          user_id: string | null
         }
         Insert: {
           business_id: string
@@ -73,6 +158,7 @@ export type Database = {
           name: string
           notes?: string | null
           phone?: string | null
+          user_id?: string | null
         }
         Update: {
           business_id?: string
@@ -82,6 +168,7 @@ export type Database = {
           name?: string
           notes?: string | null
           phone?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -373,9 +460,55 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      complete_business_onboarding: {
+        Args: {
+          p_address: string
+          p_corregimiento_code: string
+          p_date_of_birth: string
+          p_district_code: string
+          p_full_name: string
+          p_legal_name: string
+          p_legal_rep_id: string
+          p_legal_rep_name: string
+          p_legal_structure: string
+          p_national_id: string
+          p_operating_notice: string
+          p_phone: string
+          p_province_code: string
+          p_ruc: string
+          p_ruc_dv: string
+          p_trade_name: string
+        }
+        Returns: string
+      }
       create_business: { Args: { p_name: string }; Returns: string }
+      create_customer_invite: {
+        Args: { p_customer_id: string; p_ttl_minutes?: number }
+        Returns: string
+      }
+      hash_invite_code: { Args: { p_code: string }; Returns: string }
+      is_customer: { Args: { p_customer_id: string }; Returns: boolean }
       is_member: { Args: { p_business_id: string }; Returns: boolean }
       is_owner: { Args: { p_business_id: string }; Returns: boolean }
+      is_sale_customer: { Args: { p_sale_id: string }; Returns: boolean }
+      redeem_customer_invite: { Args: { p_code: string }; Returns: string }
+      update_business_legal: {
+        Args: {
+          p_address: string
+          p_business_id: string
+          p_corregimiento_code: string
+          p_district_code: string
+          p_legal_name: string
+          p_legal_rep_id: string
+          p_legal_rep_name: string
+          p_legal_structure: string
+          p_operating_notice: string
+          p_province_code: string
+          p_ruc: string
+          p_ruc_dv: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
