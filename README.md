@@ -28,24 +28,24 @@ la instalacion global por npm no esta soportada y no figura en winget.
 
 ## Documentacion
 
-| Documento | Contenido |
-|---|---|
-| [docs/PLAN.md](docs/PLAN.md) | Plan tecnico completo: modulos, stack, hoja de ruta, riesgos |
-| [docs/DISENO.md](docs/DISENO.md) | Paleta, tipografia y criterios de interfaz |
-| [CLAUDE.md](CLAUDE.md) | Reglas de trabajo y convenciones de codigo |
+| Documento                        | Contenido                                                    |
+| -------------------------------- | ------------------------------------------------------------ |
+| [docs/PLAN.md](docs/PLAN.md)     | Plan tecnico completo: modulos, stack, hoja de ruta, riesgos |
+| [docs/DISENO.md](docs/DISENO.md) | Paleta, tipografia y criterios de interfaz                   |
+| [CLAUDE.md](CLAUDE.md)           | Reglas de trabajo y convenciones de codigo                   |
 
 ## Stack
 
-| Capa | Tecnologia |
-|---|---|
-| Frontend | Next.js 15 (App Router) + TypeScript + Tailwind CSS |
-| Backend | Supabase Edge Functions (TypeScript) |
-| Base de datos | Supabase (PostgreSQL + Auth + Row Level Security) |
-| Dinero | Enteros en centavos / decimal.js |
-| Graficas | Recharts |
-| Movil / offline | PWA (Workbox / next-pwa) |
-| CI/CD | GitHub Actions + Vercel |
-| Pruebas | Vitest + Playwright + Testing Library |
+| Capa            | Tecnologia                                          |
+| --------------- | --------------------------------------------------- |
+| Frontend        | Next.js 15 (App Router) + TypeScript + Tailwind CSS |
+| Backend         | Supabase Edge Functions (TypeScript)                |
+| Base de datos   | Supabase (PostgreSQL + Auth + Row Level Security)   |
+| Dinero          | Enteros en centavos / decimal.js                    |
+| Graficas        | Recharts                                            |
+| Movil / offline | PWA (Workbox / next-pwa)                            |
+| CI/CD           | GitHub Actions + Vercel                             |
+| Pruebas         | Vitest + Playwright + Testing Library               |
 
 Un solo lenguaje de punta a punta: TypeScript. El motivo esta en
 [docs/PLAN.md](docs/PLAN.md), seccion 2.

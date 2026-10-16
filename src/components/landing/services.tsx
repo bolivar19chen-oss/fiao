@@ -5,9 +5,15 @@ import { SectionHeading } from "@/components/ui/section-heading"
 const services = [
   { title: "Inventory", body: "Stock levels, product catalog and low-stock alerts before the shelf runs empty." },
   { title: "Credit sales", body: "Installment schedules and partial payments that add up to the cent." },
-  { title: "Credit score", body: "A transparent score for every customer, built from punctuality, debt ratio and history." },
+  {
+    title: "Credit score",
+    body: "A transparent score for every customer, built from punctuality, debt ratio and history.",
+  },
   { title: "Reports", body: "Portfolio, overdue accounts and cash flow in interactive dashboards." },
-  { title: "Works offline", body: "Keep selling without signal. Everything syncs and is validated once you are back online." },
+  {
+    title: "Works offline",
+    body: "Keep selling without signal. Everything syncs and is validated once you are back online.",
+  },
   { title: "Reminders", body: "Automatic payment reminders, so nobody has to chase customers." },
 ]
 

@@ -30,16 +30,16 @@ tecnica y el mayor valor diferencial: el motor de puntaje de credito y la capa P
 sincronizacion offline. El resto son funcionalidades de complejidad media o baja
 (principalmente CRUD con reglas de negocio).
 
-| Modulo | Descripcion | Complejidad |
-|---|---|---|
-| Autenticacion y multi-tenancy | Login/registro; cada negocio solo ve sus datos (RLS) | Media |
-| Clientes (CRM ligero) | CRUD de clientes e historial de compras y pagos | Baja |
-| Inventario | CRUD de productos, stock y alertas de bajo inventario | Media |
-| Ventas a credito | Registro de ventas, cronograma de pagos y abonos parciales | Media-Alta |
-| Motor de puntaje de credito | Algoritmo que pondera puntualidad, deuda y antiguedad | Alta |
-| Reportes y dashboards | Graficas interactivas: cartera, morosidad, flujo | Media |
-| PWA y offline | Instalable; cola de sincronizacion sin conexion | Alta |
-| Notificaciones | Recordatorios de pago (email, luego WhatsApp) | Media |
+| Modulo                        | Descripcion                                                | Complejidad |
+| ----------------------------- | ---------------------------------------------------------- | ----------- |
+| Autenticacion y multi-tenancy | Login/registro; cada negocio solo ve sus datos (RLS)       | Media       |
+| Clientes (CRM ligero)         | CRUD de clientes e historial de compras y pagos            | Baja        |
+| Inventario                    | CRUD de productos, stock y alertas de bajo inventario      | Media       |
+| Ventas a credito              | Registro de ventas, cronograma de pagos y abonos parciales | Media-Alta  |
+| Motor de puntaje de credito   | Algoritmo que pondera puntualidad, deuda y antiguedad      | Alta        |
+| Reportes y dashboards         | Graficas interactivas: cartera, morosidad, flujo           | Media       |
+| PWA y offline                 | Instalable; cola de sincronizacion sin conexion            | Alta        |
+| Notificaciones                | Recordatorios de pago (email, luego WhatsApp)              | Media       |
 
 ## 2. Reevaluacion del stack tecnologico
 
@@ -82,16 +82,16 @@ sistema: frontend, backend y funciones de datos. Esto maximiza la calidad del co
 el equipo puede producir: se comparten tipos entre capas, hay un solo entorno de pruebas,
 un solo linter y un solo pipeline de CI/CD.
 
-| Componente | Poster original | Recomendacion final | Motivo |
-|---|---|---|---|
-| Frontend | React + TS + Tailwind | Next.js 15 (App Router) + TS + Tailwind | Un solo proyecto con routing y server actions |
-| Backend | Java + Spring Boot | Supabase Edge Functions (TS) | Cero servidores; logica junto a los datos |
-| Base de datos | Supabase | Supabase (igual) | Postgres + Auth + RLS ya resuelto |
-| Calculo de dinero | Python + Pandas/NumPy | Enteros en centavos / decimal.js | Precision exacta, sin servicio extra |
-| Graficas | Plotly / Matplotlib | Recharts | Nativo de React, interactivo y ligero |
-| Movil / offline | PWA | PWA (Workbox / next-pwa) | Requisito del proyecto, se mantiene |
-| CI/CD y deploy | GitHub + Actions | GitHub Actions + Vercel | Deploy automatico casi sin configurar |
-| Pruebas | JUnit + Vitest + Postman | Vitest + Playwright + Testing Library | Un solo ecosistema de testing |
+| Componente        | Poster original          | Recomendacion final                     | Motivo                                        |
+| ----------------- | ------------------------ | --------------------------------------- | --------------------------------------------- |
+| Frontend          | React + TS + Tailwind    | Next.js 15 (App Router) + TS + Tailwind | Un solo proyecto con routing y server actions |
+| Backend           | Java + Spring Boot       | Supabase Edge Functions (TS)            | Cero servidores; logica junto a los datos     |
+| Base de datos     | Supabase                 | Supabase (igual)                        | Postgres + Auth + RLS ya resuelto             |
+| Calculo de dinero | Python + Pandas/NumPy    | Enteros en centavos / decimal.js        | Precision exacta, sin servicio extra          |
+| Graficas          | Plotly / Matplotlib      | Recharts                                | Nativo de React, interactivo y ligero         |
+| Movil / offline   | PWA                      | PWA (Workbox / next-pwa)                | Requisito del proyecto, se mantiene           |
+| CI/CD y deploy    | GitHub + Actions         | GitHub Actions + Vercel                 | Deploy automatico casi sin configurar         |
+| Pruebas           | JUnit + Vitest + Postman | Vitest + Playwright + Testing Library   | Un solo ecosistema de testing                 |
 
 ### 3.1 Decisiones tecnicas de calidad
 
@@ -117,27 +117,27 @@ Claude Code actua como copiloto del equipo: genera modulos completos con pruebas
 diffs y mantiene la coherencia arquitectonica. La regla de uso es pedir un modulo
 completo por sesion y revisar cada cambio antes de aceptarlo.
 
-| Fase | Semanas | Entregable |
-|---|---|---|
-| 0 - Setup y diseno | 1-2 | Repo, CLAUDE.md, schema de BD + politicas RLS, especificacion escrita del algoritmo de puntaje (ej.: 40% puntualidad, 30% ratio deuda, 20% antiguedad, 10% frecuencia; decaimiento por dias de atraso) |
-| 1 - Backend de datos | 2-4 | Migraciones + seed; Edge Functions `calculateCreditScore` y `registerPayment` (saldo y puntaje en la misma transaccion); tests del calculo de saldos y puntaje |
-| 2 - Core funcional | 4-11 | Auth y onboarding; CRUD de clientes y productos; flujo de venta a credito con cronograma; registro de abonos y estado de cuenta; dashboard principal (cartera, morosos, cobros de la semana) |
-| 3 - PWA y offline | 11-17 | Manifest, iconos y service worker (network-first con cache de respaldo); cola de operaciones offline con IndexedDB y tabla `pending_sync`; resolucion de conflictos validada del lado del servidor |
-| 4 - Reportes y pulido | 17-23 | Graficas Recharts (cartera, morosidad, top deudores); notificaciones por email; auditoria de calidad (Lighthouse >= 90, cobertura de tests, ADRs completados) |
-| 5 - Beta | 24-27 | 2-3 negocios reales usando el sistema; correccion de hallazgos; preparacion de la demo para la exposicion |
+| Fase                  | Semanas | Entregable                                                                                                                                                                                             |
+| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0 - Setup y diseno    | 1-2     | Repo, CLAUDE.md, schema de BD + politicas RLS, especificacion escrita del algoritmo de puntaje (ej.: 40% puntualidad, 30% ratio deuda, 20% antiguedad, 10% frecuencia; decaimiento por dias de atraso) |
+| 1 - Backend de datos  | 2-4     | Migraciones + seed; Edge Functions `calculateCreditScore` y `registerPayment` (saldo y puntaje en la misma transaccion); tests del calculo de saldos y puntaje                                         |
+| 2 - Core funcional    | 4-11    | Auth y onboarding; CRUD de clientes y productos; flujo de venta a credito con cronograma; registro de abonos y estado de cuenta; dashboard principal (cartera, morosos, cobros de la semana)           |
+| 3 - PWA y offline     | 11-17   | Manifest, iconos y service worker (network-first con cache de respaldo); cola de operaciones offline con IndexedDB y tabla `pending_sync`; resolucion de conflictos validada del lado del servidor     |
+| 4 - Reportes y pulido | 17-23   | Graficas Recharts (cartera, morosidad, top deudores); notificaciones por email; auditoria de calidad (Lighthouse >= 90, cobertura de tests, ADRs completados)                                          |
+| 5 - Beta              | 24-27   | 2-3 negocios reales usando el sistema; correccion de hallazgos; preparacion de la demo para la exposicion                                                                                              |
 
 El 65% del esfuerzo se concentra en el core funcional, la PWA y los reportes.
 
 ## 5. Riesgos y mitigacion
 
-| Riesgo | Impacto | Mitigacion |
-|---|---|---|
-| Sincronizacion offline con datos inconsistentes | Alto | Validar siempre del lado del servidor; conflictos por "ultimo escritor gana" + reglas de negocio en la Edge Function |
-| Errores de redondeo en dinero | Alto | Enteros en centavos en toda la cadena; tests de aritmetica monetaria obligatorios |
-| Algoritmo de puntaje dificil de explicar o defender | Medio | Especificacion escrita en la Fase 0, ponderaciones documentadas y suite de casos de prueba |
-| Scope creep (funciones extra a mitad de proyecto) | Medio | Congelar funcionalidades al cerrar la Fase 2; todo lo nuevo va a la Fase 5 o se descarta |
-| Dependencia excesiva de la IA generando deuda | Medio | Code review humano de cada diff; prohibido aceptar codigo que el equipo no sabe explicar |
-| Reparto desigual del trabajo en el equipo | Medio | Un modulo = un responsable; integracion semanal; tablero Kanban en GitHub Projects |
+| Riesgo                                              | Impacto | Mitigacion                                                                                                           |
+| --------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| Sincronizacion offline con datos inconsistentes     | Alto    | Validar siempre del lado del servidor; conflictos por "ultimo escritor gana" + reglas de negocio en la Edge Function |
+| Errores de redondeo en dinero                       | Alto    | Enteros en centavos en toda la cadena; tests de aritmetica monetaria obligatorios                                    |
+| Algoritmo de puntaje dificil de explicar o defender | Medio   | Especificacion escrita en la Fase 0, ponderaciones documentadas y suite de casos de prueba                           |
+| Scope creep (funciones extra a mitad de proyecto)   | Medio   | Congelar funcionalidades al cerrar la Fase 2; todo lo nuevo va a la Fase 5 o se descarta                             |
+| Dependencia excesiva de la IA generando deuda       | Medio   | Code review humano de cada diff; prohibido aceptar codigo que el equipo no sabe explicar                             |
+| Reparto desigual del trabajo en el equipo           | Medio   | Un modulo = un responsable; integracion semanal; tablero Kanban en GitHub Projects                                   |
 
 ## Conclusion
 

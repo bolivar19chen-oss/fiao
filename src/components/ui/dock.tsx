@@ -79,10 +79,7 @@ export function DockItem({ href, label, icon: Icon, active = false }: DockItemPr
     const rect = ref.current?.getBoundingClientRect()
     return rect ? x - rect.x - rect.width / 2 : Infinity
   })
-  const size = useSpring(
-    useTransform(offset, [-distance, 0, distance], [baseSize, magnification, baseSize]),
-    spring,
-  )
+  const size = useSpring(useTransform(offset, [-distance, 0, distance], [baseSize, magnification, baseSize]), spring)
   const iconSize = useTransform(size, (s) => s * 0.44)
 
   return (

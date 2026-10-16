@@ -10,11 +10,11 @@ cuotas y abonos, sin intereses. Este documento define lo que falta y por que.
 
 La fuente de verdad es el historial de movimientos, no el saldo. Tres origenes:
 
-| Movimiento | Tabla | Signo sobre el saldo |
-|---|---|---|
-| Venta a credito | `sales.total_cents` | Suma |
-| Interes devengado | `interest_charges` (nueva) | Suma |
-| Abono | `payments.amount_cents` | Resta |
+| Movimiento        | Tabla                      | Signo sobre el saldo |
+| ----------------- | -------------------------- | -------------------- |
+| Venta a credito   | `sales.total_cents`        | Suma                 |
+| Interes devengado | `interest_charges` (nueva) | Suma                 |
+| Abono             | `payments.amount_cents`    | Resta                |
 
 **Nada se borra ni se edita.** RLS deniega `update` y `delete` sobre `payments` e
 `interest_charges`. Un error se corrige con un movimiento de reversion: una fila nueva
@@ -80,11 +80,11 @@ corte corre dos veces, el segundo no duplica nada.
 Derivados, no almacenados. Guardar un estado que depende de la fecha de hoy obliga a un
 job que lo actualice y abre la puerta a que quede viejo.
 
-| Estado | Condicion |
-|---|---|
-| `NO_DEBT` | saldo = 0 |
+| Estado    | Condicion                                                    |
+| --------- | ------------------------------------------------------------ |
+| `NO_DEBT` | saldo = 0                                                    |
 | `CURRENT` | saldo > 0 y ninguna cuota vencida pasados los dias de gracia |
-| `OVERDUE` | al menos una cuota vencida pasados los dias de gracia |
+| `OVERDUE` | al menos una cuota vencida pasados los dias de gracia        |
 
 Se calculan en una vista de Postgres. En la UI van en ingles, igual que todo texto visible.
 

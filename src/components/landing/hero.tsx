@@ -39,8 +39,12 @@ export function Hero() {
             <div className="mt-12 flex flex-wrap items-end gap-x-10 gap-y-6">
               <div>
                 <ArrowDownRight className="h-5 w-5 text-rojo" strokeWidth={1.75} aria-hidden />
-                <div className="mt-1 font-display text-5xl font-light tabular-nums tracking-[-0.04em]">{totalStores}</div>
-                <div className="mt-1 text-sm text-marron/60">Food stores registered across {provinces.length} provinces</div>
+                <div className="mt-1 font-display text-5xl font-light tabular-nums tracking-[-0.04em]">
+                  {totalStores}
+                </div>
+                <div className="mt-1 text-sm text-marron/60">
+                  Food stores registered across {provinces.length} provinces
+                </div>
               </div>
               <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/65">
                 {["Works offline", "Installs on any phone", "Data isolated per store"].map((item) => (
@@ -74,7 +78,9 @@ function HeroPreview() {
         <div className="flex items-center justify-between">
           <div>
             <div className="text-xs font-medium uppercase tracking-wider text-marron/50">Outstanding credit</div>
-            <div className="mt-1 font-display text-3xl font-semibold tabular-nums">{formatCents(rows.reduce((s, r) => s + r.cents, 0))}</div>
+            <div className="mt-1 font-display text-3xl font-semibold tabular-nums">
+              {formatCents(rows.reduce((s, r) => s + r.cents, 0))}
+            </div>
           </div>
           <span className="rounded-full bg-rojo/10 px-3 py-1 text-xs font-semibold text-rojo">This week</span>
         </div>

@@ -1,27 +1,27 @@
-import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter, Poppins } from "next/font/google"
+import { SiteFooter } from "@/components/layout/site-footer"
+import { SiteHeader } from "@/components/layout/site-header"
+import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "500", "600", "700"],
   variable: "--font-poppins",
-});
+})
 
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
   description: "Inventory, credit sales, payment history and customer credit scores for corner stores.",
   // UI siempre en ingles: evita que Chrome ofrezca o aplique traduccion automatica.
   other: { google: "notranslate" },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" translate="no">
@@ -31,5 +31,5 @@ export default function RootLayout({
         <SiteFooter />
       </body>
     </html>
-  );
+  )
 }

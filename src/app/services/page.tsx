@@ -20,18 +20,51 @@ export const metadata: Metadata = {
 }
 
 const steps = [
-  { title: "Add your customers", body: "Name and phone are enough. Each customer gets a profile with their full credit history." },
-  { title: "Sell on credit", body: "Record the sale, pick the products and set the installments. Stock updates on its own." },
-  { title: "Collect and grow", body: "Register payments as they come in. Balances and credit scores update instantly." },
+  {
+    title: "Add your customers",
+    body: "Name and phone are enough. Each customer gets a profile with their full credit history.",
+  },
+  {
+    title: "Sell on credit",
+    body: "Record the sale, pick the products and set the installments. Stock updates on its own.",
+  },
+  {
+    title: "Collect and grow",
+    body: "Register payments as they come in. Balances and credit scores update instantly.",
+  },
 ]
 
 const modules = [
-  { icon: UserRound, title: "Customers", points: ["Profiles with purchase and payment history", "Balance owed at a glance", "Notes for each customer"] },
-  { icon: Package, title: "Inventory", points: ["Product catalog with prices", "Stock that updates with every sale", "Low-stock alerts"] },
-  { icon: HandCoins, title: "Credit sales", points: ["Installment schedules", "Partial payments of any amount", "Account statements per customer"] },
-  { icon: ChartColumn, title: "Reports", points: ["Total credit outstanding", "Overdue accounts and top debtors", "Weekly collections"] },
-  { icon: WifiOff, title: "Offline mode", points: ["Keep selling without signal", "Automatic sync when back online", "Every change validated on the server"] },
-  { icon: BellRing, title: "Reminders", points: ["Payment reminders by email", "WhatsApp reminders on the roadmap", "You choose when they go out"] },
+  {
+    icon: UserRound,
+    title: "Customers",
+    points: ["Profiles with purchase and payment history", "Balance owed at a glance", "Notes for each customer"],
+  },
+  {
+    icon: Package,
+    title: "Inventory",
+    points: ["Product catalog with prices", "Stock that updates with every sale", "Low-stock alerts"],
+  },
+  {
+    icon: HandCoins,
+    title: "Credit sales",
+    points: ["Installment schedules", "Partial payments of any amount", "Account statements per customer"],
+  },
+  {
+    icon: ChartColumn,
+    title: "Reports",
+    points: ["Total credit outstanding", "Overdue accounts and top debtors", "Weekly collections"],
+  },
+  {
+    icon: WifiOff,
+    title: "Offline mode",
+    points: ["Keep selling without signal", "Automatic sync when back online", "Every change validated on the server"],
+  },
+  {
+    icon: BellRing,
+    title: "Reminders",
+    points: ["Payment reminders by email", "WhatsApp reminders on the roadmap", "You choose when they go out"],
+  },
 ]
 
 const factors = [
@@ -42,11 +75,26 @@ const factors = [
 ]
 
 const faqs = [
-  { q: "Do I need an internet connection?", a: "No. FIA'O keeps working offline and syncs your sales and payments when the connection comes back. The server validates every operation before saving it." },
-  { q: "Does it work on my phone?", a: "Yes. FIA'O runs in the browser and can be installed on any Android or iPhone, including low-end devices. No app store needed." },
-  { q: "Can other stores see my customers?", a: "No. Each store's data is isolated by the database itself, not just hidden by the app. Credit scores are never shared between stores." },
-  { q: "How exact are the balances?", a: "Every amount is stored as whole cents, so there are no rounding errors, no matter how many partial payments a customer makes." },
-  { q: "Can my employees use it?", a: "Yes. The owner can invite staff to the store, and each person logs in with their own account." },
+  {
+    q: "Do I need an internet connection?",
+    a: "No. FIA'O keeps working offline and syncs your sales and payments when the connection comes back. The server validates every operation before saving it.",
+  },
+  {
+    q: "Does it work on my phone?",
+    a: "Yes. FIA'O runs in the browser and can be installed on any Android or iPhone, including low-end devices. No app store needed.",
+  },
+  {
+    q: "Can other stores see my customers?",
+    a: "No. Each store's data is isolated by the database itself, not just hidden by the app. Credit scores are never shared between stores.",
+  },
+  {
+    q: "How exact are the balances?",
+    a: "Every amount is stored as whole cents, so there are no rounding errors, no matter how many partial payments a customer makes.",
+  },
+  {
+    q: "Can my employees use it?",
+    a: "Yes. The owner can invite staff to the store, and each person logs in with their own account.",
+  },
 ]
 
 export default function ServicesPage() {
@@ -66,7 +114,10 @@ export default function ServicesPage() {
       <section className="container-x pb-28">
         <p className="eyebrow text-center">How it works</p>
         <ol className="relative mt-10 grid gap-6 md:grid-cols-3">
-          <span className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-gradient-to-r from-rojo/30 via-amarillo/60 to-rojo/30 md:block" aria-hidden />
+          <span
+            className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-gradient-to-r from-rojo/30 via-amarillo/60 to-rojo/30 md:block"
+            aria-hidden
+          />
           {steps.map((step, i) => (
             <li key={step.title} className="relative text-center">
               <span className="btn-glass-red mx-auto grid h-14 w-14 place-items-center rounded-full font-display text-lg font-semibold">
@@ -107,7 +158,10 @@ export default function ServicesPage() {
 
       {/* Credit score */}
       <section className="relative isolate overflow-hidden py-28">
-        <div className="pointer-events-none absolute -left-24 top-1/3 -z-10 h-96 w-96 rounded-full bg-amarillo/25 blur-[110px]" aria-hidden />
+        <div
+          className="pointer-events-none absolute -left-24 top-1/3 -z-10 h-96 w-96 rounded-full bg-amarillo/25 blur-[110px]"
+          aria-hidden
+        />
         <div className="container-x grid items-center gap-14 lg:grid-cols-2">
           <div className="glass mx-auto flex w-full max-w-sm flex-col items-center rounded-[2rem] px-8 py-12 text-center">
             <ScoreRing score={82} className="h-44 w-44" />
@@ -143,7 +197,11 @@ export default function ServicesPage() {
       <section className="container-x pb-28">
         <div className="grid gap-5 md:grid-cols-3">
           {[
-            { icon: Smartphone, title: "Installs like an app", body: "Add FIA'O to the home screen straight from the browser." },
+            {
+              icon: Smartphone,
+              title: "Installs like an app",
+              body: "Add FIA'O to the home screen straight from the browser.",
+            },
             { icon: WifiOff, title: "Built for weak signal", body: "Fast on low-end phones and spotty connections." },
             { icon: ShieldCheck, title: "Secure by default", body: "Data isolation enforced by the database itself." },
           ].map(({ icon, title, body }) => (
@@ -167,7 +225,10 @@ export default function ServicesPage() {
             <details key={f.q} className="group px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold">
                 {f.q}
-                <ChevronDown className="h-5 w-5 shrink-0 text-rojo transition-transform group-open:rotate-180" aria-hidden />
+                <ChevronDown
+                  className="h-5 w-5 shrink-0 text-rojo transition-transform group-open:rotate-180"
+                  aria-hidden
+                />
               </summary>
               <p className="mt-3 leading-relaxed text-marron/70">{f.a}</p>
             </details>

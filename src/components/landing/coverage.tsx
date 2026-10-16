@@ -14,14 +14,19 @@ const markers: GlobeMarker[] = provinces.map((p) => ({
   label: p.id === hq.id ? `Panama · ${formatCount(totalStores)} stores` : undefined,
 }))
 
-const arcs: GlobeArc[] = provinces.filter((p) => p.id !== hq.id).map((p) => ({ id: `arc-${p.id}`, from: hq.location, to: p.location }))
+const arcs: GlobeArc[] = provinces
+  .filter((p) => p.id !== hq.id)
+  .map((p) => ({ id: `arc-${p.id}`, from: hq.location, to: p.location }))
 
 export function Coverage() {
   return (
     <section id="map" className="px-3">
       {/* Panel crema con bordes redondeados: cambio de ritmo antes del cierre. */}
       <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-[#fff8ea] py-24 ring-1 ring-marron/[0.06]">
-        <div className="pointer-events-none absolute left-1/4 top-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amarillo/30 blur-[120px]" aria-hidden />
+        <div
+          className="pointer-events-none absolute left-1/4 top-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amarillo/30 blur-[120px]"
+          aria-hidden
+        />
         <div className="container-x grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
           <Globe markers={markers} arcs={arcs} focus={hq.location} className="mx-auto w-full max-w-[560px]" />
           <div>
@@ -33,7 +38,8 @@ export function Coverage() {
               Panama&apos;s corner stores, on one map.
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-marron/70">
-              From Bocas del Toro to Darién, small stores carry the neighborhood economy. Each point is a province, sized by its registered stores. Drag the globe to explore.
+              From Bocas del Toro to Darién, small stores carry the neighborhood economy. Each point is a province,
+              sized by its registered stores. Drag the globe to explore.
             </p>
             <ul className="mt-8 grid grid-cols-2 gap-3">
               {provinces.slice(0, 6).map((p) => (

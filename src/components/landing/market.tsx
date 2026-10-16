@@ -20,16 +20,26 @@ export function Market() {
             <table className="w-full min-w-[34rem] text-left text-sm">
               <thead className="bg-marron/[0.03] text-xs uppercase tracking-wider text-marron/55">
                 <tr>
-                  <th scope="col" className="px-6 py-4 font-semibold">Province</th>
-                  <th scope="col" className="px-6 py-4 font-semibold">Stores</th>
-                  <th scope="col" className="px-6 py-4 text-right font-semibold">Share</th>
-                  <th scope="col" className="px-6 py-4 font-semibold">Top district</th>
+                  <th scope="col" className="px-6 py-4 font-semibold">
+                    Province
+                  </th>
+                  <th scope="col" className="px-6 py-4 font-semibold">
+                    Stores
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-right font-semibold">
+                    Share
+                  </th>
+                  <th scope="col" className="px-6 py-4 font-semibold">
+                    Top district
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-marron/[0.07]">
                 {provinces.map((p) => (
                   <tr key={p.id} className="transition hover:bg-amarillo/[0.07]">
-                    <th scope="row" className="px-6 py-3.5 font-medium">{p.province}</th>
+                    <th scope="row" className="px-6 py-3.5 font-medium">
+                      {p.province}
+                    </th>
                     <td className="px-6 py-3.5">
                       <div className="flex items-center gap-3">
                         <span className="w-9 tabular-nums">{formatCount(p.stores)}</span>
@@ -41,11 +51,14 @@ export function Market() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-3.5 text-right tabular-nums">{((p.stores / totalStores) * 100).toFixed(1)}%</td>
+                    <td className="px-6 py-3.5 text-right tabular-nums">
+                      {((p.stores / totalStores) * 100).toFixed(1)}%
+                    </td>
                     <td className="px-6 py-3.5 text-marron/70">
                       {p.topDistrict && (
                         <>
-                          {p.topDistrict.name} <span className="tabular-nums text-marron/45">({p.topDistrict.stores})</span>
+                          {p.topDistrict.name}{" "}
+                          <span className="tabular-nums text-marron/45">({p.topDistrict.stores})</span>
                         </>
                       )}
                     </td>

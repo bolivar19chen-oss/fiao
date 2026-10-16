@@ -129,11 +129,11 @@ hora: si lo hiciera, la misma entrada daria resultados distintos y las pruebas n
 
 ## Quien llama y cuando
 
-| Operacion | Quien la invoca | Cuando |
-|---|---|---|
-| `/accrue` | Trabajo de corte, en el servidor | Una vez al mes, por negocio |
-| `/balance/verify` | Pruebas y auditoria | En CI, y a pedido desde ajustes |
-| `/score` | Edge Function, tras registrar un abono | Al cambiar el historial del cliente |
+| Operacion         | Quien la invoca                        | Cuando                              |
+| ----------------- | -------------------------------------- | ----------------------------------- |
+| `/accrue`         | Trabajo de corte, en el servidor       | Una vez al mes, por negocio         |
+| `/balance/verify` | Pruebas y auditoria                    | En CI, y a pedido desde ajustes     |
+| `/score`          | Edge Function, tras registrar un abono | Al cambiar el historial del cliente |
 
 Next.js lee los datos bajo la sesion del usuario, llama al motor y **persiste el resultado
 el mismo**, dentro de la transaccion. El motor nunca escribe.
