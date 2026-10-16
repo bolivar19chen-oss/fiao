@@ -9,10 +9,19 @@ Mas control, menos riesgos, mas ventas.
 
 ## Estado
 
-Fase 0 (setup). Esqueleto Next.js 15 + React 19 + TypeScript + Tailwind con pnpm. Schema inicial de
-Supabase con RLS en `supabase/migrations/`.
+Fase 2 (estructura y flujo), ver [docs/FASE-2-ESTRUCTURA.md](docs/FASE-2-ESTRUCTURA.md): auth con
+Supabase, onboarding de negocio, shell de la aplicacion y rutas de clientes, inventario, ventas,
+reportes y ajustes. Schema con RLS en `supabase/migrations/`.
 
-Siguiente paso: especificacion escrita del algoritmo de puntaje.
+### Puesta en marcha
+
+1. `pnpm install`
+2. Copiar `.env.example` a `.env.local` y completar URL y anon key del proyecto Supabase
+   (Project Settings > API). Sin la key, el middleware falla en todas las paginas.
+3. `pnpm dev`
+
+Proyecto Supabase vinculado: `yqhbnyhdyulxtvpzlcnp`. Tras cambiar el schema:
+`pnpm supabase db push` y `pnpm gen:types` (regenera `shared/types/database.ts`).
 
 ### Entorno de desarrollo
 

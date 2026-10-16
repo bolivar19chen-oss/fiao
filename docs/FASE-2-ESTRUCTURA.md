@@ -47,10 +47,13 @@ Archivos a crear:
 | `src/lib/supabase/client.ts`     | `createBrowserClient` para componentes cliente              |
 | `src/lib/supabase/server.ts`     | `createServerClient` por request, con `getAll`/`setAll`     |
 | `src/lib/supabase/middleware.ts` | Refresco de sesion, usado por el middleware raiz            |
-| `middleware.ts` (raiz)           | Refresca sesion y protege `/app` y `/onboarding`            |
+| `src/middleware.ts`              | Refresca sesion y protege `/app` y `/onboarding`            |
 | `.env.example`                   | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
 
 Next 15: `cookies()` es asincrono, hay que `await`. Ver ADR 0001.
+
+Correccion: el middleware va en `src/middleware.ts`, no en la raiz. Con `src/app`, Next solo
+carga el de `src/` e ignora el de la raiz sin avisar.
 
 Nunca crear un cliente de servidor compartido entre requests: uno nuevo por render.
 
