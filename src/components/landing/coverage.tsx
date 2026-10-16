@@ -1,10 +1,11 @@
 import { MapPin } from "lucide-react"
 import { Globe, type GlobeArc, type GlobeMarker } from "@/components/landing/globe"
-import { SampleBadge } from "@/components/ui/sample-badge"
+import { SourceNote } from "@/components/ui/source-note"
 import { maxStores, provinces, totalStores } from "@/data/panama"
 import { formatCount } from "@/lib/format"
 
-const hq = provinces[0]
+// Ciudad de Panama: centro del globo y origen de los arcos.
+const hq = provinces.find((p) => p.id === "pa")!
 
 const markers: GlobeMarker[] = provinces.map((p) => ({
   id: p.id,
@@ -13,7 +14,7 @@ const markers: GlobeMarker[] = provinces.map((p) => ({
   label: p.id === hq.id ? `Panama · ${formatCount(totalStores)} stores` : undefined,
 }))
 
-const arcs: GlobeArc[] = provinces.slice(1).map((p) => ({ id: `arc-${p.id}`, from: hq.location, to: p.location }))
+const arcs: GlobeArc[] = provinces.filter((p) => p.id !== hq.id).map((p) => ({ id: `arc-${p.id}`, from: hq.location, to: p.location }))
 
 export function Coverage() {
   return (
@@ -23,9 +24,9 @@ export function Coverage() {
         <Globe markers={markers} arcs={arcs} focus={hq.location} className="mx-auto w-full max-w-[560px]" />
         <div>
           <p className="eyebrow">Coverage</p>
-          <h2 className="section-title mt-3">Every corner store in Panama, on one map.</h2>
+          <h2 className="section-title mt-3">Panama&apos;s corner stores, on one map.</h2>
           <p className="mt-5 text-lg leading-relaxed text-marron/70">
-            From Bocas del Toro to Darién, small stores carry the neighborhood economy. Drag the globe to explore.
+            From Bocas del Toro to Darién, small stores carry the neighborhood economy. Each point is a province, sized by its registered stores. Drag the globe to explore.
           </p>
           <ul className="mt-8 grid grid-cols-2 gap-3">
             {provinces.slice(0, 6).map((p) => (
@@ -38,9 +39,7 @@ export function Coverage() {
               </li>
             ))}
           </ul>
-          <div className="mt-4">
-            <SampleBadge />
-          </div>
+          <SourceNote className="mt-5" />
         </div>
       </div>
     </section>

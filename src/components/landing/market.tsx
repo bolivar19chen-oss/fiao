@@ -1,17 +1,18 @@
-import { CollectionChart } from "@/components/landing/collection-chart"
-import { SampleBadge } from "@/components/ui/sample-badge"
-import { maxStores, provinces } from "@/data/panama"
-import { formatCents, formatCount } from "@/lib/format"
+import { CategoryChart } from "@/components/landing/category-chart"
+import { SourceNote } from "@/components/ui/source-note"
+import { maxStores, provinces, totalStores } from "@/data/panama"
+import { formatCount } from "@/lib/format"
 
 export function Market() {
   return (
     <section id="market" className="container-x py-28">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="max-w-2xl">
-          <p className="eyebrow">Market</p>
-          <h2 className="section-title mt-3">The market at a glance.</h2>
-        </div>
-        <SampleBadge />
+      <div className="max-w-2xl">
+        <p className="eyebrow">Market</p>
+        <h2 className="section-title mt-3">The market at a glance.</h2>
+        <p className="mt-4 text-lg leading-relaxed text-marron/70">
+          {formatCount(totalStores)} food stores with a sanitary registration from the Ministry of Health, by province
+          and type of store.
+        </p>
       </div>
 
       <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
@@ -22,8 +23,8 @@ export function Market() {
                 <tr>
                   <th scope="col" className="px-6 py-4 font-semibold">Province</th>
                   <th scope="col" className="px-6 py-4 font-semibold">Stores</th>
-                  <th scope="col" className="px-6 py-4 text-right font-semibold">On credit</th>
-                  <th scope="col" className="px-6 py-4 text-right font-semibold">Avg. ticket</th>
+                  <th scope="col" className="px-6 py-4 text-right font-semibold">Share</th>
+                  <th scope="col" className="px-6 py-4 font-semibold">Top district</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-marron/[0.07]">
@@ -32,7 +33,7 @@ export function Market() {
                     <th scope="row" className="px-6 py-3.5 font-medium">{p.province}</th>
                     <td className="px-6 py-3.5">
                       <div className="flex items-center gap-3">
-                        <span className="w-12 tabular-nums">{formatCount(p.stores)}</span>
+                        <span className="w-9 tabular-nums">{formatCount(p.stores)}</span>
                         <span className="h-1.5 flex-1 rounded-full bg-marron/[0.06]">
                           <span
                             className="block h-full rounded-full bg-gradient-to-r from-rojo to-[#e04848]"
@@ -41,8 +42,14 @@ export function Market() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-3.5 text-right tabular-nums">{p.creditSharePct}%</td>
-                    <td className="px-6 py-3.5 text-right tabular-nums">{formatCents(p.avgTicketCents)}</td>
+                    <td className="px-6 py-3.5 text-right tabular-nums">{((p.stores / totalStores) * 100).toFixed(1)}%</td>
+                    <td className="px-6 py-3.5 text-marron/70">
+                      {p.topDistrict && (
+                        <>
+                          {p.topDistrict.name} <span className="tabular-nums text-marron/45">({p.topDistrict.stores})</span>
+                        </>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -51,21 +58,15 @@ export function Market() {
         </div>
 
         <div className="flex flex-col rounded-3xl border border-marron/10 p-6">
-          <h3 className="font-display text-lg font-semibold">Credit recovered with FIA&apos;O</h3>
-          <p className="mt-1 text-sm text-marron/60">Example store, last six months</p>
-          <div className="mt-4 flex gap-5 text-xs text-marron/65">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-rojo" /> Collected
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-amarillo" /> Outstanding
-            </span>
-          </div>
-          <div className="mt-4 min-h-[260px] flex-1">
-            <CollectionChart />
+          <h3 className="font-display text-lg font-semibold">Stores by type</h3>
+          <p className="mt-1 text-sm text-marron/60">Registered food stores across Panama</p>
+          <div className="mt-6 min-h-[260px] flex-1">
+            <CategoryChart />
           </div>
         </div>
       </div>
+
+      <SourceNote className="mt-5" />
     </section>
   )
 }
