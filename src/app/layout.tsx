@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
+import { CookieNotice } from "@/components/layout/cookie-notice"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -23,7 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" translate="no">
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+        {children}
+        <CookieNotice />
+      </body>
     </html>
   )
 }
