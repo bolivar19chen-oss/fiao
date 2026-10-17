@@ -1,23 +1,28 @@
 "use client"
 
-import { ArrowRight, LoaderCircle, Store } from "lucide-react"
+import { ArrowLeft, ArrowRight, LoaderCircle, Store } from "lucide-react"
 import Link from "next/link"
 import { useActionState } from "react"
-import { redeemInvite, type FormState } from "../actions"
+import { redeemInvite, type FormState } from "@/app/onboarding/actions"
 
 export function InviteForm() {
   const [state, action, pending] = useActionState<FormState, FormData>(redeemInvite, null)
 
   return (
     <div className="glass w-full max-w-md rounded-[2rem] p-8">
-      <span className="grid h-12 w-12 place-items-center rounded-2xl bg-crema text-marron">
+      <Link href="/me" className="flex items-center gap-1.5 text-sm font-medium text-marron/60 hover:text-marron">
+        <ArrowLeft className="h-4 w-4" aria-hidden />
+        My accounts
+      </Link>
+
+      <span className="mt-6 grid h-12 w-12 place-items-center rounded-2xl bg-crema text-marron">
         <Store className="h-6 w-6" aria-hidden />
       </span>
 
-      <p className="eyebrow mt-6">Almost there</p>
+      <p className="eyebrow mt-6">Link a shop</p>
       <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight text-marron">Enter your invite code</h1>
       <p className="mt-2 text-[15px] leading-relaxed text-marron/70">
-        Your shop gives you this code at the counter. It links your account to the notebook they already keep for you.
+        Ask for it at the counter, next time you shop. It links your account to the notebook they already keep for you.
       </p>
 
       <form action={action} aria-busy={pending} className="mt-7 space-y-4">
@@ -47,11 +52,8 @@ export function InviteForm() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-marron/60">
-        Don&apos;t have one yet?{" "}
-        <Link href="/me" className="font-medium text-rojo hover:underline">
-          Skip for now
-        </Link>
+      <p className="mt-6 text-center text-xs leading-relaxed text-marron/55">
+        No code yet? You can keep using FIA&apos;O without one. Shops hand them out at the counter.
       </p>
     </div>
   )
