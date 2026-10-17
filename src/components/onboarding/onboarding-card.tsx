@@ -43,8 +43,8 @@ export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactN
       className={[
         "relative h-36 w-full",
         tone === "red"
-          ? "bg-[radial-gradient(120%_140%_at_20%_0%,#cd2626_0%,#b91c1c_45%,#7f1d1d_100%)]"
-          : "bg-[radial-gradient(120%_140%_at_20%_0%,#fff8e6_0%,#fef3c7_45%,#ffbf32_100%)]",
+          ? "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.rojo.claro)_0%,theme(colors.rojo.DEFAULT)_45%,theme(colors.rojo.oscuro)_100%)]"
+          : "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.crema.claro)_0%,theme(colors.crema.DEFAULT)_45%,theme(colors.amarillo.DEFAULT)_100%)]",
       ].join(" ")}
     >
       <div

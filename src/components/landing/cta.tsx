@@ -10,7 +10,7 @@ export function Cta() {
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-80 w-80 rounded-full bg-[#7f1d1d] blur-[80px]"
+          className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-80 w-80 rounded-full bg-rojo-oscuro blur-[80px]"
           aria-hidden
         />
         <h2 className="mx-auto max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-white sm:text-5xl">

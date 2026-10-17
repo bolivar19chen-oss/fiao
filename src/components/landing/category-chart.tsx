@@ -1,9 +1,10 @@
 "use client"
 
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { BRAND, SERIE } from "@/lib/colors"
 import { categories } from "@/data/panama"
 
-const COLORS = ["#b91c1c", "#d64545", "#e0a21c", "#ffbf32", "#8a6a5a"]
+const COLORS = [...SERIE, BRAND.marron.claro]
 
 export function CategoryChart() {
   return (
@@ -25,14 +26,14 @@ export function CategoryChart() {
             borderRadius: 14,
             border: "1px solid rgb(72 45 31 / 0.1)",
             boxShadow: "0 12px 32px -12px rgb(72 45 31 / 0.25)",
-            color: "#482d1f",
+            color: BRAND.marron.DEFAULT,
           }}
         />
         <Bar dataKey="stores" radius={[0, 8, 8, 0]} barSize={22}>
           {categories.map((c, i) => (
             <Cell key={c.label} fill={COLORS[i % COLORS.length]} />
           ))}
-          <LabelList dataKey="stores" position="right" fill="#482d1f" fontSize={13} fontWeight={600} />
+          <LabelList dataKey="stores" position="right" fill={BRAND.marron.DEFAULT} fontSize={13} fontWeight={600} />
         </Bar>
       </BarChart>
     </ResponsiveContainer>
