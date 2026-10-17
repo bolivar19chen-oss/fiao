@@ -9,9 +9,14 @@ Mas control, menos riesgos, mas ventas.
 
 ## Estado
 
-Fase 2 (estructura y flujo), ver [docs/FASE-2-ESTRUCTURA.md](docs/FASE-2-ESTRUCTURA.md): auth con
-Supabase, onboarding de negocio, shell de la aplicacion y rutas de clientes, inventario, ventas,
-reportes y ajustes. Schema con RLS en `supabase/migrations/`.
+Hecho y verificado: auth con Supabase, onboarding de negocio y de cliente, shell de la
+aplicacion, rutas de clientes, inventario, ventas, reportes y ajustes, schema con RLS en
+`supabase/migrations/`, el motor de credito en `src/lib/credit/` y su oraculo Python en
+`tools/`.
+
+Falta: flujo de venta a credito desde la interfaz, migracion de intereses, PWA offline y
+Playwright. El estado verificado campo por campo esta en
+[docs/AUDITORIA.md](docs/AUDITORIA.md).
 
 ### Puesta en marcha
 
@@ -50,14 +55,15 @@ la instalacion global por npm no esta soportada y no figura en winget.
 | Frontend        | Next.js 15 (App Router) + TypeScript + Tailwind CSS |
 | Backend         | Supabase Edge Functions (TypeScript)                |
 | Base de datos   | Supabase (PostgreSQL + Auth + Row Level Security)   |
-| Dinero          | Enteros en centavos / decimal.js                    |
+| Dinero          | Enteros en centavos, sin librerias                  |
 | Graficas        | Recharts                                            |
 | Movil / offline | PWA (Workbox / next-pwa)                            |
 | CI/CD           | GitHub Actions + Vercel                             |
-| Pruebas         | Vitest + Playwright + Testing Library               |
+| Pruebas         | Vitest + Testing Library (Playwright: pendiente)    |
 
-Un solo lenguaje de punta a punta: TypeScript. El motivo esta en
-[docs/PLAN.md](docs/PLAN.md), seccion 2.
+La aplicacion entera es TypeScript. Python vive solo en `tools/`, fuera del camino de
+ejecucion: un oraculo que verifica el motor de credito en CI. Nunca se importa desde
+`src/`. Ver [ADR 0005](docs/adr/0005-calculo-en-typescript-python-como-herramienta.md).
 
 ## Modulos
 

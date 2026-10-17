@@ -15,8 +15,10 @@ Lo que hace falta ya esta instalado: `framer-motion` 12.43.0 y `lucide-react` 1.
 estilos salen de `.glass`, `.btn`, `.btn-glass`, `.btn-glass-red`, `.eyebrow` en
 `src/app/globals.css`.
 
-**Nombres de iconos:** en lucide-react 1.x **no existen** `Loader2` ni `Building2`. Son
-`LoaderCircle` y `Building`. Verificados en el paquete instalado: `Store`, `User`,
+**Nombres de iconos:** usar `LoaderCircle` y `Building`, que son los nombres actuales.
+(Correccion: una version previa de este documento afirmaba que `Loader2` y `Building2` no
+existen en lucide-react 1.x. Si existen; se comprobo contra el paquete instalado. Se
+prefieren los nombres nuevos, pero los viejos no rompen nada.) Verificados en el paquete: `Store`, `User`,
 `IdCard`, `Upload`, `LoaderCircle`, `ArrowLeft`, `ArrowRight`, `Check`, `CreditCard`,
 `Smartphone`, `Banknote`, `Camera`, `RefreshCw`.
 
