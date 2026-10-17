@@ -22,7 +22,7 @@ export function Coverage() {
   return (
     <section id="map" className="px-3">
       {/* Panel crema con bordes redondeados: cambio de ritmo antes del cierre. */}
-      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-[#fff8ea] py-24 ring-1 ring-marron/[0.06]">
+      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-crema-claro py-24 ring-1 ring-marron/[0.06]">
         <div
           className="pointer-events-none absolute left-1/4 top-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amarillo/30 blur-[120px]"
           aria-hidden

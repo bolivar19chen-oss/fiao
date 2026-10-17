@@ -1,19 +1,20 @@
 import type { Config } from "tailwindcss"
+import { BRAND, ESTADO } from "./src/lib/colors"
 
-// Paleta en docs/DISENO.md
+// Los valores no viven aca: vienen de src/lib/colors.ts, que es la fuente unica.
+// Asi el mismo color que usa una clase de Tailwind lo puede leer tambien un atributo de
+// SVG o una prop de Recharts, donde una clase no aplica.
+//
+// Antes de esto habia 14 valores sueltos en 8 archivos, con dos cremas casi iguales
+// (#fff8ea y #fff8e6) que nadie habia notado.
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        rojo: "#b91c1c",
-        amarillo: "#ffbf32",
-        crema: "#fef3c7",
-        marron: "#482d1f",
-      },
+      colors: { ...BRAND, estado: ESTADO },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
         display: ["var(--font-poppins)", "sans-serif"],
+        sans: ["var(--font-inter)", "sans-serif"],
       },
     },
   },

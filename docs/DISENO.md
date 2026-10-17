@@ -10,6 +10,24 @@
 | Blanco         | `#ffffff` | Fondo general                                    |
 | Marron oscuro  | `#482d1f` | Texto y jerarquia tipografica                    |
 
+## Donde viven los colores
+
+**Fuente unica: `src/lib/colors.ts`.** Ningun color se escribe a mano en un componente.
+Si hace falta un tono que no esta ahi, se agrega ahi primero.
+
+Dos consumidores leen ese archivo:
+
+1. `tailwind.config.ts`, que lo convierte en clases: `bg-rojo`, `text-marron`,
+   `bg-estado-al-dia`.
+2. El codigo que necesita el valor como dato: atributos `fill` y `stroke` de SVG y props
+   de Recharts, donde una clase no aplica.
+
+Antes de esta regla habia 14 valores sueltos en 8 archivos, con dos cremas casi iguales
+(`#fff8ea` y `#fff8e6`) que nadie habia notado. Se unificaron en `crema.claro`.
+
+Excepcion conocida: `src/components/auth/auth-switch.module.css` es CSS plano y no puede
+leer tokens de Tailwind. Mantiene sus valores escritos a mano.
+
 ## Colores de estado
 
 Reservados para estado de cuenta. **Nunca se reutilizan como color de serie en un

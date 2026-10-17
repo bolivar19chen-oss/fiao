@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section className="px-3 pt-3">
       {/* Panel con bordes redondeados y margen: el hero se lee como una pieza propia. */}
-      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-[#fff8ea] to-white pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
+      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-crema-claro to-white pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
         <Aurora />
         <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
           <div>

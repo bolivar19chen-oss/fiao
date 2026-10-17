@@ -45,7 +45,7 @@ export function Market() {
                         <span className="w-9 tabular-nums">{formatCount(p.stores)}</span>
                         <span className="h-1.5 flex-1 rounded-full bg-marron/[0.06]">
                           <span
-                            className="block h-full rounded-full bg-gradient-to-r from-rojo to-[#e04848]"
+                            className="block h-full rounded-full bg-gradient-to-r from-rojo to-rojo-suave"
                             style={{ width: `${(p.stores / maxStores) * 100}%` }}
                           />
                         </span>

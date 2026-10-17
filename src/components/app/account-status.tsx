@@ -8,8 +8,8 @@ import type { AccountStatus, ScoreBreakdown } from "@/lib/credit"
 // llegan a separarse lo suficiente para daltonismo dentro de la banda de luminosidad que
 // exige el fondo, asi que la identidad no puede descansar en el color.
 const STATUS = {
-  NO_DEBT: { label: "No debt", icon: Check, className: "bg-[#047857]/12 text-[#047857]" },
-  CURRENT: { label: "On time", icon: Check, className: "bg-[#047857]/12 text-[#047857]" },
+  NO_DEBT: { label: "No debt", icon: Check, className: "bg-estado-al-dia/12 text-estado-al-dia" },
+  CURRENT: { label: "On time", icon: Check, className: "bg-estado-al-dia/12 text-estado-al-dia" },
   OVERDUE: { label: "Overdue", icon: AlertTriangle, className: "bg-rojo/12 text-rojo" },
 } as const
 
@@ -25,7 +25,7 @@ export function StatusBadge({ status }: { status: AccountStatus }) {
 
 export function DueSoonBadge({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#d97706]/12 px-3 py-1 text-xs font-semibold text-[#d97706]">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-estado-por-vencer/12 px-3 py-1 text-xs font-semibold text-estado-por-vencer">
       <Clock className="h-3.5 w-3.5" aria-hidden />
       {label}
     </span>
@@ -75,7 +75,7 @@ export function CreditScore({ score, breakdown }: { score: number | null; breakd
             cy="46"
             r="38"
             fill="none"
-            stroke="#b91c1c"
+            className="stroke-rojo"
             strokeWidth="9"
             strokeLinecap="round"
             strokeDasharray={`${(circumference * score) / 100} ${circumference}`}

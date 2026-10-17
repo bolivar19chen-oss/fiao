@@ -1,3 +1,5 @@
+import { BRAND } from "@/lib/colors"
+
 export function ScoreRing({ score, className = "h-11 w-11" }: { score: number; className?: string }) {
   const r = 16
   const c = 2 * Math.PI * r
@@ -9,7 +11,7 @@ export function ScoreRing({ score, className = "h-11 w-11" }: { score: number; c
         cy="20"
         r={r}
         fill="none"
-        stroke="#b91c1c"
+        stroke={BRAND.rojo.DEFAULT}
         strokeWidth="4"
         strokeLinecap="round"
         strokeDasharray={c}
