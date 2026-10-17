@@ -15,6 +15,7 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 | Documento                                        | Que es                                                                |
 | ------------------------------------------------ | --------------------------------------------------------------------- |
 | [APLICACION.md](APLICACION.md)                   | El cuerpo de la app: dos tipos de usuario, pantallas, pagos y tema    |
+| [NEGOCIO.md](NEGOCIO.md)                         | Quien paga, cuanto, costos y el primer usuario real                   |
 | [MODELO-CREDITO.md](MODELO-CREDITO.md)           | Intereses, libro inmutable, idempotencia, estados y cambios de schema |
 | [DISENO.md](DISENO.md)                           | Paleta, colores de estado, tipografia y criterios de interfaz         |
 | [UI-DASHBOARD.md](UI-DASHBOARD.md)               | Medidas concretas: espaciado, tipografia, graficos, modo oscuro       |
