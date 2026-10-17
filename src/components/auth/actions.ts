@@ -24,7 +24,10 @@ export async function logIn(_prev: AuthState, formData: FormData): Promise<AuthS
   const { error } = await supabase.auth.signInWithPassword(credentials)
   if (error) return { error: error.message, email: credentials.email }
 
-  redirect("/app")
+  // A /onboarding y no a /app: es la unica pagina que sabe enrutar por rol, y aca no se
+  // puede saber cual es sin consultar la base. Un cliente mandado a /app daria tres
+  // saltos antes de llegar a /me.
+  redirect("/onboarding")
 }
 
 export async function signUp(_prev: AuthState, formData: FormData): Promise<AuthState> {
@@ -46,8 +49,11 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   })
   if (error) return { error: error.message, email: credentials.email, name }
 
-  // Sin sesion = el proyecto exige confirmar el email antes de entrar.
-  if (!data.session) return { message: "Check your email to confirm your account, then log in." }
+  // El registro entra directo: el proyecto tiene la confirmacion por correo apagada
+  // (supabase/config.toml, auth.email.enable_confirmations), asi que signUp devuelve
+  // sesion. Si alguien la vuelve a encender, no hay sesion y el alta se corta aca:
+  // el aviso queda como red, no como camino normal.
+  if (!data.session) return { message: "Your account was created. Log in to continue." }
 
   redirect("/onboarding")
 }
