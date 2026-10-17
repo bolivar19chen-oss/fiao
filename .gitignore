@@ -35,3 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python (tools/)
+__pycache__/
+*.egg-info/
+.hypothesis/
+.pytest_cache/
+/tools/oracle/py-results.json
