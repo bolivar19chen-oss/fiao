@@ -7,6 +7,7 @@ import { customerAccount } from "@/lib/credit-account"
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { InviteCard } from "./invite-card"
 
 export const metadata: Metadata = { title: "Customer - FIA'O" }
 
@@ -17,7 +18,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
   const { data: customer } = await supabase
     .from("customers")
     .select(
-      "id, name, phone, notes, created_at, sales(id, total_cents, balance_cents, created_at, payments(id, amount_cents, paid_at), installments(due_date, amount_cents))",
+      "id, name, phone, notes, created_at, user_id, sales(id, total_cents, balance_cents, created_at, payments(id, amount_cents, paid_at), installments(due_date, amount_cents))",
     )
     .eq("business_id", business.id)
     .eq("id", id)
@@ -55,6 +56,9 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           <CardTitle>Credit score</CardTitle>
           <CreditScore score={account.score} breakdown={account.breakdown} />
         </Card>
+      </div>
+      <div className="mt-4">
+        <InviteCard customerId={customer.id} linked={customer.user_id !== null} />
       </div>
       {customer.notes && (
         <Card className="mt-4">
