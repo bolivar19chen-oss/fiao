@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Plus } from "lucide-react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Logo } from "@/components/layout/logo"
@@ -40,11 +41,8 @@ export default async function MePage() {
         {cards.length === 0 ? (
           <div className="glass mt-8 rounded-[2rem] p-8 text-center">
             <p className="text-[15px] leading-relaxed text-marron/70">
-              You are not linked to any shop yet. Ask the shop that gives you credit for an invite code.
+              You are not linked to any shop yet. Next time you buy on credit, ask for an invite code at the counter.
             </p>
-            <Link href="/onboarding/invite" className="btn btn-glass-red mt-6 inline-flex">
-              Enter an invite code
-            </Link>
           </div>
         ) : (
           <ul className="mt-8 space-y-4">
@@ -59,6 +57,21 @@ export default async function MePage() {
             ))}
           </ul>
         )}
+
+        {/* Siempre disponible, con cuentas o sin ellas: un cliente suma tiendas con el
+            tiempo, y cada una trae su propio codigo. */}
+        <Link
+          href="/me/link"
+          className="glass mt-4 flex items-center gap-4 rounded-[2rem] p-6 transition hover:-translate-y-px"
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-crema text-marron">
+            <Plus className="h-5 w-5" aria-hidden />
+          </span>
+          <span>
+            <span className="block font-display text-base font-semibold text-marron">Link a shop</span>
+            <span className="block text-sm text-marron/60">Enter the invite code they give you at the counter.</span>
+          </span>
+        </Link>
       </div>
     </main>
   )
