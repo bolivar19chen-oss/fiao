@@ -10,6 +10,7 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 | [PLAN.md](PLAN.md)                                     | El plan completo: modulos, stack, 27 semanas, riesgos                     |
 | [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)           | Auth, rutas y pantallas. Hecho                                            |
 | [BLOQUE-1-MOTOR-CREDITO.md](BLOQUE-1-MOTOR-CREDITO.md) | Intereses, saldos, estados y puntaje. Hecho                               |
+| **[FASE-3-DASHBOARD.md](FASE-3-DASHBOARD.md)**         | **El trabajo que viene ahora.** Dashboard, graficos y lo que sigue        |
 | **[AUDITORIA.md](AUDITORIA.md)**                       | **Estado verificado del proyecto.** Hallazgos y lo que falta              |
 
 ## Reglas del producto
