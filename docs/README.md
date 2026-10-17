@@ -4,11 +4,12 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 
 ## Empezar por aca
 
-| Documento                                        | Que es                                                                    |
-| ------------------------------------------------ | ------------------------------------------------------------------------- |
-| [../CLAUDE.md](../CLAUDE.md)                     | Reglas de trabajo, stack y convenciones. Se lee solo al abrir el proyecto |
-| [PLAN.md](PLAN.md)                               | El plan completo: modulos, stack, 27 semanas, riesgos                     |
-| **[FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)** | **El trabajo que viene ahora.** Auth, rutas y pantallas                   |
+| Documento                                                  | Que es                                                                    |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------- |
+| [../CLAUDE.md](../CLAUDE.md)                               | Reglas de trabajo, stack y convenciones. Se lee solo al abrir el proyecto |
+| [PLAN.md](PLAN.md)                                         | El plan completo: modulos, stack, 27 semanas, riesgos                     |
+| [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)               | Auth, rutas y pantallas. Hecho                                            |
+| **[BLOQUE-1-MOTOR-CREDITO.md](BLOQUE-1-MOTOR-CREDITO.md)** | **El trabajo que viene ahora.** Intereses, saldos, estados y puntaje      |
 
 ## Reglas del producto
 
