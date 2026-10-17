@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ReceiptText, Wallet } from "lucide-react"
+import { CreditScore, StatusBadge } from "@/components/app/account-status"
 import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
+import { customerAccount } from "@/lib/credit-account"
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -15,7 +17,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
   const { data: customer } = await supabase
     .from("customers")
     .select(
-      "id, name, phone, notes, created_at, sales(id, total_cents, balance_cents, created_at, payments(id, amount_cents, paid_at))",
+      "id, name, phone, notes, created_at, sales(id, total_cents, balance_cents, created_at, payments(id, amount_cents, paid_at), installments(due_date, amount_cents))",
     )
     .eq("business_id", business.id)
     .eq("id", id)
@@ -24,7 +26,8 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
 
   const sales = [...customer.sales].sort((a, b) => b.created_at.localeCompare(a.created_at))
   const payments = sales.flatMap((s) => s.payments).sort((a, b) => b.paid_at.localeCompare(a.paid_at))
-  const balance = sales.reduce((sum, s) => sum + s.balance_cents, 0)
+  // El saldo, el estado y el puntaje salen del motor, no de sumas sueltas en la pagina.
+  const account = customerAccount(customer.sales)
 
   return (
     <>
@@ -34,8 +37,24 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
         back={{ href: "/app/customers", label: "Customers" }}
       />
       <div className="grid gap-4 sm:grid-cols-2">
-        <Stat label="Balance" value={formatCents(balance)} />
+        <Stat label="Balance" value={formatCents(account.balanceCents)} />
         <Stat label="Credit sales" value={String(sales.length)} />
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <Card>
+          <div className="flex items-center justify-between gap-3">
+            <CardTitle>Account status</CardTitle>
+            <StatusBadge status={account.status} />
+          </div>
+          <p className="text-[15px] text-marron/75">
+            {account.installments.filter((i) => i.paidDate === null).length} of {account.installments.length}{" "}
+            installments still open.
+          </p>
+        </Card>
+        <Card>
+          <CardTitle>Credit score</CardTitle>
+          <CreditScore score={account.score} breakdown={account.breakdown} />
+        </Card>
       </div>
       {customer.notes && (
         <Card className="mt-4">

@@ -7,6 +7,8 @@
 // Reglas del dominio en docs/MODELO-CREDITO.md. Por que vive aca y no en un servicio
 // aparte, en docs/adr/0005-calculo-en-typescript-python-como-herramienta.md.
 
+export { settleInstallments } from "./allocation"
+export type { PaymentEntry } from "./allocation"
 export { balanceFrom, dailyBalances, verifyBalance } from "./balance"
 export { accrueInterest, accrueLateFee } from "./accrual"
 export type { AccrualInput, LateFeeInput } from "./accrual"
