@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "node scripts/next-dist.mjs build",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "gen:types": "supabase gen types typescript --linked --schema public > shared/types/database.ts && prettier --write shared/types/database.ts"
+    "gen:types": "supabase gen types typescript --linked --schema public > shared/types/database.ts && prettier --write shared/types/database.ts",
+    "predev": "node scripts/check-dev-port.mjs",
+    "start": "node scripts/next-dist.mjs start"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
