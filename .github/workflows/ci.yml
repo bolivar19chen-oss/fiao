@@ -35,6 +35,20 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar el oraculo
+        run: python -m pip install -e ".[dev]"
+        working-directory: tools
+
+      # Antes de las pruebas: el contraste diferencial de src/lib/credit/oracle.test.ts
+      # lee py-results.json. Sin este paso, esa prueba se saltea.
+      - name: Oraculo - generar resultados
+        run: python -m oracle.emit
+        working-directory: tools
+
       # Cada paso corre aunque el anterior falle: una corrida informa todos los problemas,
       # no solo el primero.
       - name: Formato
@@ -52,6 +66,14 @@ jobs:
       - name: Pruebas
         if: always()
         run: pnpm test
+
+      # No comparan una implementacion contra la otra, sino cada una contra reglas que
+      # tienen que valer siempre. Un malentendido compartido del documento pasaria el
+      # contraste; estas no.
+      - name: Oraculo - propiedades
+        if: always()
+        run: python -m pytest -q
+        working-directory: tools
 
       # Va al final y es el que mas tarda, pero es el que atrapa lo que los otros no ven:
       # el build de produccion fallaba con lint, tipos y pruebas en verde.

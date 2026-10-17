@@ -1,0 +1,15 @@
+[project]
+name = "fiao-tools"
+version = "0.1.0"
+description = "Oraculo de verificacion del motor de credito y generador de datos de demo"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "hypothesis>=6"]
+
+[tool.pytest.ini_options]
+testpaths = ["oracle/tests"]
+
+[tool.setuptools]
+packages = ["oracle"]

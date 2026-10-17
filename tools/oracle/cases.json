@@ -1,0 +1,291 @@
+[
+  {
+    "id": "balance-sale-and-payment",
+    "op": "balance",
+    "input": {
+      "movements": [
+        { "date": "2026-10-01", "cents": 12000 },
+        { "date": "2026-10-05", "cents": -5000 }
+      ]
+    }
+  },
+  {
+    "id": "balance-payment-and-reversal",
+    "op": "balance",
+    "input": {
+      "movements": [
+        { "date": "2026-10-01", "cents": 12000 },
+        { "date": "2026-10-05", "cents": -5000 },
+        { "date": "2026-10-06", "cents": 5000 }
+      ]
+    }
+  },
+  {
+    "id": "balance-overpaid",
+    "op": "balance",
+    "input": {
+      "movements": [
+        { "date": "2026-10-01", "cents": 1000 },
+        { "date": "2026-10-02", "cents": -1500 }
+      ]
+    }
+  },
+  {
+    "id": "daily-carries-opening-balance",
+    "op": "dailyBalances",
+    "input": {
+      "movements": [
+        { "date": "2026-09-15", "cents": 5000 },
+        { "date": "2026-10-02", "cents": -2000 }
+      ],
+      "from": "2026-10-01",
+      "to": "2026-10-05"
+    }
+  },
+  {
+    "id": "daily-same-day-movements",
+    "op": "dailyBalances",
+    "input": {
+      "movements": [
+        { "date": "2026-10-01", "cents": 1000 },
+        { "date": "2026-10-01", "cents": 500 },
+        { "date": "2026-10-01", "cents": -200 }
+      ],
+      "from": "2026-10-01",
+      "to": "2026-10-03"
+    }
+  },
+  {
+    "id": "settle-partial-then-complete",
+    "op": "settle",
+    "input": {
+      "installments": [{ "dueDate": "2026-10-01", "amountCents": 5000 }],
+      "payments": [
+        { "date": "2026-10-01", "cents": 2000 },
+        { "date": "2026-10-20", "cents": 3000 }
+      ]
+    }
+  },
+  {
+    "id": "settle-oldest-first-across-installments",
+    "op": "settle",
+    "input": {
+      "installments": [
+        { "dueDate": "2026-10-01", "amountCents": 5000 },
+        { "dueDate": "2026-11-01", "amountCents": 5000 },
+        { "dueDate": "2026-12-01", "amountCents": 5000 }
+      ],
+      "payments": [{ "date": "2026-10-05", "cents": 12000 }]
+    }
+  },
+  {
+    "id": "settle-unordered-input",
+    "op": "settle",
+    "input": {
+      "installments": [
+        { "dueDate": "2026-12-01", "amountCents": 5000 },
+        { "dueDate": "2026-10-01", "amountCents": 5000 },
+        { "dueDate": "2026-11-01", "amountCents": 5000 }
+      ],
+      "payments": [
+        { "date": "2026-10-20", "cents": 3000 },
+        { "date": "2026-10-02", "cents": 4000 }
+      ]
+    }
+  },
+  {
+    "id": "accrue-flat-balance-30-days",
+    "op": "accrue",
+    "input": {
+      "movements": [{ "date": "2026-09-01", "cents": 10000 }],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "monthlyRateBp": 500
+    }
+  },
+  {
+    "id": "accrue-rate-zero",
+    "op": "accrue",
+    "input": {
+      "movements": [{ "date": "2026-09-01", "cents": 500000 }],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "monthlyRateBp": 0
+    }
+  },
+  {
+    "id": "accrue-odd-rate-and-balance",
+    "op": "accrue",
+    "input": {
+      "movements": [
+        { "date": "2026-09-01", "cents": 73333 },
+        { "date": "2026-10-11", "cents": -20000 }
+      ],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "monthlyRateBp": 437
+    }
+  },
+  {
+    "id": "accrue-negative-day-counts-as-zero",
+    "op": "accrue",
+    "input": {
+      "movements": [
+        { "date": "2026-09-01", "cents": 1000 },
+        { "date": "2026-09-02", "cents": -5000 }
+      ],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "monthlyRateBp": 500
+    }
+  },
+  {
+    "id": "accrue-31-day-period",
+    "op": "accrue",
+    "input": {
+      "movements": [{ "date": "2026-07-01", "cents": 999999 }],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-31",
+      "monthlyRateBp": 1250
+    }
+  },
+  {
+    "id": "late-fee-one-day",
+    "op": "lateFee",
+    "input": {
+      "installments": [{ "dueDate": "2026-10-29", "amountCents": 10000, "paidDate": null }],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "lateRateBp": 500,
+      "graceDays": 0
+    }
+  },
+  {
+    "id": "late-fee-due-day-with-no-grace",
+    "op": "lateFee",
+    "input": {
+      "installments": [{ "dueDate": "2026-10-30", "amountCents": 10000, "paidDate": null }],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "lateRateBp": 500,
+      "graceDays": 0
+    }
+  },
+  {
+    "id": "late-fee-with-grace-and-several",
+    "op": "lateFee",
+    "input": {
+      "installments": [
+        { "dueDate": "2026-10-10", "amountCents": 10000, "paidDate": null },
+        { "dueDate": "2026-10-20", "amountCents": 7500, "paidDate": null },
+        { "dueDate": "2026-10-05", "amountCents": 3300, "paidDate": "2026-10-06" }
+      ],
+      "periodStart": "2026-10-01",
+      "periodEnd": "2026-10-30",
+      "lateRateBp": 325,
+      "graceDays": 3
+    }
+  },
+  {
+    "id": "status-no-debt",
+    "op": "status",
+    "input": { "balanceCents": 0, "installments": [], "graceDays": 0, "asOf": "2026-10-16" }
+  },
+  {
+    "id": "status-due-day-is-current",
+    "op": "status",
+    "input": {
+      "balanceCents": 10000,
+      "installments": [{ "dueDate": "2026-10-16", "amountCents": 10000, "paidDate": null }],
+      "graceDays": 0,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "status-day-after-is-overdue",
+    "op": "status",
+    "input": {
+      "balanceCents": 10000,
+      "installments": [{ "dueDate": "2026-10-15", "amountCents": 10000, "paidDate": null }],
+      "graceDays": 0,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "status-last-day-of-grace",
+    "op": "status",
+    "input": {
+      "balanceCents": 10000,
+      "installments": [{ "dueDate": "2026-10-13", "amountCents": 10000, "paidDate": null }],
+      "graceDays": 3,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "score-perfect",
+    "op": "score",
+    "input": {
+      "installments": [
+        { "dueDate": "2026-01-01", "amountCents": 10000, "paidDate": "2026-01-01" },
+        { "dueDate": "2026-02-01", "amountCents": 10000, "paidDate": "2026-01-28" }
+      ],
+      "currentBalanceCents": 0,
+      "creditLimitCents": 100000,
+      "firstSaleDate": "2024-01-01",
+      "salesLast12Months": 12,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "score-nothing-to-measure",
+    "op": "score",
+    "input": {
+      "installments": [],
+      "currentBalanceCents": 0,
+      "creditLimitCents": null,
+      "firstSaleDate": null,
+      "salesLast12Months": 0,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "score-no-limit-renormalises",
+    "op": "score",
+    "input": {
+      "installments": [{ "dueDate": "2026-01-01", "amountCents": 10000, "paidDate": "2026-01-09" }],
+      "currentBalanceCents": 45000,
+      "creditLimitCents": null,
+      "firstSaleDate": "2025-06-15",
+      "salesLast12Months": 7,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "score-overpaid-caps-debt-ratio",
+    "op": "score",
+    "input": {
+      "installments": [{ "dueDate": "2026-01-01", "amountCents": 10000, "paidDate": "2026-01-01" }],
+      "currentBalanceCents": -500000,
+      "creditLimitCents": 100000,
+      "firstSaleDate": "2025-10-16",
+      "salesLast12Months": 6,
+      "asOf": "2026-10-16"
+    }
+  },
+  {
+    "id": "score-mixed-lateness",
+    "op": "score",
+    "input": {
+      "installments": [
+        { "dueDate": "2026-01-01", "amountCents": 10000, "paidDate": "2026-01-03" },
+        { "dueDate": "2026-02-01", "amountCents": 10000, "paidDate": "2026-03-20" },
+        { "dueDate": "2026-09-09", "amountCents": 10000, "paidDate": null }
+      ],
+      "currentBalanceCents": 33333,
+      "creditLimitCents": 99999,
+      "firstSaleDate": "2025-03-07",
+      "salesLast12Months": 9,
+      "asOf": "2026-10-16"
+    }
+  }
+]
