@@ -16,7 +16,10 @@ export function KpiBand() {
         ].map((kpi) => (
           <div key={kpi.label} className="flex flex-col-reverse border-l border-marron/15 pl-6">
             <dt className="mt-2 text-sm text-marron/55">{kpi.label}</dt>
-            <dd className="truncate font-display text-4xl font-light tabular-nums tracking-[-0.04em] text-marron sm:text-5xl">
+            <dd
+              title={kpi.value}
+              className="truncate font-display text-4xl font-light tabular-nums tracking-[-0.04em] text-marron sm:text-5xl"
+            >
               {kpi.value}
             </dd>
           </div>

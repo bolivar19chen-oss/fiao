@@ -23,7 +23,10 @@ export function PageHeader({
             &larr; {back.label}
           </Link>
         )}
-        <h1 className="section-title mt-1 truncate">{title}</h1>
+        {/* title=: en la ficha de cliente este h1 es el nombre, y truncado no habia forma de leerlo entero. */}
+        <h1 title={title} className="section-title mt-1 truncate">
+          {title}
+        </h1>
         {description && <p className="mt-1 text-[15px] text-marron/65">{description}</p>}
       </div>
       {action}
