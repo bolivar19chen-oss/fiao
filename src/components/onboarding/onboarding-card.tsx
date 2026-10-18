@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import type { ReactNode } from "react"
+import { StreetArt } from "./role-art"
 
 // La anatomia del diseno de referencia, con los tokens del proyecto.
 //
@@ -31,9 +32,9 @@ export const STAGGER = {
 }
 
 /**
- * Banda superior. En el diseno original es una foto; no hay ninguna en el repo y una
- * remota obligaria a declarar el dominio en next.config.mjs, asi que va la marca.
- * Cuando haya una imagen propia se reemplaza solo esto.
+ * Banda superior. Donde el diseno de referencia pone una foto decorativa, aca va una
+ * calle de mini supers dibujada (`StreetArt`), sobre el degradado de marca y bajo la
+ * trama de rejilla. El porque de dibujarla en vez de traer una imagen esta en `role-art.tsx`.
  */
 export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactNode }) {
   return (
@@ -47,6 +48,8 @@ export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactN
           : "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.crema.claro)_0%,theme(colors.crema.DEFAULT)_45%,theme(colors.amarillo.DEFAULT)_100%)]",
       ].join(" ")}
     >
+      <StreetArt tone={tone} />
+
       <div
         className="absolute inset-0 opacity-30"
         style={{
@@ -57,11 +60,16 @@ export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactN
           WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 30% 0%, black, transparent)",
         }}
       />
-      {/* Centrado, como el avatar del diseno original. */}
+      {/*
+        Centrado, como el avatar del diseno original. La insignia va siempre en `--fondo`,
+        en los dos tonos: la marca que lleva adentro es de varios colores y necesita una
+        superficie neutra. Antes la cara crema la ponia sobre marron, que servia para un
+        glifo de un solo color y ya no.
+      */}
       <span
         className={[
-          "absolute -bottom-7 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full ring-4 ring-fondo/70",
-          tone === "red" ? "bg-fondo text-rojo" : "bg-marron text-crema",
+          "absolute -bottom-8 left-1/2 grid h-16 w-16 -translate-x-1/2 place-items-center rounded-full bg-fondo ring-4",
+          tone === "red" ? "ring-rojo/15" : "ring-amarillo/25",
         ].join(" ")}
       >
         {icon}
@@ -91,7 +99,8 @@ export function OnboardingCard({
 
 /** Contenido centrado con el espaciado del diseno: space-y-6 p-8 text-center. */
 export function CardBody({ children }: { children: ReactNode }) {
-  return <div className="space-y-6 p-8 pt-12 text-center">{children}</div>
+  // pt-14 y no pt-8: la insignia sobresale 32px de la banda y se come el aire de arriba.
+  return <div className="space-y-6 p-8 pt-14 text-center">{children}</div>
 }
 
 export function CardHeading({ title, description }: { title: string; description: string }) {
@@ -108,9 +117,11 @@ export function CardNote({ icon, title, note }: { icon: ReactNode; title: string
   return (
     <motion.div
       variants={FADE_UP}
-      className="flex items-center gap-3 rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left"
+      // items-start y no items-center: en pantalla angosta el titulo ocupa tres lineas y
+      // el icono se iba a flotar a la mitad del bloque, lejos de lo que nombra.
+      className="flex items-start gap-3 rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left"
     >
-      <span className="shrink-0 text-marron/60">{icon}</span>
+      <span className="mt-0.5 shrink-0 text-marron/60">{icon}</span>
       <span>
         <span className="block text-sm font-medium text-marron">{title}</span>
         <span className="block text-xs leading-relaxed text-marron/60">{note}</span>
