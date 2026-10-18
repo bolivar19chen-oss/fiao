@@ -9,6 +9,11 @@ const poppins = Poppins({
   variable: "--font-poppins",
 })
 
+// Corre antes de pintar: si el usuario eligio un tema, su clase gana sobre el sistema.
+// Sin eleccion no hace nada y manda prefers-color-scheme (tailwind.config.ts). Va inline y
+// sincronico a proposito: un efecto de React llegaria tarde y la pagina parpadearia.
+const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.classList.add(t)}catch(e){}`
+
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
   description: "Inventory, credit sales, payment history and customer credit scores for corner stores.",
@@ -22,7 +27,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" translate="no">
+    // suppressHydrationWarning: el script cambia la clase de <html> antes de que React hidrate.
+    <html lang="en" translate="no" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       {/*
         CookieNotice NO va aca. Un componente cliente en el layout raiz, junto con el
         not-found.tsx raiz, rompe el build de produccion:

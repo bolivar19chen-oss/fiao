@@ -17,7 +17,7 @@ function prefersReducedMotion() {
 
 export function NotFoundPage() {
   return (
-    <div className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-rojo">
+    <div className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-rojo-marca">
       <CircleAnimation />
       <CharactersAnimation />
       <MessageDisplay />

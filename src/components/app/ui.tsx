@@ -113,7 +113,7 @@ export function Badge({ tone, children }: { tone: "red" | "yellow" | "neutral"; 
 // agrega aca: escribir las clases otra vez en una pantalla obliga a acordarse de varios
 // archivos el dia que cambie el foco o el radio.
 const FIELD_BASE =
-  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-white/70 text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
+  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-fondo/70 text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
 
 const FIELD_LOOK = {
   default: "h-12 px-4 text-[15px]",

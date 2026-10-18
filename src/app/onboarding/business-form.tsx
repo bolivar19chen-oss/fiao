@@ -117,7 +117,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
             </div>
 
             <div className={step === 2 ? "space-y-4" : "hidden"} inert={step !== 2}>
-              <fieldset className="rounded-lg border border-marron/10 bg-white/50 p-3 text-left">
+              <fieldset className="rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left">
                 <legend className="px-1 text-sm font-medium text-marron">Legal structure</legend>
                 <div className="mt-1 flex gap-4">
                   {(["natural", "corporation"] as const).map((value) => (

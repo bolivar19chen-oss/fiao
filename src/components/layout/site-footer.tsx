@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Logo } from "./logo"
 
 const links = [
@@ -25,7 +26,10 @@ export function SiteFooter() {
           ))}
         </nav>
       </div>
-      <div className="container-x pb-10 text-xs text-marron/45">© 2026 FIA&apos;O. All rights reserved.</div>
+      <div className="container-x flex items-center justify-between gap-4 pb-10">
+        <p className="text-xs text-marron/45">© 2026 FIA&apos;O. All rights reserved.</p>
+        <ThemeToggle />
+      </div>
     </footer>
   )
 }

@@ -26,7 +26,29 @@ Antes de esta regla habia 14 valores sueltos en 8 archivos, con dos cremas casi 
 (`#fff8ea` y `#fff8e6`) que nadie habia notado. Se unificaron en `crema.claro`.
 
 Excepcion conocida: `src/components/auth/auth-switch.module.css` es CSS plano y no puede
-leer tokens de Tailwind. Mantiene sus valores escritos a mano.
+leer clases de Tailwind. El lado del formulario lee las variables de tema
+(`rgb(var(--marron))`); el panel rojo y las sombras mantienen sus valores escritos a mano.
+
+## Modo oscuro
+
+Sin clases `dark:`. Los tokens que cambian de un modo al otro estan en `TEMA`
+(`src/lib/colors.ts`) como pares `[claro, oscuro]`, y `tailwind.config.ts` los convierte
+en variables CSS. La clase lee la variable, asi que `text-marron` o `bg-fondo` cambian
+solos.
+
+- **Los nombres son roles.** `marron` es la tinta y `fondo` la superficie: en oscuro la
+  tinta es clara. Para una superficie se usa `bg-fondo`, nunca `bg-white`; `white` queda
+  para texto sobre rojo.
+- **`rojo` se aclara en oscuro** (`rojo.suave`, 4.6:1 sobre el fondo). Un panel rojo con
+  texto blanco usa `rojo-marca`, que no cambia: con el rojo claro, el blanco bajaria a
+  4.1:1.
+- **Como dato** (SVG, Recharts, CSS plano): `rgb(var(--marron) / 0.55)`. Funciona tambien
+  en atributos de SVG; verificado en Chromium.
+- **Quien manda:** sin eleccion, `prefers-color-scheme`. La eleccion del usuario (selector
+  en el pie del sitio y en Settings) se guarda en `localStorage("theme")` y la aplica un
+  script inline en `<head>` antes de pintar: sin parpadeo. Lo prueba `e2e/theme.spec.ts`.
+- **Pendiente:** la serie categorica (`SERIE`) del grafico de la landing no cambia; su
+  primer rojo queda en 2.9:1 sobre el fondo oscuro. El globo lee el modo al crearse.
 
 ## Colores de estado
 

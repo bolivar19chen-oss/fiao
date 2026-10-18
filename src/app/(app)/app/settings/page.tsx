@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { ActionForm } from "@/components/app/action-form"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { requireBusiness } from "@/lib/business"
 import { formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
@@ -46,6 +47,14 @@ export default async function SettingsPage() {
             </li>
           ))}
         </ul>
+      </Card>
+
+      <Card className="mt-4">
+        <CardTitle>Appearance</CardTitle>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-marron/65">Follows your device unless you pick light or dark.</p>
+          <ThemeToggle />
+        </div>
       </Card>
 
       <Card className="mt-4">

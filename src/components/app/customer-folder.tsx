@@ -3,7 +3,6 @@
 import { AlertTriangle, Check, Eye } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useId, useRef, useState } from "react"
-import { BRAND, ESTADO, SUPERFICIE } from "@/lib/colors"
 import { formatCents } from "@/lib/format"
 
 /**
@@ -74,15 +73,15 @@ export function CustomerFolder({
   }, [open])
 
   // El bloque <style> es CSS plano y no puede leer clases de Tailwind, asi que los
-  // colores entran como variables desde aca. Siguen saliendo de src/lib/colors.ts: ningun
-  // valor se escribe a mano en el componente.
-  const FILL = { alert: ESTADO.mora, warn: ESTADO["por-vencer"], calm: ESTADO["al-dia"] } as const
+  // colores entran como variables desde aca. Leen los tokens de TEMA (src/lib/colors.ts),
+  // asi que siguen al modo oscuro: ningun valor se escribe a mano en el componente.
+  const FILL = { alert: "--estado-mora", warn: "--estado-por-vencer", calm: "--estado-al-dia" } as const
   const vars = {
-    "--cf-fill": FILL[tone],
-    "--cf-ink": BRAND.marron.DEFAULT,
-    "--cf-focus": BRAND.rojo.DEFAULT,
-    "--cf-white": SUPERFICIE.blanco,
-    "--cf-paper": SUPERFICIE.papel,
+    "--cf-fill": `rgb(var(${FILL[tone]}))`,
+    "--cf-ink": "rgb(var(--marron))",
+    "--cf-focus": "rgb(var(--rojo))",
+    "--cf-white": "rgb(var(--fondo))",
+    "--cf-paper": "rgb(var(--papel))",
   } as React.CSSProperties
 
   const k = width / W
@@ -131,8 +130,8 @@ export function CustomerFolder({
           <svg className="cf-rim" viewBox={`0 0 ${W} ${FRONT_H}`} aria-hidden>
             <defs>
               <linearGradient id={`cf-rim-${uid}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor={SUPERFICIE.blanco} stopOpacity="0.95" />
-                <stop offset="1" stopColor={SUPERFICIE.blanco} stopOpacity="0.15" />
+                <stop offset="0" style={{ stopColor: "rgb(var(--brillo))" }} stopOpacity="0.95" />
+                <stop offset="1" style={{ stopColor: "rgb(var(--brillo))" }} stopOpacity="0.15" />
               </linearGradient>
             </defs>
             <path d={FRONT_PATH} stroke={`url(#cf-rim-${uid})`} />
@@ -195,7 +194,7 @@ const CSS = `
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 0 16px; border-radius: 14px; pointer-events: auto; text-decoration: none;
   background: linear-gradient(180deg, var(--cf-white) 0%, var(--cf-paper) 100%);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 .5px rgb(72 45 31 / .1), 0 10px 24px -8px rgb(72 45 31 / .28);
+  box-shadow: inset 0 1px 0 rgb(var(--brillo) / .9), 0 0 0 .5px rgb(var(--marron) / .1), 0 10px 24px -8px rgb(72 45 31 / .28);
   transform-origin: 50% 100%;
   transform:
     translate(calc(var(--cf-slot) * var(--cf-spread)), calc(var(--cf-lift) + var(--cf-depth) * var(--cf-stack) * -1))
@@ -203,7 +202,7 @@ const CSS = `
   transition: transform .75s var(--cf-spring) calc(var(--cf-depth) * 40ms), box-shadow .4s var(--cf-ease);
 }
 .cf-root[data-open] .cf-sheet:hover, .cf-root[data-open] .cf-sheet:focus-visible {
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 .5px rgb(72 45 31 / .1), 0 22px 40px -12px rgb(72 45 31 / .42);
+  box-shadow: inset 0 1px 0 rgb(var(--brillo) / .9), 0 0 0 .5px rgb(var(--marron) / .1), 0 22px 40px -12px rgb(72 45 31 / .42);
 }
 .cf-sheet:focus-visible { outline: 2px solid var(--cf-focus); outline-offset: 2px; }
 .cf-sheet-name { font-size: 15px; font-weight: 500; color: var(--cf-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -217,7 +216,7 @@ const CSS = `
 }
 .cf-tint {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgb(255 255 255 / .16) 0%, rgb(255 255 255 / .5) 42%, rgb(252 252 252 / .93) 100%);
+  background: linear-gradient(180deg, rgb(var(--fondo) / .16) 0%, rgb(var(--fondo) / .5) 42%, rgb(var(--fondo) / .93) 100%);
 }
 .cf-rim { position: absolute; left: 0; top: 0; width: 340px; height: 198px; fill: none; pointer-events: none; overflow: visible; }
 .cf-rim path { stroke-width: 2.4; }
@@ -226,7 +225,7 @@ const CSS = `
 .cf-label { position: absolute; left: 28px; bottom: 30px; z-index: 2; display: flex; flex-direction: column; gap: 5px; max-width: 240px; pointer-events: none; }
 .cf-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: color-mix(in srgb, var(--cf-fill) 14%, transparent); color: var(--cf-fill); }
 .cf-title { font-family: var(--font-poppins), sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: var(--cf-ink); }
-.cf-meta { font-size: 13px; color: rgb(72 45 31 / .6); white-space: nowrap; }
+.cf-meta { font-size: 13px; color: rgb(var(--marron) / .6); white-space: nowrap; }
 
 @media (prefers-reduced-motion: reduce) {
   .cf-root *, .cf-root *::before, .cf-root *::after { transition-duration: 0s !important; animation: none !important; }

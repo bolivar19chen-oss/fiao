@@ -17,7 +17,7 @@ export function Aurora({ className = "" }: { className?: string }) {
         className="absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            "linear-gradient(rgb(72 45 31 / 0.06) 1px, transparent 1px), linear-gradient(90deg, rgb(72 45 31 / 0.06) 1px, transparent 1px)",
+            "linear-gradient(rgb(var(--marron) / 0.06) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--marron) / 0.06) 1px, transparent 1px)",
           backgroundSize: "56px 56px",
           maskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)",
           WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)",

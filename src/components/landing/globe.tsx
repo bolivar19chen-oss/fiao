@@ -31,6 +31,10 @@ const MARKER_COLOR: RGB = [185 / 255, 28 / 255, 28 / 255]
 const ARC_COLOR: RGB = [1, 191 / 255, 50 / 255]
 const BASE_COLOR: RGB = [1, 1, 1]
 const GLOW_COLOR: RGB = [254 / 255, 243 / 255, 199 / 255]
+// Modo oscuro: esfera oscura con puntos claros (dark: 1 de cobe) y el resplandor en la
+// crema oscura de TEMA, para que el globo no quede como un foco blanco sobre la pagina.
+const BASE_COLOR_DARK: RGB = [0.3, 0.24, 0.2]
+const GLOW_COLOR_DARK: RGB = [58 / 255, 43 / 255, 23 / 255]
 const NO_ARCS: GlobeArc[] = []
 
 const DEFAULT_SIZE = 0.03
@@ -111,6 +115,9 @@ export function Globe({ markers = [], arcs = NO_ARCS, focus, className = "" }: G
     function init() {
       const width = canvas.offsetWidth
       if (width === 0 || globe) return
+      // shortcut: el modo se lee al crear el globo; si el usuario cambia de tema con la
+      // pagina abierta, el globo lo toma en la proxima visita. Escuchar el cambio si molesta.
+      const dark = getComputedStyle(document.documentElement).colorScheme === "dark"
 
       globe = createGlobe(canvas, {
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
@@ -118,13 +125,13 @@ export function Globe({ markers = [], arcs = NO_ARCS, focus, className = "" }: G
         height: width,
         phi: basePhi,
         theta: baseTheta,
-        dark: 0,
+        dark: dark ? 1 : 0,
         diffuse: 1.4,
         mapSamples: 20000,
         mapBrightness: 6,
-        baseColor: BASE_COLOR,
+        baseColor: dark ? BASE_COLOR_DARK : BASE_COLOR,
         markerColor: MARKER_COLOR,
-        glowColor: GLOW_COLOR,
+        glowColor: dark ? GLOW_COLOR_DARK : GLOW_COLOR,
         markerElevation: 0.02,
         markers: cobeMarkers,
         arcs: cobeArcs,

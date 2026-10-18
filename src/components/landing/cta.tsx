@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react"
 export function Cta() {
   return (
     <section className="container-x py-28">
-      <div className="relative isolate overflow-hidden rounded-[2rem] bg-rojo px-8 py-16 text-center sm:px-16">
+      <div className="relative isolate overflow-hidden rounded-[2rem] bg-rojo-marca px-8 py-16 text-center sm:px-16">
         <div
           className="pointer-events-none absolute -right-20 -top-24 -z-10 h-80 w-80 rounded-full bg-amarillo/40 blur-[90px]"
           aria-hidden

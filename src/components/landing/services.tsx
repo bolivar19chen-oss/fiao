@@ -35,7 +35,7 @@ export function Services() {
                 {s.title}
               </h3>
               <p className="text-marron/60 sm:col-start-2 lg:col-start-auto">{s.body}</p>
-              <span className="hidden h-11 w-11 place-items-center rounded-full border border-marron/15 text-marron/40 transition duration-300 group-hover:border-rojo group-hover:bg-rojo group-hover:text-white sm:row-start-1 sm:grid sm:col-start-3 lg:col-start-4">
+              <span className="hidden h-11 w-11 place-items-center rounded-full border border-marron/15 text-marron/40 transition duration-300 group-hover:border-rojo-marca group-hover:bg-rojo-marca group-hover:text-white sm:row-start-1 sm:grid sm:col-start-3 lg:col-start-4">
                 <ArrowUpRight className="h-5 w-5 transition duration-300 group-hover:rotate-45" aria-hidden />
               </span>
             </Link>

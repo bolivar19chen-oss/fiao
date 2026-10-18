@@ -43,7 +43,7 @@ export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactN
       className={[
         "relative h-36 w-full",
         tone === "red"
-          ? "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.rojo.claro)_0%,theme(colors.rojo.DEFAULT)_45%,theme(colors.rojo.oscuro)_100%)]"
+          ? "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.rojo.claro)_0%,theme(colors.rojo.marca)_45%,theme(colors.rojo.oscuro)_100%)]"
           : "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.crema.claro)_0%,theme(colors.crema.DEFAULT)_45%,theme(colors.amarillo.DEFAULT)_100%)]",
       ].join(" ")}
     >
@@ -60,8 +60,8 @@ export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactN
       {/* Centrado, como el avatar del diseno original. */}
       <span
         className={[
-          "absolute -bottom-7 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full ring-4 ring-white/70",
-          tone === "red" ? "bg-white text-rojo" : "bg-marron text-crema",
+          "absolute -bottom-7 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full ring-4 ring-fondo/70",
+          tone === "red" ? "bg-fondo text-rojo" : "bg-marron text-crema",
         ].join(" ")}
       >
         {icon}
@@ -108,7 +108,7 @@ export function CardNote({ icon, title, note }: { icon: ReactNode; title: string
   return (
     <motion.div
       variants={FADE_UP}
-      className="flex items-center gap-3 rounded-lg border border-marron/10 bg-white/50 p-3 text-left"
+      className="flex items-center gap-3 rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left"
     >
       <span className="shrink-0 text-marron/60">{icon}</span>
       <span>
@@ -137,7 +137,7 @@ export function CardField({
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/45">{icon}</span>
         <input
           {...input}
-          className="h-11 w-full rounded-lg border border-marron/10 bg-white/70 pl-9 pr-3 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
+          className="h-11 w-full rounded-lg border border-marron/10 bg-fondo/70 pl-9 pr-3 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
         />
       </span>
       {hint && <span className="mt-1 block text-xs text-marron/55">{hint}</span>}
