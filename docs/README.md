@@ -13,6 +13,8 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 | **[FASE-3-DASHBOARD.md](FASE-3-DASHBOARD.md)**         | **El trabajo que viene ahora.** Dashboard, graficos y lo que sigue        |
 | **[AUDITORIA.md](AUDITORIA.md)**                       | **Estado verificado del proyecto.** Hallazgos y lo que falta              |
 
+| **[PULIDO.md](PULIDO.md)** | **El trabajo que viene ahora.** Cerrar los hallazgos de la auditoria |
+
 ## Reglas del producto
 
 | Documento                                        | Que es                                                                |
