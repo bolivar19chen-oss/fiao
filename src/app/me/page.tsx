@@ -4,6 +4,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Logo } from "@/components/layout/logo"
 import { Aurora } from "@/components/ui/aurora"
+import { AvatarField } from "@/components/onboarding/avatar-field"
 import { formatCents } from "@/lib/format"
 import { getCurrentProfile } from "@/lib/profile"
 import { createClient } from "@/lib/supabase/server"
@@ -32,6 +33,10 @@ export default async function MePage() {
       <Aurora />
       <div className="mx-auto w-full max-w-xl">
         <Logo />
+
+        <div className="glass mt-8 rounded-[1.75rem] p-3">
+          <AvatarField />
+        </div>
 
         <p className="eyebrow mt-10">My accounts</p>
         <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-marron">

@@ -328,21 +328,22 @@ cedulas validas y el usuario no puede registrarse.
 
 ## 6. Datos sensibles
 
-La foto de la cara del dueno y la imagen de un documento de identidad son datos
-personales sensibles. Guardarlos trae obligaciones de proteccion de datos en Panama, y hay
-que confirmar el marco vigente antes de pedirlos.
+**La foto de perfil esta encendida.** La decision y sus condiciones estan en
+[ADR 0008](adr/0008-foto-de-perfil.md); esta seccion resume lo que hay que respetar.
 
-Para el MVP y para la evaluacion, la recomendacion es clara:
+- **Opcional de verdad.** No viaja en el formulario y no es un campo del perfil. Saltarla
+  no cuesta nada. Si nadie sube una, no hay objeto que proteger.
+- **Bucket privado** `avatars`, ruta `{user_id}/avatar`, RLS que solo deja tocar la
+  carpeta propia. Se lee con URL firmada de vida corta, nunca por URL publica: una URL
+  publica de avatares es adivinable si se conoce el `uid`.
+- **Tipo y tamano los exige el bucket** (`allowed_mime_types`, 2 MB), que es servidor. Lo
+  del navegador es solo para avisar antes de subir en vano.
+- **Se puede retirar.** Hay politica de delete y boton de quitar.
+- El formulario dice que es opcional y que formatos y tamano acepta.
 
-- **No pedir foto de la cara ni del documento.** Guardar el numero de cedula alcanza para
-  identificar, y es muchisimo menos riesgo.
-- Si se piden igual, van en Supabase Storage en un bucket **privado**, con politica que
-  solo deje leer al dueno y al negocio, nunca publico. Jamas en una carpeta servida
-  estaticamente.
-- El formulario dice para que se usa cada dato y cuanto tiempo se guarda.
-
-Dejar el campo "Owner photo" como opcional y apagado por defecto. Encenderlo es una
-decision aparte, con su ADR.
+**La imagen del documento de identidad sigue sin pedirse.** Guardar el numero de cedula
+alcanza para identificar y una foto del documento es muchisimo mas riesgo por muy poco.
+Eso no cambio.
 
 ## 7. Cambios de schema
 

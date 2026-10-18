@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { ActionForm } from "@/components/app/action-form"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
+import { AvatarField } from "@/components/onboarding/avatar-field"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { requireBusiness } from "@/lib/business"
 import { formatDate } from "@/lib/format"
@@ -31,6 +32,11 @@ export default async function SettingsPage() {
         ) : (
           <p className="text-[15px] text-marron">{business.name}</p>
         )}
+      </Card>
+
+      <Card className="mt-4">
+        <CardTitle>Your photo</CardTitle>
+        <AvatarField />
       </Card>
 
       <Card className="mt-4">
