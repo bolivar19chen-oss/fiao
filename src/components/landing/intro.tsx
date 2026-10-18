@@ -2,108 +2,137 @@
 
 import { motion, useReducedMotion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
+import { useId } from "react"
 
 // Pantalla de entrada: el fondo limpio y la firma escribiendose. Despues se baja y
 // empieza el sitio.
 //
 // Es una seccion normal del flujo, no una capa que tapa y desaparece sola: asi se sale de
-// ella bajando, que es lo que se pidio, y nadie queda encerrado esperando a que termine
-// una animacion. z-[60] la pone por encima de la cabecera fija (z-50) mientras se ve; en
-// cuanto se sube, la cabecera aparece.
+// ella bajando, y nadie queda encerrado esperando a que termine una animacion. z-[60] la
+// pone por encima de la cabecera fija (z-50) mientras se ve.
 //
-// La firma esta dibujada a mano, siguiendo una muestra de caligrafia inglesa. Cada trazo
-// es un `path` y se anima `pathLength` de 0 a 1, que es como Motion dibuja una linea.
+// ## Como funciona
 //
-// **El contraste.** En la caligrafia real la pluma engorda al bajar y adelgaza al subir
-// DENTRO de cada letra. Un `stroke` de SVG tiene un solo grosor, asi que eso no se puede
-// copiar sin convertir cada letra en una silueta rellena, y una silueta rellena ya no se
-// puede dibujar con pathLength. El contraste que si se consigue es entre trazos: los
-// rasgos (entrada, salida, travesano) van en pelo fino y las letras en trazo grueso.
+// La firma es `public/firma.png`, caligrafia de verdad: el trazo engorda al bajar y se
+// afila al subir. Eso no se puede dibujar con un `stroke` de SVG, que tiene un grosor
+// unico. Pero tampoco se puede animar una imagen como si se escribiera, porque la
+// escritura no va de izquierda a derecha: la f baja hasta abajo del todo y vuelve a
+// subir, y el ovalo final sale a la derecha y regresa por debajo de la palabra. Un
+// barrido se veria mal justo en los dos gestos que la hacen.
 //
-// **El gesto que manda** es el ultimo: el ovalo que sale de la o, se va a la derecha y
-// vuelve por debajo de toda la palabra. Sin el, la firma es solo letra inclinada.
-
-const INCLINACION = -20
+// La solucion son dos mascaras:
+//
+//   1. `tinta`  - la imagen. Recorta la forma, y debajo va un rectangulo en currentColor.
+//                 Por eso el color es una clase y no un archivo, y sigue al tema solo.
+//   2. `escritura` - los trazos de abajo, en orden de escritura, animando pathLength.
+//                 Revelan la imagen a su paso. Nadie los ve: solo son la mano.
+//
+// ## Los trazos
+//
+// Son la linea de centro de cada trazo de la pluma, medidos sobre la imagen con
+// `scripts/firma/overlay.py`, que los dibuja encima de la tinta para corregirlos mirando.
+// **Si cambia `public/firma.png`, hay que volver a trazarlos con esa herramienta.**
+//
+// `grosor` es el ancho de la mascara, no del trazo: tiene que cubrir lo mas gordo que
+// tape. El asta de la f llega a 104px de tinta, de ahi que sea 125. Los rasgos finos van
+// estrechos a proposito, porque una mascara ancha revelaria de paso lo que tiene al lado.
 
 const TRAZOS = [
-  // Rasgo de entrada: viene de lejos por la izquierda y remonta hacia el bucle de la f.
-  { d: "M140 262C168 226 164 192 208 198C242 203 252 224 236 242", delay: 0, duracion: 0.75, grosor: 3 },
-  // La f: bucle alto, asta larga cruzando la linea, y bucle de pie que baja y vuelve.
+  // Rasgo de entrada: el ovalo grande de la izquierda.
+  { d: "M240 230C160 212 50 240 18 310C-2 370 70 405 150 400C205 396 250 410 272 440", delay: 0, dur: 0.6, grosor: 90 },
+  // El lazo bajo con el que la entrada se cierra.
+  { d: "M272 440C292 472 258 502 218 492C180 482 178 440 206 418", delay: 0.55, dur: 0.25, grosor: 90 },
+  // La f: bucle alto, el asta gruesa en diagonal, y el bucle de pie.
   {
     d:
-      "M236 242C246 202 256 150 272 120C282 100 304 96 304 118C304 142 284 170 270 208" +
-      "C256 246 242 300 238 334C234 366 246 386 264 381C282 376 290 352 280 330",
-    delay: 0.65,
-    duracion: 1.15,
-    grosor: 10,
+      "M385 205C368 150 392 60 448 28C478 10 508 14 505 30C480 60 440 85 420 110" +
+      "C392 155 364 205 350 250C322 330 300 368 280 405C252 462 230 502 210 540" +
+      "C180 598 155 642 140 668C120 702 116 742 142 764C176 790 226 774 240 730C250 700 244 668 234 648",
+    delay: 0.75,
+    dur: 0.95,
+    grosor: 210,
   },
-  // Travesano de la f, en pelo fino.
-  { d: "M222 208C250 197 290 197 318 206", delay: 1.7, duracion: 0.3, grosor: 4 },
-  // i y a de corrido: asta de la i, enlace, bucle de la a y salida.
+  // La i.
   {
-    d:
-      "M314 254C328 226 345 190 352 173C355 197 355 226 360 245C364 263 380 265 392 250C409 229 409 193 385 191C361 188 346 216 356 239C366 260 394 254 404 227C411 205 411 228 416 248C421 265 438 268 452 251",
-    delay: 1.95,
-    duracion: 1.05,
-    grosor: 9,
+    d: "M425 285C455 350 482 420 512 465C536 500 570 506 600 482C624 462 646 450 660 440",
+    delay: 1.65,
+    dur: 0.3,
+    grosor: 230,
   },
-  // La o, que entra desde el enlace de la a.
+  // La a.
   {
-    d: "M452 251C474 230 481 196 462 186C440 175 418 199 426 226C433 253 462 258 476 235",
-    delay: 2.95,
-    duracion: 0.55,
-    grosor: 9,
+    d: "M660 440C650 400 640 350 662 310C682 276 716 272 716 302C716 342 692 382 702 422C714 464 762 470 786 430C800 406 796 362 800 342C806 372 812 400 826 418",
+    delay: 1.9,
+    dur: 0.4,
+    grosor: 180,
   },
-  // El gesto: sale de la o, se abre a la derecha y vuelve por debajo de la palabra.
+  // La o.
   {
-    d: "M476 235C512 220 562 214 598 231C627 244 631 272 606 286C569 304 494 306 426 295C374 288 330 279 304 269",
-    delay: 3.45,
-    duracion: 1.1,
-    grosor: 3.5,
+    d: "M826 418C858 372 890 290 932 260C976 236 1002 272 986 332C970 392 920 442 896 430C876 420 882 396 902 380",
+    delay: 2.25,
+    dur: 0.35,
+    grosor: 160,
   },
   // El apostrofo de FIA'O.
-  { d: "M409 157C414 170 411 184 404 193", delay: 4.45, duracion: 0.22, grosor: 5 },
+  { d: "M880 140C895 170 890 220 862 262", delay: 2.6, dur: 0.18, grosor: 110 },
   // El punto de la i.
-  { d: "M352 151C354 151 355 151 356 151", delay: 4.65, duracion: 0.18, grosor: 7 },
+  { d: "M552 198C556 198 560 198 564 198", delay: 2.75, dur: 0.12, grosor: 90 },
+  // Rasgo de salida, hacia la derecha.
+  { d: "M1000 340C1080 280 1200 220 1300 228C1370 234 1392 270 1382 300", delay: 2.85, dur: 0.5, grosor: 140 },
+  // El gesto final: el ovalo que vuelve por debajo de toda la palabra.
+  {
+    d: "M376 688C500 620 700 540 900 512C1050 492 1160 530 1152 582C1144 640 1000 678 860 690C800 696 740 690 722 662",
+    delay: 3.3,
+    dur: 0.7,
+    grosor: 140,
+  },
 ]
 
-const FIN = 4.9
+const FIN = 4.1
+const ANCHO = 1400
+const ALTO = 785
 
 export function Intro() {
   const reducido = useReducedMotion()
+  const uid = useId()
+  const escritura = `escritura-${uid}`
+  const tinta = `tinta-${uid}`
 
   return (
     <section
       aria-label="Welcome"
       className="relative z-[60] flex h-[100dvh] flex-col items-center justify-center gap-10 bg-fondo px-6"
     >
-      <svg
-        // Medido sobre el svg ya inclinado, no a ojo: getBBox del grupo devuelve la caja
-        // de antes de su propio skew y deja el encuadre corrido.
-        viewBox="-11 91 608 303"
-        className="w-full max-w-2xl text-marron"
-        role="img"
-        aria-label="FIA'O"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <g transform={`skewX(${INCLINACION})`}>
-          {TRAZOS.map((trazo) => (
-            <motion.path
-              key={trazo.d}
-              d={trazo.d}
-              strokeWidth={trazo.grosor}
-              // strokeDasharray="0 1" es lo que deja a pathLength controlar el dibujo.
-              strokeDasharray="0 1"
-              initial={reducido ? false : { pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={
-                reducido ? { duration: 0 } : { delay: trazo.delay, duration: trazo.duracion, ease: "easeInOut" }
-              }
-            />
-          ))}
+      <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} className="w-full max-w-2xl text-rojo" role="img" aria-label="FIA'O">
+        <defs>
+          <mask id={escritura}>
+            {TRAZOS.map((trazo) => (
+              <motion.path
+                key={trazo.d}
+                d={trazo.d}
+                fill="none"
+                stroke="white"
+                strokeWidth={trazo.grosor}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                // strokeDasharray="0 1" es lo que deja a pathLength controlar el dibujo.
+                strokeDasharray="0 1"
+                initial={reducido ? false : { pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={reducido ? { duration: 0 } : { delay: trazo.delay, duration: trazo.dur, ease: "easeInOut" }}
+              />
+            ))}
+          </mask>
+
+          <mask id={tinta}>
+            {/* La imagen es blanca sobre transparente, asi que vale como mascara por
+                luminancia sin depender de mask-type: alpha. */}
+            <image href="/firma.png" width={ANCHO} height={ALTO} />
+          </mask>
+        </defs>
+
+        <g mask={`url(#${escritura})`}>
+          <rect width={ANCHO} height={ALTO} fill="currentColor" mask={`url(#${tinta})`} />
         </g>
       </svg>
 
