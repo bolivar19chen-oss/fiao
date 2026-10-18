@@ -71,7 +71,9 @@ export function AppShell({ businessName, children }: { businessName: string; chi
         <div className="glass flex h-14 items-center justify-between gap-3 rounded-full pl-3 pr-1.5">
           <Link href="/app" aria-label="Dashboard" className="flex min-w-0 items-center gap-2">
             <Logo />
-            <span className="truncate text-sm font-medium text-marron/60">{businessName}</span>
+            <span title={businessName} className="truncate text-sm font-medium text-marron/60">
+              {businessName}
+            </span>
           </Link>
           <form action={signOut}>
             <button type="submit" className="btn btn-glass h-11 w-11 px-0" aria-label="Log out">
