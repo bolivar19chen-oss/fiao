@@ -25,6 +25,8 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 | [ONBOARDING.md](ONBOARDING.md)                   | Tarjeta reversible, registro de negocio y de cliente, cookies         |
 | [HERRAMIENTAS-PYTHON.md](HERRAMIENTAS-PYTHON.md) | El oraculo de verificacion y el generador de datos de demo            |
 
+| [CLASIFICACION-Y-AVISOS.md](CLASIFICACION-Y-AVISOS.md) | Clasificacion automatica de clientes y el aviso diario al dueno |
+
 ## Decisiones de arquitectura
 
 Una por decision que cambia el rumbo. Se leen para entender **por que** algo es como es,
