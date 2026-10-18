@@ -3,6 +3,7 @@
 import { AlertTriangle, Check, Eye } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useId, useRef, useState } from "react"
+import { BRAND, ESTADO, SUPERFICIE } from "@/lib/colors"
 import { formatCents } from "@/lib/format"
 
 /**
@@ -72,6 +73,18 @@ export function CustomerFolder({
     }
   }, [open])
 
+  // El bloque <style> es CSS plano y no puede leer clases de Tailwind, asi que los
+  // colores entran como variables desde aca. Siguen saliendo de src/lib/colors.ts: ningun
+  // valor se escribe a mano en el componente.
+  const FILL = { alert: ESTADO.mora, warn: ESTADO["por-vencer"], calm: ESTADO["al-dia"] } as const
+  const vars = {
+    "--cf-fill": FILL[tone],
+    "--cf-ink": BRAND.marron.DEFAULT,
+    "--cf-focus": BRAND.rojo.DEFAULT,
+    "--cf-white": SUPERFICIE.blanco,
+    "--cf-paper": SUPERFICIE.papel,
+  } as React.CSSProperties
+
   const k = width / W
   const visible = customers.slice(0, MAX_VISIBLE)
   const total = customers.reduce((sum, customer) => sum + customer.balanceCents, 0)
@@ -83,7 +96,7 @@ export function CustomerFolder({
       className="cf-root relative inline-block align-top"
       data-tone={tone}
       data-open={open || undefined}
-      style={{ width, height: (H + HEADROOM) * k }}
+      style={{ width, height: (H + HEADROOM) * k, ...vars }}
     >
       <style>{CSS}</style>
       <div className="cf-stage" style={{ transform: `translateY(${HEADROOM * k}px) scale(${k})` }}>
@@ -118,8 +131,8 @@ export function CustomerFolder({
           <svg className="cf-rim" viewBox={`0 0 ${W} ${FRONT_H}`} aria-hidden>
             <defs>
               <linearGradient id={`cf-rim-${uid}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#fff" stopOpacity="0.95" />
-                <stop offset="1" stopColor="#fff" stopOpacity="0.15" />
+                <stop offset="0" stopColor={SUPERFICIE.blanco} stopOpacity="0.95" />
+                <stop offset="1" stopColor={SUPERFICIE.blanco} stopOpacity="0.15" />
               </linearGradient>
             </defs>
             <path d={FRONT_PATH} stroke={`url(#cf-rim-${uid})`} />
@@ -157,11 +170,8 @@ const CSS = `
   --cf-stack: 14px;
   --cf-ease: cubic-bezier(.2, .8, .2, 1);
   --cf-spring: cubic-bezier(.34, 1.36, .5, 1);
-  --cf-fill: #b91c1c;
   isolation: isolate;
 }
-.cf-root[data-tone="warn"] { --cf-fill: #d97706; }
-.cf-root[data-tone="calm"] { --cf-fill: #047857; }
 .cf-root:hover, .cf-root:focus-within { --cf-hinge: -11deg; --cf-lift: -32px; --cf-spread: 8px; --cf-fan: 1.4deg; --cf-stack: 10px; }
 .cf-root[data-open] { --cf-hinge: -24deg; --cf-lift: -94px; --cf-spread: 38px; --cf-fan: 5deg; --cf-stack: 28px; }
 
@@ -184,7 +194,7 @@ const CSS = `
   position: absolute; left: 34px; top: 104px; width: 272px; height: 64px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 0 16px; border-radius: 14px; pointer-events: auto; text-decoration: none;
-  background: linear-gradient(180deg, #fff 0%, #f6f4f1 100%);
+  background: linear-gradient(180deg, var(--cf-white) 0%, var(--cf-paper) 100%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 .5px rgb(72 45 31 / .1), 0 10px 24px -8px rgb(72 45 31 / .28);
   transform-origin: 50% 100%;
   transform:
@@ -195,9 +205,9 @@ const CSS = `
 .cf-root[data-open] .cf-sheet:hover, .cf-root[data-open] .cf-sheet:focus-visible {
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 .5px rgb(72 45 31 / .1), 0 22px 40px -12px rgb(72 45 31 / .42);
 }
-.cf-sheet:focus-visible { outline: 2px solid #b91c1c; outline-offset: 2px; }
-.cf-sheet-name { font-size: 15px; font-weight: 500; color: #482d1f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cf-sheet-amount { flex: none; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; color: #482d1f; }
+.cf-sheet:focus-visible { outline: 2px solid var(--cf-focus); outline-offset: 2px; }
+.cf-sheet-name { font-size: 15px; font-weight: 500; color: var(--cf-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-sheet-amount { flex: none; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--cf-ink); }
 
 .cf-front {
   position: absolute; left: 0; top: 74px; width: 340px; height: 198px; z-index: 10;
@@ -215,7 +225,7 @@ const CSS = `
 .cf-hit { position: absolute; inset: 0; z-index: 1; cursor: pointer; background: none; border: 0; padding: 0; }
 .cf-label { position: absolute; left: 28px; bottom: 30px; z-index: 2; display: flex; flex-direction: column; gap: 5px; max-width: 240px; pointer-events: none; }
 .cf-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: color-mix(in srgb, var(--cf-fill) 14%, transparent); color: var(--cf-fill); }
-.cf-title { font-family: var(--font-poppins), sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: #482d1f; }
+.cf-title { font-family: var(--font-poppins), sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: var(--cf-ink); }
 .cf-meta { font-size: 13px; color: rgb(72 45 31 / .6); white-space: nowrap; }
 
 @media (prefers-reduced-motion: reduce) {

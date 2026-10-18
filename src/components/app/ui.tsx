@@ -109,20 +109,64 @@ export function Badge({ tone, children }: { tone: "red" | "yellow" | "neutral"; 
   )
 }
 
+// El unico lugar donde vive el aspecto de un campo. Si hace falta una variante, se
+// agrega aca: escribir las clases otra vez en una pantalla obliga a acordarse de varios
+// archivos el dia que cambie el foco o el radio.
+const FIELD_BASE =
+  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-white/70 text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
+
+const FIELD_LOOK = {
+  default: "h-12 px-4 text-[15px]",
+  // Los digitos de un monto se alinean en columna: asi se compara de un vistazo.
+  amount: "h-12 px-4 text-[15px] tabular-nums",
+  // Un codigo se lee en voz alta, caracter por caracter: mas alto, centrado y espaciado.
+  code: "h-14 px-4 text-center font-display text-xl font-semibold uppercase tracking-[0.18em] placeholder:font-sans placeholder:text-base placeholder:font-normal placeholder:normal-case placeholder:tracking-normal",
+} as const
+
+const slug = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+
+/**
+ * El campo con etiqueta y pista.
+ *
+ * La etiqueta se ata con `htmlFor` y no envolviendo al input: envuelto, el nombre
+ * accesible se come tambien la pista, y un lector de pantalla lee "Reference Reference
+ * from your Yappy app.". La pista va aparte, con `aria-describedby`, que es lo que
+ * corresponde: describe, no nombra.
+ *
+ * El id sale del `name` porque dentro de un formulario es unico, y asi el componente
+ * sirve igual en una pagina de servidor, donde no se pueden usar hooks.
+ */
 export function Field({
   label,
   hint,
+  look = "default",
+  id,
   ...input
-}: { label: string; hint?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+}: { label: string; hint?: string; look?: keyof typeof FIELD_LOOK } & React.InputHTMLAttributes<HTMLInputElement>) {
+  const fieldId = id ?? input.name ?? slug(label)
+  const hintId = `${fieldId}-hint`
+
   return (
-    <label className="block">
-      <span className="text-sm font-medium text-marron">{label}</span>
+    <div>
+      <label htmlFor={fieldId} className="block text-sm font-medium text-marron">
+        {label}
+      </label>
       <input
         {...input}
-        className="mt-1.5 h-12 w-full rounded-2xl border border-marron/10 bg-white/70 px-4 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
+        id={fieldId}
+        aria-describedby={hint ? hintId : undefined}
+        className={`${FIELD_BASE} ${FIELD_LOOK[look]}`}
       />
-      {hint && <span className="mt-1 block text-xs text-marron/55">{hint}</span>}
-    </label>
+      {hint && (
+        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+          {hint}
+        </span>
+      )}
+    </div>
   )
 }
 

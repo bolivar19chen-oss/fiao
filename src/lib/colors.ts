@@ -35,5 +35,17 @@ export const ESTADO = {
   "mora-oscuro": "#f43f5e",
 } as const
 
+/**
+ * Superficies: el papel de una ficha y el blanco de un brillo.
+ *
+ * Separadas de BRAND porque no son marca: son el material sobre el que se apoya todo. El
+ * blanco va escrito completo y no como `#fff` para que todos los valores del archivo se
+ * lean igual.
+ */
+export const SUPERFICIE = {
+  blanco: "#ffffff",
+  papel: "#f6f4f1",
+} as const
+
 /** Serie categorica para graficos. En orden fijo: nunca se cicla ni se genera un tono nuevo. */
 export const SERIE = [BRAND.rojo.DEFAULT, BRAND.rojo.medio, BRAND.amarillo.oscuro, BRAND.amarillo.DEFAULT] as const

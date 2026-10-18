@@ -2,7 +2,7 @@
 
 import { Check, LoaderCircle, Smartphone } from "lucide-react"
 import { useActionState } from "react"
-import { Card, CardTitle } from "@/components/app/ui"
+import { Card, CardTitle, Field } from "@/components/app/ui"
 import { createInvite, type InviteState } from "./actions"
 
 export function InviteCard({ customerId, linked }: { customerId: string; linked: boolean }) {
@@ -28,15 +28,18 @@ export function InviteCard({ customerId, linked }: { customerId: string; linked:
       {issued ? (
         <>
           <p className="text-[15px] text-marron/75">Read this code to them at the counter.</p>
-          <p className="mt-3 rounded-2xl border border-marron/10 bg-white/70 py-4 text-center font-display text-2xl font-bold tracking-[0.18em] text-marron">
-            {issued.code}
-          </p>
-          {/* Se muestra una vez: la base guarda el hash, no el codigo. Por eso el boton
-              de abajo se queda: si el cliente no alcanzo a anotarlo, se genera otro sin
-              recargar la pagina. */}
-          <p className="mt-2 text-xs text-marron/55">
-            Valid for {issued.expiresInHours} hours, single use. It is not shown again.
-          </p>
+          {/* Un campo de solo lectura y no un parrafo: se puede seleccionar y copiar.
+              Se muestra una vez, porque la base guarda el hash y no el codigo. Por eso el
+              boton de abajo se queda: si el cliente no alcanzo a anotarlo, se genera otro
+              sin recargar la pagina. */}
+          <Field
+            label="Invite code"
+            look="code"
+            readOnly
+            value={issued.code}
+            onFocus={(e) => e.currentTarget.select()}
+            hint={`Valid for ${issued.expiresInHours} hours, single use. It is not shown again.`}
+          />
         </>
       ) : (
         <p className="text-[15px] text-marron/75">

@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight, LoaderCircle, Store } from "lucide-react"
 import Link from "next/link"
 import { useActionState } from "react"
+import { Field } from "@/components/app/ui"
 import { redeemInvite, type FormState } from "@/app/onboarding/actions"
 
 export function InviteForm() {
@@ -26,18 +27,16 @@ export function InviteForm() {
       </p>
 
       <form action={action} aria-busy={pending} className="mt-7 space-y-4">
-        <label className="block">
-          <span className="text-sm font-medium text-marron">Invite code</span>
-          <input
-            name="code"
-            required
-            autoComplete="off"
-            autoCapitalize="characters"
-            spellCheck={false}
-            placeholder="A1B2C3D4E5F6"
-            className="mt-1.5 h-14 w-full rounded-2xl border border-marron/10 bg-white/70 px-4 text-center font-display text-xl font-semibold uppercase tracking-[0.18em] text-marron outline-none transition placeholder:font-sans placeholder:text-base placeholder:font-normal placeholder:tracking-normal placeholder:text-marron/30 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
-          />
-        </label>
+        <Field
+          label="Invite code"
+          look="code"
+          name="code"
+          required
+          autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
+          placeholder="A1B2C3D4E5F6"
+        />
 
         {state?.error && (
           <p role="alert" className="rounded-2xl bg-amarillo/20 px-4 py-3 text-center text-sm text-marron/85">
