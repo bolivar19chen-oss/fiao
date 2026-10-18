@@ -7,14 +7,14 @@ Si tomas este documento a mitad, mira primero `git log` para ver que ya esta hec
 
 ## Estado
 
-| Punto                              | Estado                      |
-| ---------------------------------- | --------------------------- |
-| 1. D1 - colores escritos a mano    | **Hecho**                   |
-| 2. C1 - estilo de input repetido   | **Hecho**                   |
-| 3. D2 - dashboard sin `PageHeader` | **Hecho**                   |
-| 4. C2 - pruebas de componente      | **Hecho** (123 -> 145)      |
-| 5. Modo oscuro                     | Pendiente, su propia sesion |
-| Playwright / end-to-end            | Pendiente                   |
+| Punto                              | Estado                 |
+| ---------------------------------- | ---------------------- |
+| 1. D1 - colores escritos a mano    | **Hecho**              |
+| 2. C1 - estilo de input repetido   | **Hecho**              |
+| 3. D2 - dashboard sin `PageHeader` | **Hecho**              |
+| 4. C2 - pruebas de componente      | **Hecho** (123 -> 145) |
+| 5. Modo oscuro                     | **Hecho** (DISENO.md)  |
+| Playwright / end-to-end            | **Hecho** (`pnpm e2e`) |
 
 Hallazgo extra que aparecio al escribir las pruebas: `Field` envolvia al input dentro del
 `<label>`, asi que el nombre accesible se comia tambien la pista y un lector de pantalla
