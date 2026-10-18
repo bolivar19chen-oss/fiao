@@ -258,25 +258,34 @@ export type Database = {
         Row: {
           amount_cents: number
           business_id: string
+          client_token: string
           created_by: string | null
           id: string
+          method: string
           paid_at: string
+          provider_ref: string | null
           sale_id: string
         }
         Insert: {
           amount_cents: number
           business_id: string
+          client_token?: string
           created_by?: string | null
           id?: string
+          method?: string
           paid_at?: string
+          provider_ref?: string | null
           sale_id: string
         }
         Update: {
           amount_cents?: number
           business_id?: string
+          client_token?: string
           created_by?: string | null
           id?: string
+          method?: string
           paid_at?: string
+          provider_ref?: string | null
           sale_id?: string
         }
         Relationships: [
@@ -492,6 +501,16 @@ export type Database = {
       is_owner: { Args: { p_business_id: string }; Returns: boolean }
       is_sale_customer: { Args: { p_sale_id: string }; Returns: boolean }
       redeem_customer_invite: { Args: { p_code: string }; Returns: string }
+      register_payment: {
+        Args: {
+          p_amount_cents: number
+          p_client_token: string
+          p_method: string
+          p_provider_ref?: string
+          p_sale_id: string
+        }
+        Returns: string
+      }
       update_business_legal: {
         Args: {
           p_address: string

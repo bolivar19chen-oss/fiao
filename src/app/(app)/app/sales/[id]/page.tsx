@@ -6,6 +6,7 @@ import { Card, CardTitle, EmptyState, PageHeader, Stat, Table } from "@/componen
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatCount, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { RecordPayment } from "./record-payment"
 
 export const metadata: Metadata = { title: "Sale - FIA'O" }
 
@@ -16,7 +17,7 @@ export default async function SalePage({ params }: { params: Promise<{ id: strin
   const { data: sale } = await supabase
     .from("sales")
     .select(
-      "id, total_cents, balance_cents, created_at, customers(id, name), sale_items(id, quantity, unit_price_cents, products(name)), installments(id, number, due_date, amount_cents), payments(id, amount_cents, paid_at)",
+      "id, total_cents, balance_cents, created_at, customers(id, name), sale_items(id, quantity, unit_price_cents, products(name)), installments(id, number, due_date, amount_cents), payments(id, amount_cents, paid_at, method)",
     )
     .eq("business_id", business.id)
     .eq("id", id)
@@ -61,6 +62,10 @@ export default async function SalePage({ params }: { params: Promise<{ id: strin
         </Table>
       </Card>
 
+      <div className="mt-4">
+        <RecordPayment saleId={sale.id} balanceCents={sale.balance_cents} />
+      </div>
+
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Card>
           <CardTitle>Installments</CardTitle>
@@ -83,10 +88,11 @@ export default async function SalePage({ params }: { params: Promise<{ id: strin
           {payments.length === 0 ? (
             <EmptyState icon={Wallet} title="No payments yet" body="Payments on this sale will show here." />
           ) : (
-            <Table head={["Date", "Amount"]}>
+            <Table head={["Date", "Method", "Amount"]}>
               {payments.map((p) => (
                 <tr key={p.id}>
                   <td className="px-2 py-3">{formatDate(p.paid_at)}</td>
+                  <td className="px-2 py-3 capitalize text-marron/70">{p.method}</td>
                   <td className="px-2 py-3 text-right font-semibold tabular-nums">{formatCents(p.amount_cents)}</td>
                 </tr>
               ))}
