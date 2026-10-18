@@ -25,6 +25,8 @@ import {
   FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
+import { AvatarField } from "@/components/onboarding/avatar-field"
+import { ShopArt } from "@/components/onboarding/role-art"
 import { completeBusiness, type FormState } from "./actions"
 
 export function BusinessForm({ onBack }: { onBack: () => void }) {
@@ -45,7 +47,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
       </button>
 
       <OnboardingCard>
-        <CardBanner tone="red" icon={<Store className="h-6 w-6" aria-hidden />} />
+        <CardBanner tone="red" icon={<ShopArt className="h-9 w-9" />} />
 
         <CardBody>
           <motion.div variants={FADE_UP} className="flex items-center gap-3">
@@ -71,6 +73,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
               sus campos viajen en el envio. Si se desmontara, se perderian. */}
           <form action={action} aria-busy={pending}>
             <div className={step === 1 ? "space-y-4" : "hidden"} inert={step !== 1}>
+              <AvatarField />
               <CardField
                 label="Full name"
                 icon={<User className="h-4 w-4" aria-hidden />}

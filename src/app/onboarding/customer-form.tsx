@@ -9,8 +9,11 @@ import {
   CardError,
   CardField,
   CardHeading,
+  FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
+import { AvatarField } from "@/components/onboarding/avatar-field"
+import { CustomerArt } from "@/components/onboarding/role-art"
 import { completeCustomer, type FormState } from "./actions"
 
 export function CustomerForm({ email, onBack }: { email: string; onBack: () => void }) {
@@ -28,13 +31,17 @@ export function CustomerForm({ email, onBack }: { email: string; onBack: () => v
       </button>
 
       <OnboardingCard>
-        <CardBanner tone="cream" icon={<User className="h-6 w-6" aria-hidden />} />
+        <CardBanner tone="cream" icon={<CustomerArt className="h-9 w-9" />} />
 
         <CardBody>
           <CardHeading
             title="Your details"
             description="Your shop uses these to match you with the account they already keep for you."
           />
+
+          <motion.div variants={FADE_UP}>
+            <AvatarField />
+          </motion.div>
 
           {/* El boton se deshabilita mientras guarda: un doble clic crearia dos perfiles. */}
           <form action={action} aria-busy={pending} className="space-y-4">

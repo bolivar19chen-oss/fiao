@@ -17,6 +17,7 @@ const sections = [
     title: "Information we collect",
     body: [
       "Account data: the name, email address and password you use to create an account. Passwords are never stored in plain text.",
+      "An optional profile photo. You choose whether to add one, it is stored privately so only you can see it, and you can remove it at any time from your settings.",
       "Business data: the products, customers, sales, installments and payments that your store records in FIA'O.",
       "Technical data: the minimum needed to keep the service running and secure, such as session cookies and error logs.",
     ],
