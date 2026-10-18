@@ -43,7 +43,7 @@ export default async function ProductsPage() {
         ) : (
           <Table head={["Product", "Price", "Stock"]}>
             {products.map((p) => (
-              <tr key={p.id} className="hover:bg-white/50">
+              <tr key={p.id} className="hover:bg-fondo/50">
                 <PrimaryCell href={`/app/products/${p.id}`} title={p.name} />
                 <td className="px-2 py-3 text-right tabular-nums">{formatCents(p.price_cents)}</td>
                 <td className="px-2 py-3 text-right">

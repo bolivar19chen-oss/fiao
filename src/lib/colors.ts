@@ -47,5 +47,36 @@ export const SUPERFICIE = {
   papel: "#f6f4f1",
 } as const
 
+/**
+ * Modo oscuro: solo los tokens que cambian, como [claro, oscuro].
+ *
+ * tailwind.config.ts los convierte en variables CSS (`--marron`, `--fondo`, ...) y la
+ * clase de Tailwind lee la variable, asi que `text-marron` o `bg-fondo` cambian solos sin
+ * una sola clase `dark:`. `marron` es el rol "tinta" y `fondo` el rol "superficie": en
+ * oscuro la tinta es clara. Lo que no esta aca (amarillo, los rojos de los degradados)
+ * se ve igual en los dos modos.
+ *
+ * El codigo que necesita el valor como dato (SVG, Recharts, CSS plano) escribe
+ * `rgb(var(--marron) / 0.6)` y tambien cambia solo.
+ *
+ * Contrastes sobre `fondo` oscuro: tinta 15.5:1, tinta al 50% 4.6:1, rojo 4.6:1 (blanco
+ * sobre ese rojo 4.1:1, valido para iconos y texto grande). El rojo oscuro es
+ * `rojo.suave`: el `rojo` claro sobre fondo oscuro queda en 2.9:1.
+ */
+export const TEMA = {
+  marron: [BRAND.marron.DEFAULT, "#f3e8dc"],
+  "marron-claro": [BRAND.marron.claro, "#b39c8a"],
+  crema: [BRAND.crema.DEFAULT, "#3a2b17"],
+  "crema-claro": [BRAND.crema.claro, "#21180f"],
+  rojo: [BRAND.rojo.DEFAULT, BRAND.rojo.suave],
+  fondo: [SUPERFICIE.blanco, "#17110d"],
+  papel: [SUPERFICIE.papel, "#241b15"],
+  // El canto con luz del cristal. En oscuro un blanco seria un marco duro: va un tono calido.
+  brillo: [SUPERFICIE.blanco, "#4d3c30"],
+  "estado-al-dia": [ESTADO["al-dia"], ESTADO["al-dia-oscuro"]],
+  "estado-por-vencer": [ESTADO["por-vencer"], ESTADO["por-vencer-oscuro"]],
+  "estado-mora": [ESTADO.mora, ESTADO["mora-oscuro"]],
+} as const
+
 /** Serie categorica para graficos. En orden fijo: nunca se cicla ni se genera un tono nuevo. */
 export const SERIE = [BRAND.rojo.DEFAULT, BRAND.rojo.medio, BRAND.amarillo.oscuro, BRAND.amarillo.DEFAULT] as const

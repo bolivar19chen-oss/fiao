@@ -46,7 +46,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`flex h-11 items-center gap-3 rounded-full px-4 text-sm font-medium transition ${
-                  active ? "btn-glass-red" : "text-marron/75 hover:bg-white/70 hover:text-marron"
+                  active ? "btn-glass-red" : "text-marron/75 hover:bg-fondo/70 hover:text-marron"
                 }`}
               >
                 <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
@@ -58,7 +58,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
         <form action={signOut} className="mt-auto">
           <button
             type="submit"
-            className="flex h-11 w-full items-center gap-3 rounded-full px-4 text-sm font-medium text-marron/75 transition hover:bg-white/70 hover:text-marron"
+            className="flex h-11 w-full items-center gap-3 rounded-full px-4 text-sm font-medium text-marron/75 transition hover:bg-fondo/70 hover:text-marron"
           >
             <LogOut className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
             Log out

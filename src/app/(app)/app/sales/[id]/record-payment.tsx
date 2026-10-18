@@ -66,7 +66,7 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
             {method === tab.id && (
               <motion.span
                 layoutId={`${group}-tab`}
-                className="absolute inset-0 rounded-full bg-white shadow-sm"
+                className="absolute inset-0 rounded-full bg-fondo shadow-sm"
                 transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
               />
             )}

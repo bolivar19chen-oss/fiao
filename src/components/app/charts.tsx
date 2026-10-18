@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion"
 import { AlertTriangle, Check, Clock } from "lucide-react"
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { BRAND } from "@/lib/colors"
 import { formatCents } from "@/lib/format"
 
 // Reglas que vienen de la guia de visualizacion y de docs/DISENO.md:
@@ -13,13 +12,15 @@ import { formatCents } from "@/lib/format"
 // - El texto va en tinta, nunca del color de la serie.
 // - Un grafico en pantalla es interactivo: lleva capa de hover.
 
-const TICK = { fill: "rgb(72 45 31 / 0.55)", fontSize: 12 }
+// Recharts pide el color como dato: se pasa la variable del token para que siga al modo
+// oscuro (ver TEMA en src/lib/colors.ts).
+const TICK = { fill: "rgb(var(--marron) / 0.55)", fontSize: 12 }
 
 /** Tooltip propio: el de Recharts trae su caja blanca con borde gris, ajeno a la marca. */
 function MoneyTooltip({ active, payload, label }: { active?: boolean; payload?: { value: number }[]; label?: string }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-xl border border-white/70 bg-white/95 px-3 py-2 shadow-lg backdrop-blur">
+    <div className="rounded-xl border border-fondo/70 bg-fondo/95 px-3 py-2 shadow-lg backdrop-blur">
       <p className="text-xs text-marron/60">{label}</p>
       <p className="font-display text-sm font-semibold tabular-nums text-marron">{formatCents(payload[0].value)}</p>
     </div>
@@ -98,17 +99,13 @@ export function WeekColumns({ days }: { days: DayBar[] }) {
       <div className="h-44 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={days} margin={{ top: 8, right: 0, bottom: 0, left: 0 }}>
-            <XAxis dataKey="label" tickLine={false} axisLine={{ stroke: "rgb(72 45 31 / 0.14)" }} tick={TICK} />
+            <XAxis dataKey="label" tickLine={false} axisLine={{ stroke: "rgb(var(--marron) / 0.14)" }} tick={TICK} />
             <YAxis hide />
-            <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgb(72 45 31 / 0.04)" }} />
+            <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgb(var(--marron) / 0.04)" }} />
             {/* radius solo arriba: el extremo que apoya en la base queda recto. */}
             <Bar dataKey="cents" radius={[4, 4, 0, 0]} isAnimationActive={!reduced} animationDuration={600}>
               {days.map((day) => (
-                <Cell
-                  key={day.label}
-                  fill={BRAND.rojo.DEFAULT}
-                  fillOpacity={day.cents === peak && peak > 0 ? 1 : 0.7}
-                />
+                <Cell key={day.label} fill="rgb(var(--rojo))" fillOpacity={day.cents === peak && peak > 0 ? 1 : 0.7} />
               ))}
             </Bar>
           </BarChart>
@@ -141,12 +138,12 @@ export function TopDebtors({ debtors }: { debtors: Debtor[] }) {
               tick={TICK}
               interval={0}
             />
-            <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgb(72 45 31 / 0.04)" }} />
+            <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgb(var(--marron) / 0.04)" }} />
             <Bar dataKey="cents" radius={[0, 4, 4, 0]} isAnimationActive={!reduced} animationDuration={600}>
               {debtors.map((debtor, index) => (
                 <Cell
                   key={debtor.id}
-                  fill={BRAND.rojo.DEFAULT}
+                  fill="rgb(var(--rojo))"
                   // Mas claro hacia abajo: el orden es el dato, y el tono lo acompana.
                   fillOpacity={1 - index * 0.14}
                 />

@@ -117,7 +117,7 @@ export default function AboutPage() {
           <h2 className="section-title mt-3 max-w-2xl">Four rules behind every decision.</h2>
           <div className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-marron/10 sm:grid-cols-2">
             {values.map(({ icon, title, body }, i) => (
-              <div key={title} className="bg-white p-8">
+              <div key={title} className="bg-fondo p-8">
                 <div className="flex items-center gap-4">
                   <span className="font-display text-sm font-semibold tabular-nums text-rojo">
                     {String(i + 1).padStart(2, "0")}
@@ -144,7 +144,7 @@ export default function AboutPage() {
             >
               <span
                 className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${
-                  i === 0 ? "bg-rojo text-white" : "bg-marron/[0.06] text-marron/70"
+                  i === 0 ? "bg-rojo-marca text-white" : "bg-marron/[0.06] text-marron/70"
                 }`}
               >
                 {step.stage}

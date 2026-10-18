@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section className="px-3 pt-3">
       {/* Panel con bordes redondeados y margen: el hero se lee como una pieza propia. */}
-      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-crema-claro to-white pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
+      <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-crema-claro to-fondo pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
         <Aurora />
         <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
           <div>
@@ -109,7 +109,7 @@ function HeroPreview() {
       </div>
 
       <div className="glass absolute -bottom-7 -right-4 hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex">
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-rojo text-white">
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-rojo-marca text-white">
           <Check className="h-4 w-4" strokeWidth={3} aria-hidden />
         </span>
         <div>

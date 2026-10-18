@@ -69,7 +69,7 @@ export function SiteHeader() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium text-marron hover:bg-white/60"
+              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium text-marron hover:bg-fondo/60"
             >
               <Icon className="h-5 w-5 text-rojo" strokeWidth={1.75} aria-hidden />
               {label}

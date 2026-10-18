@@ -17,23 +17,24 @@ export function CategoryChart() {
           width={112}
           tickLine={false}
           axisLine={false}
-          tick={{ fill: "rgb(72 45 31 / 0.7)", fontSize: 13 }}
+          tick={{ fill: "rgb(var(--marron) / 0.7)", fontSize: 13 }}
         />
         <Tooltip
-          cursor={{ fill: "rgb(72 45 31 / 0.04)" }}
+          cursor={{ fill: "rgb(var(--marron) / 0.04)" }}
           formatter={(value) => [`${value} stores`, "Registered"]}
           contentStyle={{
             borderRadius: 14,
-            border: "1px solid rgb(72 45 31 / 0.1)",
+            border: "1px solid rgb(var(--marron) / 0.1)",
+            background: "rgb(var(--fondo))",
             boxShadow: "0 12px 32px -12px rgb(72 45 31 / 0.25)",
-            color: BRAND.marron.DEFAULT,
+            color: "rgb(var(--marron))",
           }}
         />
         <Bar dataKey="stores" radius={[0, 8, 8, 0]} barSize={22}>
           {categories.map((c, i) => (
             <Cell key={c.label} fill={COLORS[i % COLORS.length]} />
           ))}
-          <LabelList dataKey="stores" position="right" fill={BRAND.marron.DEFAULT} fontSize={13} fontWeight={600} />
+          <LabelList dataKey="stores" position="right" fill="rgb(var(--marron))" fontSize={13} fontWeight={600} />
         </Bar>
       </BarChart>
     </ResponsiveContainer>

@@ -137,7 +137,7 @@ export default function ServicesPage() {
           <h2 className="section-title mt-3 max-w-2xl">Six modules, one ledger.</h2>
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {modules.map(({ icon, title, points }) => (
-              <article key={title} className="rounded-3xl border border-marron/10 bg-white p-7">
+              <article key={title} className="rounded-3xl border border-marron/10 bg-fondo p-7">
                 <div className="flex items-center gap-4">
                   <IconTile icon={icon} />
                   <h3 className="font-display text-xl font-semibold">{title}</h3>
