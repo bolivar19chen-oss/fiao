@@ -5,6 +5,22 @@ equipo: **ningun criterio por debajo de 4.5 sobre 5**, apuntando a 4.8.
 
 Si tomas este documento a mitad, mira primero `git log` para ver que ya esta hecho.
 
+## Estado
+
+| Punto                              | Estado                      |
+| ---------------------------------- | --------------------------- |
+| 1. D1 - colores escritos a mano    | **Hecho**                   |
+| 2. C1 - estilo de input repetido   | **Hecho**                   |
+| 3. D2 - dashboard sin `PageHeader` | **Hecho**                   |
+| 4. C2 - pruebas de componente      | **Hecho** (123 -> 145)      |
+| 5. Modo oscuro                     | Pendiente, su propia sesion |
+| Playwright / end-to-end            | Pendiente                   |
+
+Hallazgo extra que aparecio al escribir las pruebas: `Field` envolvia al input dentro del
+`<label>`, asi que el nombre accesible se comia tambien la pista y un lector de pantalla
+leia "Reference Reference from your Yappy app.". Arreglado con `htmlFor` y
+`aria-describedby`. Lo encontro una prueba, no una lectura del codigo.
+
 ## 0. El contexto que importa
 
 **Nadie ha visto nunca esta interfaz funcionando.** Hay 123 pruebas y las 123 son del
@@ -15,8 +31,8 @@ Por eso el punto 4 es el que mas mueve la aguja, no los de diseno.
 
 ## 1. D1 - Los colores escritos a mano (consistencia 3 -> 4.5)
 
-`docs/DISENO.md` dice textual: *"Ningun color se escribe a mano en un componente. Si hace
-falta un tono que no esta ahi, se agrega ahi primero."*
+`docs/DISENO.md` dice textual: _"Ningun color se escribe a mano en un componente. Si hace
+falta un tono que no esta ahi, se agrega ahi primero."_
 
 `src/components/app/customer-folder.tsx` tiene **8 valores hex escritos a mano**. Es el
 unico archivo de la aplicacion que rompe la regla.
@@ -51,15 +67,15 @@ configurados (`vitest.config.mts`). No hace falta instalar nada.
 
 Lo minimo que hay que cubrir, una prueba por comportamiento, no por linea:
 
-| Componente             | Que probar                                                        |
-| ---------------------- | ----------------------------------------------------------------- |
-| `charts.tsx`           | `StatusBar` con total cero no dibuja barra; los porcentajes suman 100 |
-| `charts.tsx`           | El equivalente en `sr-only` nombra los siete dias                  |
-| `customer-folder.tsx`  | Cerrada, las fichas estan fuera del orden de tabulacion (`inert`)  |
-| `customer-folder.tsx`  | El boton anuncia cuantos clientes hay y si abre o cierra           |
-| `record-payment.tsx`   | Con saldo cero no muestra formulario                               |
-| `record-payment.tsx`   | En efectivo no pide referencia; en los demas si                    |
-| `invite-card.tsx`      | Vinculado no ofrece generar codigo                                 |
+| Componente            | Que probar                                                            |
+| --------------------- | --------------------------------------------------------------------- |
+| `charts.tsx`          | `StatusBar` con total cero no dibuja barra; los porcentajes suman 100 |
+| `charts.tsx`          | El equivalente en `sr-only` nombra los siete dias                     |
+| `customer-folder.tsx` | Cerrada, las fichas estan fuera del orden de tabulacion (`inert`)     |
+| `customer-folder.tsx` | El boton anuncia cuantos clientes hay y si abre o cierra              |
+| `record-payment.tsx`  | Con saldo cero no muestra formulario                                  |
+| `record-payment.tsx`  | En efectivo no pide referencia; en los demas si                       |
+| `invite-card.tsx`     | Vinculado no ofrece generar codigo                                    |
 
 Regla: probar **lo que el usuario ve y puede hacer**, nunca detalles internos. Nada de
 comprobar clases de CSS.

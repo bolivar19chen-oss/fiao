@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { ReceiptText } from "lucide-react"
 import { StatusBar, TopDebtors, WeekColumns, type Debtor, type StatusSlice } from "@/components/app/charts"
-import { Card, CardTitle, EmptyState, Stat } from "@/components/app/ui"
+import { Card, CardTitle, EmptyState, PageHeader, Stat } from "@/components/app/ui"
 import { requireBusiness } from "@/lib/business"
 import { addDays, eachDay } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
@@ -90,7 +90,7 @@ export default async function DashboardPage() {
   return (
     <>
       {/* El nombre del negocio ya esta en el shell: no se repite aca. */}
-      <h1 className="section-title mb-6">Dashboard</h1>
+      <PageHeader title="Dashboard" description="What your customers owe you, as of today." />
 
       {/* La figura principal responde la pregunta que el dueno se hace al abrir. */}
       <Card>

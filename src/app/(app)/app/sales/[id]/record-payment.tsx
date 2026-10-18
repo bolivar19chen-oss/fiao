@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion"
 import { Banknote, Check, CreditCard, LoaderCircle, Smartphone, Wallet } from "lucide-react"
 import { useActionState, useEffect, useId, useState } from "react"
-import { Card, CardTitle } from "@/components/app/ui"
+import { Card, CardTitle, Field } from "@/components/app/ui"
 import { centsToInput } from "@/lib/format"
 import { recordPayment, type Method, type PaymentState } from "./actions"
 
@@ -81,31 +81,26 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
         <input type="hidden" name="method" value={method} />
         <input type="hidden" name="client_token" value={token} />
 
-        <label className="block">
-          <span className="text-sm font-medium text-marron">Amount</span>
-          <input
-            name="amount"
-            required
-            inputMode="decimal"
-            placeholder={centsToInput(balanceCents)}
-            className="mt-1.5 h-12 w-full rounded-2xl border border-marron/10 bg-white/70 px-4 text-[15px] tabular-nums text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
-          />
-          <span className="mt-1 block text-xs text-marron/55">Balance on this sale: {centsToInput(balanceCents)}</span>
-        </label>
+        <Field
+          label="Amount"
+          look="amount"
+          name="amount"
+          required
+          inputMode="decimal"
+          placeholder={centsToInput(balanceCents)}
+          hint={`Balance on this sale: ${centsToInput(balanceCents)}`}
+        />
 
+        {/* El mismo numero dos veces no cobra dos veces: la base lo rechaza. */}
         {method !== "cash" && (
-          <label className="block">
-            <span className="text-sm font-medium text-marron">Reference</span>
-            <input
-              name="provider_ref"
-              required
-              autoComplete="off"
-              placeholder="Receipt or transaction number"
-              className="mt-1.5 h-12 w-full rounded-2xl border border-marron/10 bg-white/70 px-4 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-white focus:ring-4 focus:ring-rojo/10"
-            />
-            {/* El mismo numero dos veces no cobra dos veces: la base lo rechaza. */}
-            <span className="mt-1 block text-xs text-marron/55">{active.hint}</span>
-          </label>
+          <Field
+            label="Reference"
+            name="provider_ref"
+            required
+            autoComplete="off"
+            placeholder="Receipt or transaction number"
+            hint={active.hint}
+          />
         )}
 
         {method === "cash" && <p className="text-xs text-marron/55">{active.hint}</p>}
