@@ -1,9 +1,10 @@
 "use client"
 
 import { motion, useReducedMotion } from "framer-motion"
-import { ArrowRight, IdCard, RefreshCw, Store, User } from "lucide-react"
+import { ArrowRight, IdCard, RefreshCw } from "lucide-react"
 import { useState } from "react"
 import { CardBanner, CardBody, CardHeading, CardNote, OnboardingCard } from "./onboarding-card"
+import { CustomerArt, ShopArt } from "./role-art"
 
 export type Role = "business" | "customer"
 
@@ -25,7 +26,7 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Role) => void }) {
             side="front"
             hidden={flipped}
             reduced={reduced}
-            icon={<Store className="h-6 w-6" aria-hidden />}
+            icon={<ShopArt className="h-9 w-9" />}
             title="I run a business"
             description="Track inventory, sell on credit and keep every customer's payment history in one place."
             noteTitle="You'll need your RUC"
@@ -38,7 +39,7 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Role) => void }) {
             side="back"
             hidden={!flipped}
             reduced={reduced}
-            icon={<User className="h-6 w-6" aria-hidden />}
+            icon={<CustomerArt className="h-9 w-9" />}
             title="I'm a customer"
             description="See what you owe at each shop, your payment history and your credit score there."
             noteTitle="You'll need your ID number"

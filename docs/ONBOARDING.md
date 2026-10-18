@@ -22,9 +22,16 @@ prefieren los nombres nuevos, pero los viejos no rompen nada.) Verificados en el
 `IdCard`, `Upload`, `LoaderCircle`, `ArrowLeft`, `ArrowRight`, `Check`, `CreditCard`,
 `Smartphone`, `Banknote`, `Camera`, `RefreshCw`.
 
-**No hay imagen de banner en el repo.** Donde el diseno de referencia pone una foto, va un
-degradado de marca con la aurora. Una imagen remota ademas obligaria a declarar el dominio
-en `next.config.mjs`.
+**No hay imagen de banner en el repo.** Donde el diseno de referencia pone una foto, va el
+degradado de marca mas una calle de mini supers dibujada en SVG (`StreetArt`, en
+`src/components/onboarding/role-art.tsx`). La del ejemplo vive en un CDN ajeno: habria que
+declarar ese dominio en `next.config.mjs` y la tarjeta dependeria de un servidor que no es
+nuestro.
+
+**Los iconos de rol no son de lucide.** `Store` y `User` se cambiaron por dos marcas
+propias, `ShopArt` y `CustomerArt`, en la paleta del proyecto. Un glifo de contorno de
+libreria se ve igual en cualquier aplicacion; estas no. Van en una insignia `bg-fondo` en
+los dos tonos, porque son de varios colores y necesitan una superficie neutra.
 
 ## 1. El flujo
 
@@ -93,7 +100,7 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Face) => void }) {
             side="front"
             hidden={flipped}
             reduced={reduced}
-            icon={<Store className="h-6 w-6" aria-hidden="true" />}
+            icon={<ShopArt className="h-9 w-9" />}
             eyebrow="For shop owners"
             title="I run a business"
             description="Track inventory, sell on credit and keep every customer's payment history in one place."
@@ -108,7 +115,7 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Face) => void }) {
             side="back"
             hidden={!flipped}
             reduced={reduced}
-            icon={<User className="h-6 w-6" aria-hidden="true" />}
+            icon={<CustomerArt className="h-9 w-9" />}
             eyebrow="For customers"
             title="I'm a customer"
             description="See what you owe at each shop, your payment history and your credit score there."
