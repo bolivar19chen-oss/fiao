@@ -4,16 +4,18 @@ Indice. Si llegaste aca sin contexto, lee en este orden.
 
 ## Empezar por aca
 
-| Documento                                              | Que es                                                                    |
-| ------------------------------------------------------ | ------------------------------------------------------------------------- |
-| [../CLAUDE.md](../CLAUDE.md)                           | Reglas de trabajo, stack y convenciones. Se lee solo al abrir el proyecto |
-| [PLAN.md](PLAN.md)                                     | El plan completo: modulos, stack, 27 semanas, riesgos                     |
-| [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)           | Auth, rutas y pantallas. Hecho                                            |
-| [BLOQUE-1-MOTOR-CREDITO.md](BLOQUE-1-MOTOR-CREDITO.md) | Intereses, saldos, estados y puntaje. Hecho                               |
-| **[FASE-3-DASHBOARD.md](FASE-3-DASHBOARD.md)**         | **El trabajo que viene ahora.** Dashboard, graficos y lo que sigue        |
-| **[AUDITORIA.md](AUDITORIA.md)**                       | **Estado verificado del proyecto.** Hallazgos y lo que falta              |
+| Documento                                              | Que es                                                                      |
+| ------------------------------------------------------ | --------------------------------------------------------------------------- |
+| [../CLAUDE.md](../CLAUDE.md)                           | Reglas de trabajo, stack y convenciones. Se lee solo al abrir el proyecto   |
+| [PLAN.md](PLAN.md)                                     | El plan completo: modulos, stack, 27 semanas, riesgos                       |
+| [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md)           | Auth, rutas y pantallas. Hecho                                              |
+| [BLOQUE-1-MOTOR-CREDITO.md](BLOQUE-1-MOTOR-CREDITO.md) | Intereses, saldos, estados y puntaje. Hecho                                 |
+| [FASE-3-DASHBOARD.md](FASE-3-DASHBOARD.md)             | Dashboard implementado y siguientes entregas                                |
+| [AUDITORIA.md](AUDITORIA.md)                           | Auditoria historica del 17 con correcciones del 19                          |
+| [INVENTARIO.md](INVENTARIO.md)                         | Archivos clasificados, tokens y consumidores                                |
+| [INFORME-CODEX.md](INFORME-CODEX.md)                   | Revision del 19, evidencia ejecutada y anexo historico del informe anterior |
 
-| **[PULIDO.md](PULIDO.md)** | **El trabajo que viene ahora.** Cerrar los hallazgos de la auditoria |
+| [PULIDO.md](PULIDO.md) | Brief de pulido; colores manuales aun pendientes |
 
 ## Reglas del producto
 
@@ -43,6 +45,7 @@ antes de proponer cambiarlo.
 | [0005](adr/0005-calculo-en-typescript-python-como-herramienta.md) | Calculo en TypeScript; Python como oraculo | Aceptado              |
 | [0006](adr/0006-cuentas-de-cliente.md)                            | Cuentas de cliente por invitacion          | Aceptado              |
 | [0007](adr/0007-pagos-sin-custodia.md)                            | Pagos sin custodia de fondos               | Aceptado              |
+| [0008](adr/0008-foto-de-perfil.md)                                | Avatar privado de perfil                   | Aceptado              |
 
 ## Superado
 

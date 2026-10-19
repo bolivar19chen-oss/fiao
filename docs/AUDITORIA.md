@@ -1,7 +1,8 @@
 # FIA'O - Auditoria del proyecto
 
-Inspeccion del 2026-10-17. Cada afirmacion de este documento se comprobo ejecutando algo,
-no leyendo por encima. La columna **Evidencia** dice con que.
+Inspeccion historica del 2026-10-17. Las cifras y ejecuciones de esa fecha no certifican
+el codigo actual. Correcciones del 2026-10-19 al final y en
+[INFORME-CODEX.md](INFORME-CODEX.md), con comandos de esta sesion.
 
 ## 0. Como leer esto
 
@@ -92,14 +93,14 @@ contrasena seguro activado. Despues alinear `config.toml` para que diga lo mismo
 Todos son lo mismo: **el proyecto afirmaba algo falso sobre si mismo.** Es el tipo de error
 que mas caro sale en una evaluacion, porque quien lee confia en el documento.
 
-| ID     | Categoria | Afirmacion falsa                                                  | Realidad                                          |
-| ------ | --------- | ----------------------------------------------------------------- | ------------------------------------------------- |
-| `M-01` | DOC       | `README.md`: el dinero usa `decimal.js`                           | No se usa. El ADR 0005 lo prohibe                 |
-| `M-02` | DOC       | `README.md`: Playwright en el stack de pruebas                    | No esta instalado                                 |
-| `M-03` | DOC       | `README.md`: "Estado: Fase 2"                                     | Motor de credito y oraculo ya hechos              |
-| `M-04` | DOC       | `README.md`: "un solo lenguaje de punta a punta: TypeScript"      | Python vive en `tools/` desde el ADR 0005         |
-| `M-05` | DOC       | `docs/README.md`: el bloque 1 es "el trabajo que viene ahora"     | Terminado, 95 pruebas                             |
-| `M-06` | DOC       | `ONBOARDING.md`: `Loader2` y `Building2` no existen en lucide 1.x | **Existen los dos.** Comprobado contra el paquete |
+| ID     | Categoria | Afirmacion falsa                                                           | Realidad                                                                                   |
+| ------ | --------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `M-01` | DOC       | `README.md`: el dinero usa `decimal.js`                                    | No se usa. El ADR 0005 lo prohibe                                                          |
+| `M-02` | DOC       | `README.md`: Playwright pendiente; esta fila decia que no estaba instalado | Corregido el 2026-10-19: instalado, configurado y con dos specs en e2e/; no ejecutados hoy |
+| `M-03` | DOC       | `README.md`: "Estado: Fase 2"                                              | Motor de credito y oraculo ya hechos                                                       |
+| `M-04` | DOC       | `README.md`: "un solo lenguaje de punta a punta: TypeScript"               | Python vive en `tools/` desde el ADR 0005                                                  |
+| `M-05` | DOC       | `docs/README.md`: el bloque 1 es "el trabajo que viene ahora"              | Terminado, 95 pruebas                                                                      |
+| `M-06` | DOC       | `ONBOARDING.md`: `Loader2` y `Building2` no existen en lucide 1.x          | **Existen los dos.** Comprobado contra el paquete                                          |
 
 `M-06` es el peor de los seis: el documento decia "verificados en el paquete instalado" y
 no lo estaban. Una afirmacion falsa presentada como verificada es peor que no decir nada.
@@ -114,13 +115,14 @@ devuelve `true true`. El resto, comparando cada afirmacion contra el arbol de ar
 
 | ID     | Categoria | Hallazgo                                                                                                           | Estado  |
 | ------ | --------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| `B-01` | COD       | `src/lib/credit/oracle.test.ts` usa `any` dos veces con `eslint-disable`. CLAUDE.md dice no usar `any`             | ABIERTO |
+| `B-01` | COD       | `src/lib/credit/oracle.test.ts` usa `any` dos veces con `eslint-disable`; debilita el tipado del despachador       | ABIERTO |
 | `B-02` | COD       | `dailyBalances`, `verifyBalance`, `accrueInterest` y `accrueLateFee` se exportan y nadie los llama fuera del motor | ABIERTO |
 | `B-03` | CI        | CI no detecta migraciones locales sin aplicar, que es exactamente lo que fue `C-01`                                | ABIERTO |
 
 Sobre `B-01`: el `any` esta en un despachador dinamico sobre casos de forma heterogenea.
-Se arregla con una union discriminada por `op`. No es urgente pero es una regla del
-proyecto incumplida, y las reglas que se incumplen sin anotarlo dejan de ser reglas.
+Se arregla con una union discriminada por `op`. Correccion del 2026-10-19: el CLAUDE.md
+actual no contiene una prohibicion expresa de `any`; la version anterior de este informe
+le atribuia una regla inexistente. La mejora de tipado sigue siendo una propuesta.
 
 Sobre `B-02`: no es codigo muerto. Es superficie que entra en uso cuando exista la
 migracion de intereses. Se anota para que nadie la borre pensando que sobra.
@@ -130,31 +132,50 @@ migracion de intereses. Se anota para que nadie la borre pensando que sobra.
 Esto tambien es resultado de la inspeccion. Un informe que solo lista problemas no dice
 donde esta parado el proyecto.
 
-| Verificacion                                   | Resultado | Evidencia                                                         |
-| ---------------------------------------------- | --------- | ----------------------------------------------------------------- |
-| Secretos en el repositorio                     | Ninguno   | `git ls-files \| grep ^\.env` devuelve solo `.env.example`        |
-| RLS en las 11 tablas                           | Completa  | Cada `create table` tiene su `enable row level security`          |
-| Pureza del motor de credito                    | Intacta   | Sin `new Date()`, `Date.now()`, `@/lib/supabase` ni `process.env` |
-| Dependencias de npm dentro del motor           | Ninguna   | Solo importaciones relativas                                      |
-| Tipos generados en uso                         | Si        | `@shared/types/database` en los tres clientes de Supabase         |
-| Documentos fuera del indice                    | Ninguno   | Los 11 de `docs/` y los 7 ADR estan indexados                     |
-| Archivos sueltos sin rastrear en `src/`        | Ninguno   | `git status --untracked-files=all src/` vacio                     |
-| Contraste diferencial TypeScript contra Python | Coinciden | 25 de 25 casos                                                    |
-| Suite completa                                 | Verde     | 121 pruebas, 9 archivos                                           |
-| Formato, lint, tipos y build                   | Limpios   | `pnpm format:check`, `lint`, `typecheck`, `build`                 |
+| Verificacion                                   | Resultado                                  | Evidencia                                                         |
+| ---------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------- |
+| Secretos en el repositorio                     | Ninguno                                    | `git ls-files \| grep ^\.env` devuelve solo `.env.example`        |
+| RLS en las 11 tablas                           | Habilitada; no prueba aislamiento completo | Cada `create table` tiene su `enable row level security`          |
+| Pureza del motor de credito                    | Intacta                                    | Sin `new Date()`, `Date.now()`, `@/lib/supabase` ni `process.env` |
+| Dependencias de npm dentro del motor           | Ninguna                                    | Solo importaciones relativas                                      |
+| Tipos generados en uso                         | Si                                         | `@shared/types/database` en los tres clientes de Supabase         |
+| Documentos fuera del indice                    | Ninguno                                    | Los 11 de `docs/` y los 7 ADR estan indexados                     |
+| Archivos sueltos sin rastrear en `src/`        | Ninguno                                    | `git status --untracked-files=all src/` vacio                     |
+| Contraste diferencial TypeScript contra Python | Coinciden                                  | 25 de 25 casos                                                    |
+| Suite completa                                 | Verde                                      | 121 pruebas, 9 archivos                                           |
+| Formato, lint, tipos y build                   | Limpios                                    | `pnpm format:check`, `lint`, `typecheck`, `build`                 |
 
 ## 7. Lo que falta construir
 
 No son hallazgos: es alcance pendiente, ordenado por lo que desbloquea.
 
-| #   | Pieza                              | Por que importa                                                         |
-| --- | ---------------------------------- | ----------------------------------------------------------------------- |
-| 1   | Flujo de venta a credito           | Sin el, el motor calcula sobre datos que nadie puede cargar             |
-| 2   | Migracion de intereses             | Hoy el limite de credito va `null` y no hay tasas ni `interest_charges` |
-| 3   | `tools/seed/`                      | El generador de datos de demostracion                                   |
-| 4   | PWA y sincronizacion offline       | La segunda pieza tecnica dificil del proyecto                           |
-| 5   | Playwright                         | No hay pruebas de extremo a extremo                                     |
-| 6   | Respaldos con restauracion probada | Condicion acordada antes de cualquier usuario real                      |
+| #   | Pieza                                 | Por que importa                                                              |
+| --- | ------------------------------------- | ---------------------------------------------------------------------------- |
+| 1   | Flujo de venta a credito              | Sin el, el motor calcula sobre datos que nadie puede cargar                  |
+| 2   | Migracion de intereses                | Hoy el limite de credito va `null` y no hay tasas ni `interest_charges`      |
+| 3   | `tools/seed/`                         | El generador de datos de demostracion                                        |
+| 4   | PWA y sincronizacion offline          | La segunda pieza tecnica dificil del proyecto                                |
+| 5   | Playwright en CI y cobertura restante | Instalado y con dos specs; no hay paso e2e en CI. No ejecutado el 2026-10-19 |
+| 6   | Respaldos con restauracion probada    | Condicion acordada antes de cualquier usuario real                           |
 
 El 6 no es tecnicamente el ultimo: es el que bloquea la beta. Ver
 [NEGOCIO.md](NEGOCIO.md) seccion 5.
+
+## 8. Correcciones verificadas del 2026-10-19
+
+- `@playwright/test` esta declarado e instalado; `playwright.config.ts` y dos specs en
+  `e2e/` existen. Se corrigieron M-02 y README. No se ejecuto `pnpm e2e`: crea usuarios
+  y negocios reales en el Supabase vinculado.
+- El grep de hex de seis digitos en TSX deja un agujero: quedan **32 apariciones rgb
+  numericas**, **7 hex** y **6 constantes RGB de WebGL** fuera de colors.ts. Se contaron
+  tambien CSS y los rgb dentro de clases arbitrarias de Tailwind. Reproducible con
+  `node scripts/audit-inventory.mjs`; detalle en [INVENTARIO.md](INVENTARIO.md).
+- Al leer este archivo antes de editarlo no habia una anotacion de ese agujero rgb;
+  `PULIDO.md` solo proponia el grep de hex. La evidencia actual queda documentada aqui.
+- La lista "documentos fuera del indice: ninguno" y las cifras 121/9 son evidencia
+  historica. El indice actual incluye ADR 0008, inventario e informe; las pruebas de hoy
+  se registran en INFORME-CODEX.md.
+- Consulta de solo lectura al catalogo remoto: diez migraciones registradas y RLS activa
+  en once tablas publicas. Se confirmaron tambien permisos de UPDATE sobre balance_cents
+  y SELECT sobre notes para authenticated. Habilitar RLS no garantiza inmutabilidad ni
+  privacidad de columnas. Hallazgos y propuestas en el informe actual.

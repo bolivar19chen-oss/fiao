@@ -7,14 +7,14 @@ Si tomas este documento a mitad, mira primero `git log` para ver que ya esta hec
 
 ## Estado
 
-| Punto                              | Estado                 |
-| ---------------------------------- | ---------------------- |
-| 1. D1 - colores escritos a mano    | **Hecho**              |
-| 2. C1 - estilo de input repetido   | **Hecho**              |
-| 3. D2 - dashboard sin `PageHeader` | **Hecho**              |
-| 4. C2 - pruebas de componente      | **Hecho** (123 -> 145) |
-| 5. Modo oscuro                     | **Hecho** (DISENO.md)  |
-| Playwright / end-to-end            | **Hecho** (`pnpm e2e`) |
+| Punto                              | Estado                                                                |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| 1. D1 - colores escritos a mano    | **Parcial**: 32 rgb, 7 hex y 6 RGB WebGL pendientes                   |
+| 2. C1 - estilo de input repetido   | **Hecho**                                                             |
+| 3. D2 - dashboard sin `PageHeader` | **Hecho**                                                             |
+| 4. C2 - pruebas de componente      | **Hecho** (123 -> 145)                                                |
+| 5. Modo oscuro                     | **Hecho** (DISENO.md)                                                 |
+| Playwright / end-to-end            | Instalado y con dos specs; ejecucion manual, no corrida el 2026-10-19 |
 
 Hallazgo extra que aparecio al escribir las pruebas: `Field` envolvia al input dentro del
 `<label>`, asi que el nombre accesible se comia tambien la pista y un lector de pantalla
@@ -23,9 +23,9 @@ leia "Reference Reference from your Yappy app.". Arreglado con `htmlFor` y
 
 ## 0. El contexto que importa
 
-**Nadie ha visto nunca esta interfaz funcionando.** Hay 123 pruebas y las 123 son del
-motor puro: cero pruebas de componente, cero end-to-end, y ninguna pantalla autenticada
-se ha renderizado con datos reales. Compilar no es funcionar.
+**Contexto inicial del brief, ya superado:** entonces no habia pruebas de componente ni
+end-to-end. Hoy hay pruebas de componente y dos specs de Playwright. La ejecucion actual
+de Vitest esta en [INFORME-CODEX.md](INFORME-CODEX.md); una cifra guardada no prueba el codigo de hoy.
 
 Por eso el punto 4 es el que mas mueve la aguja, no los de diseno.
 
@@ -34,13 +34,16 @@ Por eso el punto 4 es el que mas mueve la aguja, no los de diseno.
 `docs/DISENO.md` dice textual: _"Ningun color se escribe a mano en un componente. Si hace
 falta un tono que no esta ahi, se agrega ahi primero."_
 
-`src/components/app/customer-folder.tsx` tiene **8 valores hex escritos a mano**. Es el
-unico archivo de la aplicacion que rompe la regla.
+Los ocho hex de `customer-folder.tsx` se sustituyeron por variables, pero la limpieza
+quedo incompleta: ese archivo conserva tres rgb numericos. En todo `src/`, fuera de
+colors.ts, quedan 32 rgb, 7 hex y 6 tuplas WebGL. No es el unico archivo que rompe la
+regla. Detalle y conteo reproducible en [INVENTARIO.md](INVENTARIO.md).
 
 Que hacer: mover esos tonos a `src/lib/colors.ts` y consumirlos. El componente usa un
 bloque `<style>` con CSS plano, asi que no puede leer clases de Tailwind: los valores
 entran como variables CSS desde el `style` del elemento raiz, calculadas en el componente
-a partir de `BRAND` y `ESTADO`.
+a partir de tokens. La implementacion actual lee variables CSS de TEMA; los apartados
+2, 3 y 4 conservan el brief original, cuyas tareas figuran hechas en la tabla de estado.
 
 ## 2. C1 - El estilo de input repetido (esbeltez 3 -> 4.5)
 
@@ -80,17 +83,15 @@ Lo minimo que hay que cubrir, una prueba por comportamiento, no por linea:
 Regla: probar **lo que el usuario ve y puede hacer**, nunca detalles internos. Nada de
 comprobar clases de CSS.
 
-**Playwright sigue sin instalar** (su metadata no bajaba con la conexion de ese dia). Los
-end-to-end quedan fuera de este pulido; entran con su propia tarea.
+**Actualizacion 2026-10-19:** Playwright esta instalado y configurado con dos specs. Su
+ejecucion crea datos reales en Supabase; no se corrio en esta revision ni forma parte del CI.
 
 ## 5. Lo que NO entra en este pulido
 
-**El modo oscuro.** `src/lib/colors.ts` define los tonos oscuros y no hay **ni una clase
-`dark:`** en toda la aplicacion. Implementarlo bien toca todos los componentes y merece su
-propia sesion; hacerlo a la carrera junto con lo demas sale mal.
-
-Hasta entonces esos tokens son lineas que nadie ejecuta. Es deuda conocida y esta
-anotada, no olvidada.
+**El modo oscuro ya esta implementado.** TEMA alimenta variables CSS en tailwind.config.ts,
+la preferencia se aplica en layout.tsx antes del pintado y ThemeToggle permite cambiarla.
+No usa clases `dark:`. Solo el par `TEMA["marron-claro"]` carece de consumidor visual;
+no corresponde describir todos los tokens oscuros como inactivos.
 
 ## 6. Como saber que terminaste
 
@@ -104,6 +105,9 @@ Y ademas, a mano:
 - `grep -rc "rounded-2xl border border-marron/10 bg-white/70" src/ --include=*.tsx` solo
   aparece en `ui.tsx`
 - El numero de pruebas subio bien por encima de 123
+
+El primer grep es una comprobacion historica insuficiente: no detecta CSS, rgb ni hex
+abreviados. Para esos casos usar `node scripts/audit-inventory.mjs`.
 
 **No correr `pnpm build` con el servidor de desarrollo arriba.** Ya no se pisan (el build
 escribe en `.next-build`), pero bajarlo sigue siendo lo prolijo.
