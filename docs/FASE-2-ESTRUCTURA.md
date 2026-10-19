@@ -7,7 +7,11 @@ Decisiones que ya estan tomadas y no se rediscuten:
 [ADR 0002](adr/0002-credito-por-tienda.md), [ADR 0003](adr/0003-sin-cpp.md),
 [MODELO-CREDITO.md](MODELO-CREDITO.md), [PLAN.md](PLAN.md).
 
-## 0. Estado actual
+## 0. Estado inicial del brief (historico)
+
+Este apartado describe el punto de partida de la fase, no el estado actual. Hoy existen
+autenticacion real, clientes Supabase y `src/middleware.ts`. Estado de esta revision en
+[INFORME-CODEX.md](INFORME-CODEX.md).
 
 - Next 15.5.28, React 19, Tailwind, App Router. 53 archivos.
 - Landing lista: `/`, `/about`, `/services`, `/privacy`.

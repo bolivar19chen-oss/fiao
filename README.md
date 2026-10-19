@@ -14,8 +14,8 @@ aplicacion, rutas de clientes, inventario, ventas, reportes y ajustes, schema co
 `supabase/migrations/`, el motor de credito en `src/lib/credit/` y su oraculo Python en
 `tools/`.
 
-Falta: flujo de venta a credito desde la interfaz, migracion de intereses, PWA offline y
-Playwright. El estado verificado campo por campo esta en
+Falta: flujo de venta a credito desde la interfaz, migracion de intereses y PWA offline.
+Playwright esta instalado y hay specs en `e2e/`; no corre en CI. El estado esta en
 [docs/AUDITORIA.md](docs/AUDITORIA.md).
 
 ### Puesta en marcha
@@ -50,16 +50,16 @@ la instalacion global por npm no esta soportada y no figura en winget.
 
 ## Stack
 
-| Capa            | Tecnologia                                          |
-| --------------- | --------------------------------------------------- |
-| Frontend        | Next.js 15 (App Router) + TypeScript + Tailwind CSS |
-| Backend         | Supabase Edge Functions (TypeScript)                |
-| Base de datos   | Supabase (PostgreSQL + Auth + Row Level Security)   |
-| Dinero          | Enteros en centavos, sin librerias                  |
-| Graficas        | Recharts                                            |
-| Movil / offline | PWA (Workbox / next-pwa)                            |
-| CI/CD           | GitHub Actions + Vercel                             |
-| Pruebas         | Vitest + Testing Library (Playwright: pendiente)    |
+| Capa            | Tecnologia                                                          |
+| --------------- | ------------------------------------------------------------------- |
+| Frontend        | Next.js 15 (App Router) + TypeScript + Tailwind CSS                 |
+| Backend         | Next.js Server Actions y RPCs PostgreSQL (Edge Functions previstas) |
+| Base de datos   | Supabase (PostgreSQL + Auth + Row Level Security)                   |
+| Dinero          | Enteros en centavos, sin librerias                                  |
+| Graficas        | Recharts                                                            |
+| Movil / offline | PWA offline prevista; Workbox / next-pwa sin instalar               |
+| CI/CD           | GitHub Actions + Vercel                                             |
+| Pruebas         | Vitest + Testing Library + Playwright (`e2e/`, ejecucion manual)    |
 
 La aplicacion entera es TypeScript. Python vive solo en `tools/`, fuera del camino de
 ejecucion: un oraculo que verifica el motor de credito en CI. Nunca se importa desde

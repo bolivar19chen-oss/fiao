@@ -59,17 +59,21 @@ pueden rehacer con divs como la barra de estado, y el peso vuelve a donde estaba
    Sin esto el dashboard muestra ceros para siempre, porque no hay forma de cargar una
    venta sin SQL.
 2. **Migracion de intereses** ([MODELO-CREDITO.md](MODELO-CREDITO.md) seccion 5): tasas,
-   dias de gracia, limite de credito, cargos de interes e idempotencia en `payments`.
+   dias de gracia, limite de credito y cargos de interes. La idempotencia de `payments`
+   ya existe en `20261018120000_payment_methods.sql`.
    Desbloquea el tercer cubo de estado y el calculo real de intereses.
-3. **Registrar abonos** desde la ficha de la venta.
+3. **Registrar abonos: implementado** en la ficha de la venta, con accion y RPC. La
+   verificacion del cobro real requiere una prueba especifica; ver INFORME-CODEX.md.
 4. **La pantalla de reportes**, hoy vacia.
-5. **Modo oscuro.** Los tokens ya estan en `src/lib/colors.ts`; falta aplicarlos.
-6. **El lado del cliente (`/me`)**: estado de cuenta por tienda con su puntaje.
+5. **Modo oscuro: implementado** mediante TEMA, variables CSS y ThemeToggle. No necesita
+   clases `dark:`. Quedan colores manuales por centralizar; ver INVENTARIO.md.
+6. **Completar el lado del cliente:** `/me` ya lista cuentas y saldos; faltan el detalle
+   de movimientos y el puntaje por tienda. No hay ruta `/me/[businessId]`.
 
 ## 5. Como verificar que algo de esto funciona
 
-No alcanza con que compile. La base no tiene ningun negocio ni cliente, asi que el
-dashboard se ve en ceros y los graficos no se dibujan.
+No alcanza con que compile. Si un negocio no tiene ventas, el dashboard muestra ceros
+y no dibuja graficos. Este documento no certifica cuantos registros hay hoy en la nube.
 
 Para probarlo de verdad: registrarse como negocio, crear dos o tres clientes, y cargar
 ventas con cuotas. Hasta que exista el flujo de venta (punto 1), eso se hace por SQL.
