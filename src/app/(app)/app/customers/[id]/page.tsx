@@ -74,7 +74,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           ) : (
             <Table head={["Date", "Total", "Balance"]}>
               {sales.map((s) => (
-                <tr key={s.id} className="hover:bg-fondo/50">
+                <tr key={s.id} className="hover:bg-papel">
                   <PrimaryCell href={`/app/sales/${s.id}`} title={formatDate(s.created_at)} />
                   <td className="px-2 py-3 text-right tabular-nums">{formatCents(s.total_cents)}</td>
                   <td className="px-2 py-3 text-right font-semibold tabular-nums">{formatCents(s.balance_cents)}</td>
