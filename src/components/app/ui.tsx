@@ -35,7 +35,13 @@ export function PageHeader({
 }
 
 export function Card({ className = "", children }: { className?: string; children: React.ReactNode }) {
-  return <section className={`glass rounded-[1.75rem] p-5 sm:p-6 ${className}`}>{children}</section>
+  // Superficie limpia: separan el tono y el aire, no una sombra. El cristal se queda en
+  // el sitio publico, donde hay una aurora detras que lo justifica.
+  return (
+    <section className={`rounded-[1.75rem] border border-marron/10 bg-fondo p-6 sm:p-7 ${className}`}>
+      {children}
+    </section>
+  )
 }
 
 export function CardTitle({ children }: { children: React.ReactNode }) {
@@ -116,7 +122,7 @@ export function Badge({ tone, children }: { tone: "red" | "yellow" | "neutral"; 
 // agrega aca: escribir las clases otra vez en una pantalla obliga a acordarse de varios
 // archivos el dia que cambie el foco o el radio.
 const FIELD_BASE =
-  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-fondo/70 text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-papel text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
 
 const FIELD_LOOK = {
   default: "h-12 px-4 text-[15px]",

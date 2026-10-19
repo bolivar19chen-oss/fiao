@@ -48,7 +48,7 @@ const FACTORS: { key: keyof ScoreBreakdown; label: string; max: number }[] = [
 export function CreditScore({ score, breakdown }: { score: number | null; breakdown: ScoreBreakdown }) {
   if (score === null) {
     return (
-      <div className="rounded-2xl border border-marron/10 bg-fondo/50 p-4">
+      <div className="rounded-2xl border border-marron/10 bg-papel p-4">
         <p className="text-sm font-medium text-marron">Not enough history yet</p>
         <p className="mt-1 text-xs leading-relaxed text-marron/60">
           A score appears once this customer has credit sales with a payment schedule.
