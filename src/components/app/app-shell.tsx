@@ -4,7 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ChartColumn, LayoutDashboard, LogOut, Package, ReceiptText, Settings, Users } from "lucide-react"
 import { Logo } from "@/components/layout/logo"
-import { Aurora } from "@/components/ui/aurora"
 import { signOut } from "./actions"
 
 const nav = [
@@ -24,13 +23,9 @@ export function AppShell({ businessName, children }: { businessName: string; chi
   const isActive = (href: string) => (href === "/app" ? pathname === href : pathname.startsWith(href))
 
   return (
-    <div className="relative isolate min-h-[100dvh]">
-      <div className="fixed inset-0 -z-10" aria-hidden>
-        <Aurora />
-      </div>
-
+    <div className="relative isolate min-h-[100dvh] bg-papel">
       {/* Escritorio */}
-      <aside className="fixed inset-y-3 left-3 z-40 hidden w-60 flex-col rounded-[1.75rem] p-4 md:flex glass">
+      <aside className="fixed inset-y-3 left-3 z-40 hidden w-60 flex-col rounded-[1.75rem] border border-marron/10 bg-fondo p-4 md:flex">
         <Link href="/app" aria-label="Dashboard" className="px-2 pt-1">
           <Logo />
         </Link>
@@ -46,7 +41,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`flex h-11 items-center gap-3 rounded-full px-4 text-sm font-medium transition ${
-                  active ? "btn-glass-red" : "text-marron/75 hover:bg-fondo/70 hover:text-marron"
+                  active ? "btn-glass-red" : "text-marron/75 hover:bg-papel hover:text-marron"
                 }`}
               >
                 <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
@@ -58,7 +53,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
         <form action={signOut} className="mt-auto">
           <button
             type="submit"
-            className="flex h-11 w-full items-center gap-3 rounded-full px-4 text-sm font-medium text-marron/75 transition hover:bg-fondo/70 hover:text-marron"
+            className="flex h-11 w-full items-center gap-3 rounded-full px-4 text-sm font-medium text-marron/75 transition hover:bg-papel hover:text-marron"
           >
             <LogOut className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
             Log out
@@ -68,7 +63,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
 
       {/* Movil: arriba negocio y salir, abajo la navegacion */}
       <header className="sticky top-0 z-40 px-3 pt-3 md:hidden">
-        <div className="glass flex h-14 items-center justify-between gap-3 rounded-full pl-3 pr-1.5">
+        <div className="flex h-14 items-center justify-between gap-3 rounded-full border border-marron/10 bg-fondo pl-3 pr-1.5">
           <Link href="/app" aria-label="Dashboard" className="flex min-w-0 items-center gap-2">
             <Logo />
             <span title={businessName} className="truncate text-sm font-medium text-marron/60">
@@ -84,7 +79,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
       </header>
 
       <nav
-        className="glass fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 rounded-[1.5rem] p-1.5 md:hidden"
+        className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 rounded-[1.5rem] border border-marron/10 bg-fondo p-1.5 md:hidden"
         style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}
         aria-label="App"
       >

@@ -87,7 +87,7 @@ export default async function CustomersPage() {
         ) : (
           <Table head={["Customer", "Status", "Balance"]}>
             {customers.map((c) => (
-              <tr key={c.id} className="hover:bg-fondo/50">
+              <tr key={c.id} className="hover:bg-papel">
                 <PrimaryCell href={`/app/customers/${c.id}`} title={c.name} sub={c.phone ?? undefined} />
                 <td className="px-2 py-3">
                   <StatusBadge status={c.status} />

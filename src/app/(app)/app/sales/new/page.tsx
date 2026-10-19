@@ -20,7 +20,7 @@ export default function NewSalePage() {
       <Card>
         <ol className="flex flex-col gap-3">
           {steps.map(({ icon: Icon, title, body }, i) => (
-            <li key={title} className="flex items-center gap-4 rounded-2xl bg-fondo/50 p-4">
+            <li key={title} className="flex items-center gap-4 rounded-2xl bg-papel p-4">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-rojo/10 text-rojo">
                 <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
               </span>
