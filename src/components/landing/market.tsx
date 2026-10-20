@@ -1,8 +1,8 @@
+import { maxStores, provinces, totalStores } from "@/data/panama"
+import { formatCount } from "@/lib/format"
 import { CategoryChart } from "@/components/landing/category-chart"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { SourceNote } from "@/components/ui/source-note"
-import { maxStores, provinces, totalStores } from "@/data/panama"
-import { formatCount } from "@/lib/format"
 
 export function Market() {
   return (
