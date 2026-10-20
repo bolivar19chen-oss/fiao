@@ -51,7 +51,7 @@ export function Hero() {
                 </div>
               </div>
               <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/65">
-                {["Works offline", "Installs on any phone", "Data isolated per store"].map((item) => (
+                {["Works in any phone browser", "Nothing to install", "Data isolated per store"].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-rojo" strokeWidth={2.5} aria-hidden />
                     {item}

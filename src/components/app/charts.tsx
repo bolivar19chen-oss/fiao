@@ -8,7 +8,9 @@ import { formatCents } from "@/lib/format"
 
 // Reglas que vienen de la guia de visualizacion y de docs/DISENO.md:
 // - Los colores de estado son reservados y SIEMPRE van con icono y etiqueta, nunca solos.
-// - Nada de torta: parte-de-un-todo va en barra apilada horizontal.
+// - Parte-de-un-todo va en barra apilada horizontal. La dona de abajo es la unica
+//   excepcion, pedida por el usuario y anotada en su sitio: dos segmentos y el total
+//   escrito en el centro, para no obligar a comparar angulos.
 // - Una sola serie no lleva leyenda; el titulo ya dice que es.
 // - El texto va en tinta, nunca del color de la serie.
 // - Un grafico en pantalla es interactivo: lleva capa de hover.
