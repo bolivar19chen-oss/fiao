@@ -1,8 +1,9 @@
 "use client"
 
-import { ArrowLeft, ArrowRight, LoaderCircle, Store } from "lucide-react"
-import Link from "next/link"
 import { useActionState } from "react"
+import Link from "next/link"
+import { ArrowLeft, ArrowRight, LoaderCircle, Store } from "lucide-react"
+
 import { Field } from "@/components/app/ui"
 import { redeemInvite, type FormState } from "@/app/onboarding/actions"
 
