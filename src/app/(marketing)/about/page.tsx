@@ -54,7 +54,11 @@ const roadmap = [
   {
     stage: "Later",
     title: "Credit that grows the business",
-    items: ["Customer credit scores", "Automatic payment reminders", "A beta with real stores across Panama"],
+    items: [
+      "A credit score for every customer of your store",
+      "Automatic payment reminders",
+      "A beta with real stores across Panama",
+    ],
   },
 ]
 

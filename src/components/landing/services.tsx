@@ -7,7 +7,7 @@ const services = [
   { title: "Inventory", body: "Stock levels, product catalog and low-stock alerts before the shelf runs empty." },
   { title: "Credit sales", body: "Installment schedules and partial payments that add up to the cent." },
   {
-    title: "Credit score",
+    title: "Store credit score",
     body: "A transparent score for every customer, built from punctuality, debt ratio and history.",
   },
   { title: "Reports", body: "Portfolio, overdue accounts and cash flow in interactive dashboards." },
