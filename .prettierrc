@@ -1,4 +1,19 @@
 {
   "semi": false,
-  "printWidth": 120
+  "printWidth": 120,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "importOrder": [
+    "^(react|react-dom)(/.*)?$",
+    "^next(/.*)?$",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^(@/)?shared/(.*)$",
+    "^@/data/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/components/(.*)$",
+    "^@/(.*)$",
+    "",
+    "^[.]"
+  ],
+  "importOrderTypeScriptVersion": "5.9.0"
 }

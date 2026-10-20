@@ -1,8 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { ArrowRight, IdCard, RefreshCw } from "lucide-react"
-import { useState } from "react"
+
 import { CardBanner, CardBody, CardHeading, CardNote, OnboardingCard } from "./onboarding-card"
 import { CustomerArt, ShopArt } from "./role-art"
 

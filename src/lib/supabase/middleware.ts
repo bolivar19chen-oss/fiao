@@ -1,6 +1,6 @@
-import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 import type { Database } from "@shared/types/database"
+import { createServerClient } from "@supabase/ssr"
 
 // Refresca la sesion y aplica las redirecciones que solo dependen de tener sesion o no.
 // La pertenencia a un negocio NO se comprueba aca: costaria una consulta a la base en cada

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Coins, Compass, Eye, HeartHandshake, KeyRound, Sparkles } from "lucide-react"
+
 import { Cta } from "@/components/landing/cta"
 import { IconTile } from "@/components/ui/icon-tile"
 import { PageHero } from "@/components/ui/page-hero"
