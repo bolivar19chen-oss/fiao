@@ -1,8 +1,9 @@
 import { MapPin } from "lucide-react"
-import { Globe, type GlobeArc, type GlobeMarker } from "@/components/landing/globe"
-import { SourceNote } from "@/components/ui/source-note"
+
 import { maxStores, provinces, totalStores } from "@/data/panama"
 import { formatCount } from "@/lib/format"
+import { Globe, type GlobeArc, type GlobeMarker } from "@/components/landing/globe"
+import { SourceNote } from "@/components/ui/source-note"
 
 // Ciudad de Panama: centro del globo y origen de los arcos.
 const hq = provinces.find((p) => p.id === "pa")!

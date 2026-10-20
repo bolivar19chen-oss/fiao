@@ -1,8 +1,9 @@
 "use client"
 
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { BRAND, SERIE } from "@/lib/colors"
+
 import { categories } from "@/data/panama"
+import { BRAND, SERIE } from "@/lib/colors"
 
 const COLORS = [...SERIE, BRAND.marron.claro]
 
