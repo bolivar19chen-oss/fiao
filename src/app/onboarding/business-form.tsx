@@ -1,5 +1,6 @@
 "use client"
 
+import { useActionState, useState } from "react"
 import { motion } from "framer-motion"
 import {
   ArrowLeft,
@@ -15,7 +16,8 @@ import {
   Store,
   User,
 } from "lucide-react"
-import { useActionState, useState } from "react"
+
+import { AvatarField } from "@/components/onboarding/avatar-field"
 import {
   CardBanner,
   CardBody,
@@ -25,8 +27,8 @@ import {
   FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
-import { AvatarField } from "@/components/onboarding/avatar-field"
 import { ShopArt } from "@/components/onboarding/role-art"
+
 import { completeBusiness, type FormState } from "./actions"
 
 export function BusinessForm({ onBack }: { onBack: () => void }) {

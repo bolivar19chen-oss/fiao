@@ -1,6 +1,8 @@
 "use server"
 
 import { redirect } from "next/navigation"
+
+import { PROVINCES } from "@/data/stores"
 import { createClient } from "@/lib/supabase/server"
 
 export type FormState = { error: string } | null
@@ -43,6 +45,11 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
   // insert fallaba con un mensaje que no dice nada.
   if (!auth) return { error: "Your session expired. Log in again." }
 
+  // La provincia decide en que tiendas puede pedir fiado, asi que se valida aca y no
+  // solo en el `check` de la base: el navegador puede mandar cualquier cosa.
+  const province = field(data, "province")
+  if (!PROVINCES.includes(province)) return { error: "Choose your province." }
+
   const { error } = await supabase.from("profiles").insert({
     user_id: auth.claims.sub,
     role: "customer",
@@ -50,6 +57,7 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
     national_id: field(data, "national_id"),
     phone: field(data, "phone"),
     date_of_birth: field(data, "date_of_birth"),
+    province,
   })
 
   if (error) return { error: "We couldn't save your details. Try again." }

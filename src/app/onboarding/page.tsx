@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { Logo } from "@/components/layout/logo"
-import { Aurora } from "@/components/ui/aurora"
+
 import { getCurrentBusiness } from "@/lib/business"
 import { getCurrentProfile } from "@/lib/profile"
 import { createClient } from "@/lib/supabase/server"
+import { Logo } from "@/components/layout/logo"
+import { Aurora } from "@/components/ui/aurora"
+
 import { OnboardingFlow } from "./onboarding-flow"
 
 export const metadata: Metadata = { title: "Welcome - FIA'O" }
