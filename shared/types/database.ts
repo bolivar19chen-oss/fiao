@@ -1,3 +1,9 @@
+// Dos cosas estan escritas a mano porque sus migraciones todavia no se han aplicado:
+//   - `profiles.province`        (migracion 20261020120000)
+//   - `my_shop_names()`          (migracion 20261020140000)
+// Al correr `supabase gen types` otra vez este archivo se regenera y las dos deben
+// seguir aqui. Si desaparecen, es que las migraciones no se aplicaron.
+
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -350,6 +356,7 @@ export type Database = {
           full_name: string
           national_id: string
           phone: string
+          province: string | null
           role: string
           user_id: string
         }
@@ -359,6 +366,7 @@ export type Database = {
           full_name: string
           national_id: string
           phone: string
+          province?: string | null
           role: string
           user_id: string
         }
@@ -368,6 +376,7 @@ export type Database = {
           full_name?: string
           national_id?: string
           phone?: string
+          province?: string | null
           role?: string
           user_id?: string
         }
@@ -500,6 +509,7 @@ export type Database = {
       is_member: { Args: { p_business_id: string }; Returns: boolean }
       is_owner: { Args: { p_business_id: string }; Returns: boolean }
       is_sale_customer: { Args: { p_sale_id: string }; Returns: boolean }
+      my_shop_names: { Args: Record<string, never>; Returns: { business_id: string; name: string }[] }
       redeem_customer_invite: { Args: { p_code: string }; Returns: string }
       register_payment: {
         Args: {
