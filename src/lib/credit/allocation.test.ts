@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { settleInstallments, type PaymentEntry } from "./allocation"
 
 const due = (dueDate: string, amountCents: number) => ({ dueDate, amountCents })

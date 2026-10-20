@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { centsToInput, formatCents, formatCount, formatDate, parseCents } from "./format"
 
 describe("formatCents", () => {

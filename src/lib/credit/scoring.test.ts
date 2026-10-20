@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { creditScore, type ScoreInput } from "./scoring"
 import type { Installment } from "./types"
 
