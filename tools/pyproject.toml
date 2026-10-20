@@ -12,4 +12,4 @@ dev = ["pytest>=8", "hypothesis>=6"]
 testpaths = ["oracle/tests"]
 
 [tool.setuptools]
-packages = ["oracle"]
+packages = ["oracle", "seed"]
