@@ -13,9 +13,9 @@ const services = [
   { title: "Reports", body: "Portfolio, overdue accounts and cash flow in interactive dashboards." },
   {
     title: "Works offline",
-    body: "Keep selling without signal. Everything syncs and is validated once you are back online.",
+    body: "Coming next. Keep selling without signal, with everything validated on the server once you are back online.",
   },
-  { title: "Reminders", body: "Automatic payment reminders, so nobody has to chase customers." },
+  { title: "Reminders", body: "Coming next. Automatic payment reminders, so nobody has to chase customers." },
 ]
 
 // Lista editorial numerada; el detalle de cada modulo vive en /services.

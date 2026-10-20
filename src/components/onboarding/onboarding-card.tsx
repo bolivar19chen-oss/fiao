@@ -137,24 +137,49 @@ export function CardNote({ icon, title, note }: { icon: ReactNode; title: string
  * visible: un placeholder no es un label, y al escribir desaparece la unica pista de
  * que pedia ese campo.
  */
+const slug = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+
+/**
+ * Campo con etiqueta, icono y pista.
+ *
+ * La etiqueta se ata con `htmlFor` y no envolviendo al input. Envuelto, el nombre
+ * accesible se comia tambien la pista y un lector de pantalla leia "Reference Reference
+ * from your Yappy app.". La pista va aparte con `aria-describedby`, que es lo que
+ * corresponde: describe, no nombra. Mismo arreglo que ya tienen `Field` y `CardSelect`.
+ */
 export function CardField({
   label,
   icon,
   hint,
   ...input
 }: { label: string; icon: ReactNode; hint?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+  const id = input.id ?? input.name ?? slug(label)
+  const hintId = `${id}-hint`
+
   return (
-    <motion.label variants={FADE_UP} className="block text-left">
-      <span className="text-sm font-medium text-marron">{label}</span>
+    <motion.div variants={FADE_UP} className="block text-left">
+      <label htmlFor={id} className="text-sm font-medium text-marron">
+        {label}
+      </label>
       <span className="relative mt-1.5 block">
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/45">{icon}</span>
         <input
           {...input}
+          id={id}
+          aria-describedby={hint ? hintId : undefined}
           className="h-11 w-full rounded-lg border border-marron/10 bg-fondo/70 pl-9 pr-3 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
         />
       </span>
-      {hint && <span className="mt-1 block text-xs text-marron/55">{hint}</span>}
-    </motion.label>
+      {hint && (
+        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+          {hint}
+        </span>
+      )}
+    </motion.div>
   )
 }
 
@@ -188,7 +213,7 @@ export function CardSelect({
   options: string[]
   placeholder: string
 } & React.SelectHTMLAttributes<HTMLSelectElement>) {
-  const id = select.id ?? select.name
+  const id = select.id ?? select.name ?? slug(label)
   const hintId = `${id}-hint`
 
   return (
