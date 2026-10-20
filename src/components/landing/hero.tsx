@@ -28,7 +28,7 @@ export function Hero() {
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-marron/70">
               FIA&apos;O turns the store notebook into a secure ledger: inventory, credit sales, payment history and a
-              credit score for every customer, on any phone.
+              credit score for every customer of your store, on any phone.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/login" className="btn btn-glass-red h-12 px-6 text-[15px]">
@@ -107,7 +107,7 @@ function HeroPreview() {
       <div className="glass absolute -left-6 -top-8 hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex">
         <ScoreRing score={82} />
         <div>
-          <div className="text-xs text-marron/55">Credit score</div>
+          <div className="text-xs text-marron/55">Store credit score</div>
           <div className="text-sm font-semibold">Rosa M. · Good</div>
         </div>
       </div>

@@ -15,7 +15,10 @@ La diferencia no es de interfaz. Es la misma pregunta que resolvio
 
 ## Decision
 
-**La tienda fija sus propios terminos. FIA'O no trae ninguno.**
+**El negocio es el acreedor. Fija sus propios terminos y FIA'O no trae ninguno.**
+
+Esa es la frase que ordena todo lo demas: quien presta es la tienda, quien debe es su
+cliente, y el acuerdo es entre ellos dos. FIA'O no es parte. Registra.
 
 Los valores por defecto son cero: un negocio que no cobra intereses es un caso valido, y
 es el mas comun en una tienda de barrio. Cero no es "sin configurar", es una respuesta.
@@ -32,7 +35,8 @@ convierte al software en parte del contrato:
   Un software que las propone asume una responsabilidad que no le toca y que no puede
   mantener al dia.
 - **El que responde es el que cobra.** Si manana un cliente reclama una tasa, la discusion
-  es con la tienda, que fue quien la puso, no con la herramienta donde quedo anotada.
+  es con la tienda, que fue quien la puso, no con la herramienta donde quedo anotada. Al
+  reves seria peor: FIA'O discutiendo condiciones con cada negocio, una por una.
 
 ### Donde viven
 
@@ -59,6 +63,22 @@ condicion del negocio sino una decision sobre esa persona.
 **No valida que la tasa sea legal.** No hay una tabla de topes por pais y no la va a
 haber: estaria desactualizada el dia que se escriba, y acertar a medias en esto es peor
 que no intentarlo. La interfaz lo dice donde se configura.
+
+## Ser un puente no es automatico
+
+La posicion se sostiene si el producto se comporta como un puente en todo, no solo en el
+formulario de terminos. Tres sitios donde se pierde sin darse cuenta:
+
+- **El puntaje.** Un puntaje que cruzara tiendas convertiria a FIA'O en un buro de
+  credito, que es actividad regulada aparte. [ADR 0002](0002-credito-por-tienda.md) ya lo
+  cerro: el puntaje es reputacion dentro de esa tienda. Su consecuencia practica es que
+  la interfaz tiene que decir "Store credit score" y no "Credit score", porque un puntaje
+  a secas promete lo que no es. Esa regla estaba escrita y aplicada en un solo sitio; se
+  completo al aceptar este ADR.
+- **Los avisos al deudor.** Cuando existan los recordatorios de cuota, salen en nombre de
+  la tienda, nunca en el de FIA'O. Un aviso de cobro firmado por FIA'O es FIA'O cobrando.
+- **La voz de la interfaz.** Las pantallas del cliente dicen lo que la tienda registro
+  ("what your shop recorded"), no lo que FIA'O determina.
 
 ## Consecuencias
 
