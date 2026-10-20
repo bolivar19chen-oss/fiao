@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { ChartColumn } from "lucide-react"
+
 import { Card, EmptyState, PageHeader } from "@/components/app/ui"
 
 export const metadata: Metadata = { title: "Reports - FIA'O" }

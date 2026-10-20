@@ -1,10 +1,12 @@
 "use client"
 
+import { useActionState, useEffect, useId, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { Banknote, Check, CreditCard, LoaderCircle, Smartphone, Wallet } from "lucide-react"
-import { useActionState, useEffect, useId, useState } from "react"
-import { Card, CardTitle, Field } from "@/components/app/ui"
+
 import { centsToInput } from "@/lib/format"
+import { Card, CardTitle, Field } from "@/components/app/ui"
+
 import { recordPayment, type Method, type PaymentState } from "./actions"
 
 const TABS: { id: Method; label: string; Icon: typeof Banknote; hint: string }[] = [
