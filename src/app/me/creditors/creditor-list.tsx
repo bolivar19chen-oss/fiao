@@ -43,7 +43,7 @@ export function CreditorList({ creditors }: { creditors: Creditor[] }) {
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[15px] text-marron">{shop.name}</span>
                 <span className="block text-[13px] text-marron/55">
-                  {shop.score === null ? "No score yet" : `Score ${shop.score}`}
+                  {shop.score === null ? "No score yet" : `Store score ${shop.score}`}
                 </span>
               </span>
               {shop.overdue && <span className="shrink-0 text-[13px] font-semibold text-estado-mora">Late</span>}

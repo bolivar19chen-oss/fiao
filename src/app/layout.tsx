@@ -17,7 +17,8 @@ const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t=
 
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
-  description: "Inventory, credit sales, payment history and customer credit scores for corner stores.",
+  description:
+    "Inventory, credit sales, payment history and a store credit score for every customer of a corner store.",
   // UI siempre en ingles: evita que Chrome ofrezca o aplique traduccion automatica.
   other: { google: "notranslate" },
 }
