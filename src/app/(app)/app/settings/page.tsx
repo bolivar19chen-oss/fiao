@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
+
+import { requireBusiness } from "@/lib/business"
+import { formatDate } from "@/lib/format"
+import { createClient } from "@/lib/supabase/server"
 import { ActionForm } from "@/components/app/action-form"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
 import { AvatarField } from "@/components/onboarding/avatar-field"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
-import { requireBusiness } from "@/lib/business"
-import { formatDate } from "@/lib/format"
-import { createClient } from "@/lib/supabase/server"
+
 import { updateBusinessName } from "./actions"
 
 export const metadata: Metadata = { title: "Settings - FIA'O" }

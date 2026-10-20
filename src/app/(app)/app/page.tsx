@@ -1,23 +1,34 @@
 import type { Metadata } from "next"
-import { ReceiptText } from "lucide-react"
-import { StatusBar, TopDebtors, WeekColumns, type Debtor, type StatusSlice } from "@/components/app/charts"
-import { Card, CardTitle, EmptyState, PageHeader, Stat } from "@/components/app/ui"
+import Link from "next/link"
+import { AlertTriangle, CalendarClock, ReceiptText, TrendingUp, Wallet } from "lucide-react"
+
 import { requireBusiness } from "@/lib/business"
 import { addDays, eachDay } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
 import { formatCents, formatCount } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { StatusDonut, TopDebtors, type Debtor, type StatusSlice } from "@/components/app/charts"
+import { Card, CardTitle, EmptyState, KpiCard, PageHeader } from "@/components/app/ui"
+
+import { CollectedChart } from "./collected-chart"
 
 export const metadata: Metadata = { title: "Dashboard - FIA'O" }
 
-const DAYS_SHOWN = 7
+const DAYS_SHOWN = 30
 const DUE_SOON_DAYS = 7
 
 type CustomerRow = { id: string; name: string } & { sales: SaleRow[] }
 
-const weekdayOf = (iso: string) =>
+const dayLabel = (iso: string) =>
   // Mediodia UTC: la fecha ya viene resuelta en Panama, y asi ningun huso la corre un dia.
-  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", timeZone: "UTC" })
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { day: "numeric", timeZone: "UTC" })
+
+/** Variacion porcentual entera, o null cuando el periodo anterior fue cero: un "+100%"
+ *  nacido de la nada es ruido, no una noticia. */
+function delta(now: number, before: number): number | null {
+  if (before === 0) return null
+  return Math.round(((now - before) / before) * 100)
+}
 
 export default async function DashboardPage() {
   const business = await requireBusiness()
@@ -67,18 +78,28 @@ export default async function DashboardPage() {
     0,
   )
 
+  // Dos ventanas de 30 dias: la actual para la grafica, la anterior solo para la
+  // variacion de lo cobrado. Es el unico indicador con historia con la que compararse.
   const days = eachDay(addDays(asOf, -(DAYS_SHOWN - 1)), asOf)
+  const priorFrom = addDays(asOf, -(DAYS_SHOWN * 2 - 1))
   const paidOn = new Map<string, number>(days.map((day) => [day, 0]))
+  let priorWeek = 0
+  let thisWeek = 0
+  const weekFrom = addDays(asOf, -6)
+  const priorWeekFrom = addDays(asOf, -13)
+
   for (const customer of customers) {
     for (const sale of customer.sales) {
       for (const payment of sale.payments) {
         const day = payment.paid_at.slice(0, 10)
+        if (day < priorFrom || day > asOf) continue
         const current = paidOn.get(day)
         if (current !== undefined) paidOn.set(day, current + payment.amount_cents)
+        if (day >= weekFrom) thisWeek += payment.amount_cents
+        else if (day >= priorWeekFrom) priorWeek += payment.amount_cents
       }
     }
   }
-  const collected = [...paidOn.values()].reduce((sum, cents) => sum + cents, 0)
 
   const topDebtors: Debtor[] = withDebt
     .map((entry) => ({ id: entry.id, name: entry.name, cents: entry.account.balanceCents }))
@@ -89,52 +110,70 @@ export default async function DashboardPage() {
 
   return (
     <>
-      {/* El nombre del negocio ya esta en el shell: no se repite aca. */}
-      <PageHeader title="Dashboard" description="What your customers owe you, as of today." />
+      {/* El nombre del negocio y el titulo ya estan en la barra superior: aca va la
+          accion, como en la referencia. */}
+      <PageHeader
+        title="Dashboard"
+        description="What your customers owe you, as of today."
+        action={
+          <div className="flex gap-3">
+            <Link href="/app/products/new" className="btn btn-glass">
+              Add a product
+            </Link>
+            <Link href="/app/customers/new" className="btn btn-glass-red">
+              Add a customer
+            </Link>
+          </div>
+        }
+      />
 
-      {/* La figura principal responde la pregunta que el dueno se hace al abrir. */}
-      <Card>
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-marron/55">Outstanding credit</p>
-        <p className="mt-2 font-display text-[44px] font-bold leading-none tracking-[-0.03em] text-marron sm:text-[58px]">
-          {formatCents(portfolio)}
-        </p>
-        <p className="mt-2 text-sm text-marron/60">
-          Across {formatCount(withDebt.length)} {withDebt.length === 1 ? "customer" : "customers"} with an open balance
-        </p>
-      </Card>
-
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-        <Stat label="Overdue" value={formatCents(overdue)} note="Past the due date" />
-        <Stat label="Due this week" value={formatCents(dueThisWeek)} note="Next 7 days" />
-        <Stat
-          className="col-span-2 sm:col-span-1"
+      {/* Fila de cuatro, como DashSpace. La variacion solo donde existe de verdad. */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <KpiCard
+          icon={Wallet}
+          label="Outstanding credit"
+          value={formatCents(portfolio)}
+          since={`${formatCount(withDebt.length)} ${withDebt.length === 1 ? "customer" : "customers"} with a balance`}
+        />
+        <KpiCard
+          icon={AlertTriangle}
+          label="Overdue"
+          value={formatCents(overdue)}
+          goodWhenUp={false}
+          since="Past the due date"
+        />
+        <KpiCard icon={CalendarClock} label="Due this week" value={formatCents(dueThisWeek)} since="Next 7 days" />
+        <KpiCard
+          icon={TrendingUp}
           label="Collected this week"
-          value={formatCents(collected)}
-          note="Payments in the last 7 days"
+          value={formatCents(thisWeek)}
+          delta={delta(thisWeek, priorWeek)}
+          since="vs the 7 days before"
         />
       </div>
 
       {hasSales ? (
         <>
-          <Card className="mt-4">
-            <CardTitle>Portfolio by status</CardTitle>
-            <StatusBar slices={slices} />
-          </Card>
-
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          {/* Grafica grande a dos tercios y la dona al lado, como en la referencia. */}
+          <div className="mt-4 grid gap-4 lg:grid-cols-[1.9fr_1fr]">
             <Card>
-              <CardTitle>Collected this week</CardTitle>
-              <WeekColumns days={days.map((day) => ({ label: weekdayOf(day), cents: paidOn.get(day) ?? 0 }))} />
+              <CardTitle>Collected</CardTitle>
+              <CollectedChart days={days.map((day) => ({ label: dayLabel(day), cents: paidOn.get(day) ?? 0 }))} />
             </Card>
             <Card>
-              <CardTitle>Top debtors</CardTitle>
-              {topDebtors.length === 0 ? (
-                <p className="text-[15px] text-marron/60">Nobody owes you anything right now.</p>
-              ) : (
-                <TopDebtors debtors={topDebtors} />
-              )}
+              <CardTitle>Portfolio by status</CardTitle>
+              <StatusDonut slices={slices} />
             </Card>
           </div>
+
+          <Card className="mt-4">
+            <CardTitle>Top debtors</CardTitle>
+            {topDebtors.length === 0 ? (
+              <p className="text-[17px] leading-[22px] text-marron/60">Nobody owes you anything right now.</p>
+            ) : (
+              <TopDebtors debtors={topDebtors} />
+            )}
+          </Card>
         </>
       ) : (
         <Card className="mt-4">

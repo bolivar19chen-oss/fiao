@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { Plus, ReceiptText } from "lucide-react"
-import { Badge, ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { Badge, ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 
 export const metadata: Metadata = { title: "Sales - FIA'O" }
 

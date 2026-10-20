@@ -2,10 +2,12 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { CalendarClock, Wallet } from "lucide-react"
-import { Card, CardTitle, EmptyState, PageHeader, Stat, Table } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatCount, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { Card, CardTitle, EmptyState, PageHeader, Stat, Table } from "@/components/app/ui"
+
 import { RecordPayment } from "./record-payment"
 
 export const metadata: Metadata = { title: "Sale - FIA'O" }

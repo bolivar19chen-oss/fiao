@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ReceiptText, Wallet } from "lucide-react"
-import { CreditScore, StatusBadge } from "@/components/app/account-status"
-import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
-import { customerAccount } from "@/lib/credit-account"
+
 import { requireBusiness } from "@/lib/business"
+import { customerAccount } from "@/lib/credit-account"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { CreditScore, StatusBadge } from "@/components/app/account-status"
+import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
+
 import { InviteCard } from "./invite-card"
 
 export const metadata: Metadata = { title: "Customer - FIA'O" }

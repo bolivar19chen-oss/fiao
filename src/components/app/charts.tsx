@@ -2,7 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion"
 import { AlertTriangle, Check, Clock } from "lucide-react"
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+
 import { formatCents } from "@/lib/format"
 
 // Reglas que vienen de la guia de visualizacion y de docs/DISENO.md:
@@ -153,6 +154,77 @@ export function TopDebtors({ debtors }: { debtors: Debtor[] }) {
         </ResponsiveContainer>
       </div>
       <p className="sr-only">{debtors.map((debtor) => `${debtor.name}: ${formatCents(debtor.cents)}`).join(". ")}</p>
+    </>
+  )
+}
+
+/**
+ * Reparto de la cartera en dona, con el total en el centro.
+ *
+ * **Excepcion anotada:** docs/DISENO.md dice "nada de torta". Esta entra a peticion
+ * expresa del usuario, copiando la estructura de DashSpace. Se mantienen las otras dos
+ * reglas que si protegen la lectura: los colores de estado son reservados y la leyenda
+ * lleva icono y etiqueta, nunca color solo. Con dos segmentos y el total escrito en el
+ * centro, una dona se lee sin tener que comparar angulos.
+ */
+export function StatusDonut({ slices }: { slices: StatusSlice[] }) {
+  const reduced = useReducedMotion()
+  const total = slices.reduce((sum, slice) => sum + slice.cents, 0)
+  const visible = slices.filter((slice) => slice.cents > 0)
+
+  if (total === 0) return <p className="text-[15px] text-marron/60">Nothing owed right now.</p>
+
+  const FILL = {
+    "on-time": "rgb(var(--estado-al-dia))",
+    "due-soon": "rgb(var(--estado-por-vencer))",
+    overdue: "rgb(var(--estado-mora))",
+  } as const
+
+  return (
+    <>
+      <div className="relative h-52 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={visible}
+              dataKey="cents"
+              nameKey="key"
+              innerRadius="68%"
+              outerRadius="100%"
+              paddingAngle={visible.length > 1 ? 2 : 0}
+              stroke="none"
+              isAnimationActive={!reduced}
+              animationDuration={600}
+            >
+              {visible.map((slice) => (
+                <Cell key={slice.key} fill={FILL[slice.key]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+        {/* El total va escrito, no deducido del angulo. */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-marron/50">Outstanding</span>
+          <span className="font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
+            {formatCents(total)}
+          </span>
+        </div>
+      </div>
+
+      <ul className="mt-5 flex flex-col gap-2.5">
+        {visible.map((slice) => {
+          const { label, ink, Icon } = STATUS_META[slice.key]
+          return (
+            <li key={slice.key} className="flex items-center gap-2 text-[13px]">
+              <Icon className={`h-4 w-4 shrink-0 ${ink}`} strokeWidth={2} aria-hidden />
+              <span className="flex-1 font-semibold text-marron">{label}</span>
+              <span className="shrink-0 tabular-nums text-marron/60">
+                {formatCents(slice.cents)} - {Math.round((slice.cents / total) * 100)}%
+              </span>
+            </li>
+          )
+        })}
+      </ul>
     </>
   )
 }
