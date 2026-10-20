@@ -34,3 +34,9 @@ export function formatDate(iso: string): string {
 export function centsToInput(cents: number): string {
   return `${Math.trunc(cents / 100)}.${String(cents % 100).padStart(2, "0")}`
 }
+
+// Un porcentaje con dos decimales y los puntos base son la misma aritmetica que un monto
+// y sus centavos: "1.50" -> 150. Se reusa el mismo parser en vez de escribir otro igual,
+// y se renombra porque `parseCents(tasa)` en codigo de intereses despista al que lo lee.
+export const parseBasisPoints = parseCents
+export const basisPointsToInput = centsToInput

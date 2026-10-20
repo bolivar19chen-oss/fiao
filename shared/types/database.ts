@@ -1,6 +1,8 @@
 // Dos cosas estan escritas a mano porque sus migraciones todavia no se han aplicado:
 //   - `profiles.province`        (migracion 20261020120000)
 //   - `my_shop_names()`          (migracion 20261020140000)
+//   - los terminos de credito    (migracion 20261020160000): businesses.monthly_rate_bp
+//     y companeras, customers.credit_limit_cents, sales.monthly_rate_bp y companeras
 // Al correr `supabase gen types` otra vez este archivo se regenera y las dos deben
 // seguir aqui. Si desaparecen, es que las migraciones no se aplicaron.
 
@@ -45,6 +47,12 @@ export type Database = {
       }
       businesses: {
         Row: {
+          cutoff_day: number
+          default_installments: number
+          grace_days: number
+          installment_days: number
+          late_rate_bp: number
+          monthly_rate_bp: number
           address: string | null
           corregimiento_code: string | null
           created_at: string
@@ -61,6 +69,12 @@ export type Database = {
           ruc_dv: string | null
         }
         Insert: {
+          cutoff_day?: number
+          default_installments?: number
+          grace_days?: number
+          installment_days?: number
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
@@ -77,6 +91,12 @@ export type Database = {
           ruc_dv?: string | null
         }
         Update: {
+          cutoff_day?: number
+          default_installments?: number
+          grace_days?: number
+          installment_days?: number
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
@@ -147,6 +167,7 @@ export type Database = {
       }
       customers: {
         Row: {
+          credit_limit_cents: number | null
           business_id: string
           created_at: string
           credit_score: number | null
@@ -157,6 +178,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          credit_limit_cents?: number | null
           business_id: string
           created_at?: string
           credit_score?: number | null
@@ -167,6 +189,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          credit_limit_cents?: number | null
           business_id?: string
           created_at?: string
           credit_score?: number | null
@@ -433,6 +456,9 @@ export type Database = {
       }
       sales: {
         Row: {
+          grace_days: number
+          late_rate_bp: number
+          monthly_rate_bp: number
           balance_cents: number
           business_id: string
           created_at: string
@@ -441,6 +467,9 @@ export type Database = {
           total_cents: number
         }
         Insert: {
+          grace_days?: number
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           balance_cents: number
           business_id: string
           created_at?: string
@@ -449,6 +478,9 @@ export type Database = {
           total_cents: number
         }
         Update: {
+          grace_days?: number
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           balance_cents?: number
           business_id?: string
           created_at?: string
