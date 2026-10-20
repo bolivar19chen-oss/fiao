@@ -1,4 +1,5 @@
 import { AlertTriangle, Check, Clock } from "lucide-react"
+
 import type { AccountStatus, ScoreBreakdown } from "@/lib/credit"
 
 // Los colores de estado de docs/DISENO.md. Salieron de validar la paleta con el script
@@ -25,7 +26,7 @@ export function StatusBadge({ status }: { status: AccountStatus }) {
 
 export function DueSoonBadge({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-estado-por-vencer/12 px-3 py-1 text-xs font-semibold text-estado-por-vencer">
+    <span className="bg-estado-por-vencer/12 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-estado-por-vencer">
       <Clock className="h-3.5 w-3.5" aria-hidden />
       {label}
     </span>
@@ -98,7 +99,7 @@ export function CreditScore({ score, breakdown }: { score: number | null; breakd
           <div key={key} className="flex items-center gap-3">
             <dt className="w-24 shrink-0 text-xs text-marron/70">{label}</dt>
             <dd className="flex flex-1 items-center gap-3">
-              <span className="h-2 flex-1 overflow-hidden rounded-full bg-marron/8">
+              <span className="bg-marron/8 h-2 flex-1 overflow-hidden rounded-full">
                 <span
                   className="block h-full rounded-full bg-rojo/70"
                   style={{ width: `${(breakdown[key] / max) * 100}%` }}

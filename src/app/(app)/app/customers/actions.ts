@@ -1,9 +1,10 @@
 "use server"
 
 import { redirect } from "next/navigation"
-import type { FormState } from "@/components/app/action-form"
+
 import { requireBusiness } from "@/lib/business"
 import { createClient } from "@/lib/supabase/server"
+import type { FormState } from "@/components/app/action-form"
 
 export async function createCustomer(_prev: FormState, formData: FormData): Promise<FormState> {
   const business = await requireBusiness()

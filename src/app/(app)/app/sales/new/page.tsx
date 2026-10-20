@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { CalendarClock, ClipboardCheck, ShoppingBasket, UserRound } from "lucide-react"
+
 import { Card, PageHeader } from "@/components/app/ui"
 
 export const metadata: Metadata = { title: "New sale - FIA'O" }

@@ -16,7 +16,7 @@ export function PageHeader({
   action?: React.ReactNode
 }) {
   return (
-    <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <header className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
       <div className="min-w-0">
         {back && (
           <Link href={back.href} className="text-sm font-medium text-marron/60 hover:text-rojo">
@@ -24,10 +24,13 @@ export function PageHeader({
           </Link>
         )}
         {/* title=: en la ficha de cliente este h1 es el nombre, y truncado no habia forma de leerlo entero. */}
-        <h1 title={title} className="section-title mt-1 truncate">
+        <h1
+          title={title}
+          className="mt-1 truncate font-display text-[34px] font-bold leading-[41px] tracking-[-0.015em] text-marron sm:text-[40px] sm:leading-[46px]"
+        >
           {title}
         </h1>
-        {description && <p className="mt-1 text-[15px] text-marron/65">{description}</p>}
+        {description && <p className="mt-2 text-[17px] leading-[22px] text-marron/65">{description}</p>}
       </div>
       {action}
     </header>
@@ -38,14 +41,18 @@ export function Card({ className = "", children }: { className?: string; childre
   // Superficie limpia: separan el tono y el aire, no una sombra. El cristal se queda en
   // el sitio publico, donde hay una aurora detras que lo justifica.
   return (
-    <section className={`rounded-[1.75rem] border border-marron/10 bg-fondo p-6 sm:p-7 ${className}`}>
+    <section className={`rounded-[1.75rem] border border-marron/10 bg-fondo p-7 sm:p-9 ${className}`}>
       {children}
     </section>
   )
 }
 
 export function CardTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-4 font-display text-lg font-semibold text-marron">{children}</h2>
+  return (
+    <h2 className="mb-6 font-display text-[22px] font-semibold leading-[28px] tracking-[-0.01em] text-marron">
+      {children}
+    </h2>
+  )
 }
 
 export function EmptyState({
@@ -60,14 +67,16 @@ export function EmptyState({
   action?: { href: string; label: string }
 }) {
   return (
-    <div className="flex flex-col items-center px-4 py-10 text-center">
-      <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rojo/10 text-rojo">
-        <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
+    <div className="flex flex-col items-center px-4 py-14 text-center">
+      <span className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] bg-rojo/10 text-rojo">
+        <Icon className="h-7 w-7" strokeWidth={1.75} aria-hidden />
       </span>
-      <p className="mt-4 font-display text-lg font-semibold text-marron">{title}</p>
-      <p className="mt-1 max-w-sm text-sm text-marron/65">{body}</p>
+      <p className="mt-6 font-display text-[22px] font-semibold leading-[28px] tracking-[-0.01em] text-marron">
+        {title}
+      </p>
+      <p className="mt-2 max-w-sm text-[17px] leading-[22px] text-marron/65">{body}</p>
       {action && (
-        <Link href={action.href} className="btn btn-glass-red mt-5">
+        <Link href={action.href} className="btn btn-glass-red mt-7">
           {action.label}
         </Link>
       )}
@@ -192,11 +201,11 @@ export function Stat({
 }) {
   return (
     <Card className={className}>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-marron/55 sm:text-xs">{label}</p>
-      <p className="mt-2 font-display text-2xl font-semibold tracking-tight text-marron tabular-nums sm:text-3xl">
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/55">{label}</p>
+      <p className="mt-3 font-display text-[28px] font-semibold tabular-nums leading-[34px] tracking-[-0.015em] text-marron">
         {value}
       </p>
-      {note && <p className="mt-1 text-xs text-marron/55">{note}</p>}
+      {note && <p className="mt-2 text-[13px] leading-[18px] text-marron/55">{note}</p>}
     </Card>
   )
 }
@@ -210,5 +219,59 @@ export function PrimaryCell({ href, title, sub }: { href: string; title: string;
       </Link>
       {sub && <span className="block text-xs text-marron/55">{sub}</span>}
     </td>
+  )
+}
+
+// Bloque en gris de los esqueletos de carga. El pulso se apaga si el sistema pide menos
+// movimiento: un parpadeo constante marea y hay quien no lo tolera.
+export function Skeleton({ className = "" }: { className?: string }) {
+  return <div aria-hidden className={`animate-pulse rounded-xl bg-marron/10 motion-reduce:animate-none ${className}`} />
+}
+
+/**
+ * Ficha de indicador al estilo DashSpace: icono en circulo tintado, etiqueta, cifra y
+ * variacion. Copiada a peticion del usuario.
+ *
+ * `delta` es opcional y a proposito: una variacion que no se puede calcular se imprime
+ * como raya, nunca como cero ni como un verde inventado. Hoy solo lo cobrado tiene
+ * periodo anterior con el que compararse; la cartera y la mora no se guardan historicas.
+ *
+ * `goodWhenUp` dice en que direccion es buena la noticia. La mora que sube es roja
+ * aunque el numero crezca.
+ */
+export function KpiCard({
+  icon: Icon,
+  label,
+  value,
+  delta,
+  since,
+  goodWhenUp = true,
+}: {
+  icon: LucideIcon
+  label: string
+  value: string
+  delta?: number | null
+  since?: string
+  goodWhenUp?: boolean
+}) {
+  const bueno = delta === undefined || delta === null || delta === 0 ? null : delta > 0 === goodWhenUp
+  const tono = bueno === null ? "text-marron/45" : bueno ? "text-estado-al-dia" : "text-estado-mora"
+
+  return (
+    <div className="rounded-xl border border-marron/10 bg-fondo p-5">
+      <span className="grid h-11 w-11 place-items-center rounded-full bg-rojo/[0.09] text-rojo">
+        <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+      </span>
+      <p className="mt-4 text-[13px] text-marron/55">{label}</p>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <p className="font-display text-[26px] font-semibold tabular-nums leading-tight tracking-[-0.015em] text-marron">
+          {value}
+        </p>
+        <span className={`text-[13px] font-semibold tabular-nums ${tono}`}>
+          {delta === undefined || delta === null ? "—" : `${delta > 0 ? "+" : ""}${delta}%`}
+        </span>
+      </div>
+      {since && <p className="mt-1 text-xs text-marron/50">{since}</p>}
+    </div>
   )
 }
