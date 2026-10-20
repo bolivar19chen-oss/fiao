@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { accountStatus } from "./status"
 import type { Installment } from "./types"
 

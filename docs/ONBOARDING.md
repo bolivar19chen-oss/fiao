@@ -65,10 +65,9 @@ Archivo nuevo: `src/components/onboarding/role-flip-card.tsx`.
 ```tsx
 "use client"
 
-import { useReducedMotion } from "framer-motion"
-import { motion } from "framer-motion"
-import { ArrowRight, IdCard, RefreshCw, Store, User } from "lucide-react"
 import { useState } from "react"
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowRight, IdCard, RefreshCw, Store, User } from "lucide-react"
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 10 },

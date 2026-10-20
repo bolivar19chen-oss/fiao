@@ -2,6 +2,17 @@ allowBuilds:
   unrs-resolver: true
   supabase: true
 
-# Next 15 fija postcss 8.4.31, con avisos de seguridad. Se fuerza la version parcheada.
+# Dependencias transitivas con aviso de seguridad, forzadas a la version parcheada.
+# Las tres son de build (postcss, tailwind, eslint): no viajan al navegador ni corren en
+# el servidor en produccion. Se fijan igual, porque `pnpm audit` limpio es mas barato de
+# mantener que acordarse de cuales eran aceptables.
 overrides:
+  # Next 15 fija postcss 8.4.31.
   next>postcss: ^8.5.23
+  # braces (GHSA, agotamiento de pila): SIN ARREGLO. El aviso dice "parcheado en >=3.0.4"
+  # pero esa version no esta publicada; la ultima es 3.0.3. No se puede fijar. Llega por
+  # tailwind>chokidar y eslint-config-next>fast-glob, las dos de build: para explotarlo
+  # haria falta controlar los patrones glob, y quien los controla ya tiene el repo.
+  # Revisar si se publica 3.0.4.
+  # GHSA-rj75-hqrm-r3gf: complejidad cuadratica al leer selectores. Via tailwind.
+  postcss-selector-parser: ^7.1.6

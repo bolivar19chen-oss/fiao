@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server"
+
 import { updateSession } from "@/lib/supabase/middleware"
 
 // Va en src/ y no en la raiz: con src/app, Next solo carga src/middleware.ts.

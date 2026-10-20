@@ -1,8 +1,9 @@
 "use client"
 
-import Link from "next/link"
 import { useActionState, useState } from "react"
+import Link from "next/link"
 import { Lock, Mail, UserRound, type LucideIcon } from "lucide-react"
+
 import { logIn, signUp, type AuthState } from "./actions"
 import s from "./auth-switch.module.css"
 

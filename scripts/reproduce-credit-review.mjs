@@ -1,6 +1,6 @@
 // Casos diagnosticos de la revision del 2026-10-19. No escribe en Supabase.
 // Imprime resultado actual y esperado; no es una suite de regresion que acepte los bugs.
-import { readFileSync, existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import path from "node:path"
 import vm from "node:vm"
 import ts from "typescript"

@@ -1,7 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
 import type { ReactNode } from "react"
+import { motion } from "framer-motion"
+import { ChevronDown } from "lucide-react"
+
 import { StreetArt } from "./role-art"
 
 // La anatomia del diseno de referencia, con los tokens del proyecto.
@@ -161,5 +163,63 @@ export function CardError({ children }: { children: ReactNode }) {
     <p role="alert" className="rounded-lg bg-amarillo/20 px-4 py-3 text-sm text-marron/85">
       {children}
     </p>
+  )
+}
+
+/**
+ * Desplegable con la misma piel que CardField.
+ *
+ * A diferencia de CardField, la etiqueta se ata con `htmlFor` y no envolviendo al
+ * control: envuelta, el nombre accesible se come tambien la pista y un lector de
+ * pantalla lee la etiqueta y la ayuda de corrido. Es el mismo arreglo que ya tiene
+ * `Field` en components/app/ui.tsx.
+ */
+export function CardSelect({
+  label,
+  icon,
+  hint,
+  options,
+  placeholder,
+  ...select
+}: {
+  label: string
+  icon: ReactNode
+  hint?: string
+  options: string[]
+  placeholder: string
+} & React.SelectHTMLAttributes<HTMLSelectElement>) {
+  const id = select.id ?? select.name
+  const hintId = `${id}-hint`
+
+  return (
+    <motion.div variants={FADE_UP} className="block text-left">
+      <label htmlFor={id} className="text-sm font-medium text-marron">
+        {label}
+      </label>
+      <span className="relative mt-1.5 block">
+        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/45">{icon}</span>
+        <select
+          {...select}
+          id={id}
+          aria-describedby={hint ? hintId : undefined}
+          className="h-11 w-full appearance-none rounded-lg border border-marron/10 bg-fondo/70 pl-9 pr-9 text-[15px] text-marron outline-none transition focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+        >
+          <option value="">{placeholder}</option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-marron/45">
+          <ChevronDown className="h-4 w-4" aria-hidden />
+        </span>
+      </span>
+      {hint && (
+        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+          {hint}
+        </span>
+      )}
+    </motion.div>
   )
 }

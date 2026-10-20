@@ -1,6 +1,6 @@
-import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import type { Database } from "@shared/types/database"
+import { createServerClient } from "@supabase/ssr"
 
 // Uno nuevo por request: nunca compartir este cliente entre renders.
 export async function createClient() {
