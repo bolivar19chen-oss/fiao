@@ -1,9 +1,12 @@
 import Link from "next/link"
 import { ArrowDownRight, ArrowRight, Check } from "lucide-react"
-import { Aurora } from "@/components/ui/aurora"
-import { ScoreRing } from "@/components/ui/score-ring"
+
 import { provinces, totalStores } from "@/data/panama"
 import { formatCents } from "@/lib/format"
+import { Aurora } from "@/components/ui/aurora"
+import { ScoreRing } from "@/components/ui/score-ring"
+
+import { Petals } from "./petals"
 
 export function Hero() {
   return (
@@ -11,6 +14,7 @@ export function Hero() {
       {/* Panel con bordes redondeados y margen: el hero se lee como una pieza propia. */}
       <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-crema-claro to-fondo pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
         <Aurora />
+        <Petals />
         <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
           <div>
             <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-marron/80">

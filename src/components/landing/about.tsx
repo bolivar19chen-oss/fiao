@@ -1,4 +1,5 @@
 import { Check, Lock, Store } from "lucide-react"
+
 import { IconTile } from "@/components/ui/icon-tile"
 import { SectionHeading } from "@/components/ui/section-heading"
 

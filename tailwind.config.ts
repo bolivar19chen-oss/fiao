@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
+
 import { BRAND, ESTADO, TEMA } from "./src/lib/colors"
 
 // Los valores no viven aca: vienen de src/lib/colors.ts, que es la fuente unica.
@@ -40,6 +41,10 @@ const config: Config = {
         display: ["var(--font-poppins)", "sans-serif"],
         sans: ["var(--font-inter)", "sans-serif"],
       },
+      // La curva del sistema de Apple. Todo lo que responde a un dedo o a un cursor sale
+      // con esta: arranca rapido y se asienta, sin rebote. Es la mitad de por que una
+      // interfaz de iOS se siente cara.
+      transitionTimingFunction: { apple: "cubic-bezier(0.28, 0.11, 0.32, 1)" },
     },
   },
   plugins: [

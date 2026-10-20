@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
+
 import { createClient } from "@/lib/supabase/server"
 
 // Destino del enlace de confirmacion de email (flujo PKCE): canjea el codigo por sesion.
