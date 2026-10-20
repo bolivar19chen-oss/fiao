@@ -1,11 +1,3 @@
-// Dos cosas estan escritas a mano porque sus migraciones todavia no se han aplicado:
-//   - `profiles.province`        (migracion 20261020120000)
-//   - `my_shop_names()`          (migracion 20261020140000)
-//   - los terminos de credito    (migracion 20261020160000): businesses.monthly_rate_bp
-//     y companeras, customers.credit_limit_cents, sales.monthly_rate_bp y companeras
-// Al correr `supabase gen types` otra vez este archivo se regenera y las dos deben
-// seguir aqui. Si desaparecen, es que las migraciones no se aplicaron.
-
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -47,21 +39,21 @@ export type Database = {
       }
       businesses: {
         Row: {
-          cutoff_day: number
-          default_installments: number
-          grace_days: number
-          installment_days: number
-          late_rate_bp: number
-          monthly_rate_bp: number
           address: string | null
           corregimiento_code: string | null
           created_at: string
+          cutoff_day: number
+          default_installments: number
           district_code: string | null
+          grace_days: number
           id: string
+          installment_days: number
+          late_rate_bp: number
           legal_name: string | null
           legal_rep_id: string | null
           legal_rep_name: string | null
           legal_structure: string | null
+          monthly_rate_bp: number
           name: string
           operating_notice: string | null
           province_code: string | null
@@ -69,21 +61,21 @@ export type Database = {
           ruc_dv: string | null
         }
         Insert: {
-          cutoff_day?: number
-          default_installments?: number
-          grace_days?: number
-          installment_days?: number
-          late_rate_bp?: number
-          monthly_rate_bp?: number
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
+          cutoff_day?: number
+          default_installments?: number
           district_code?: string | null
+          grace_days?: number
           id?: string
+          installment_days?: number
+          late_rate_bp?: number
           legal_name?: string | null
           legal_rep_id?: string | null
           legal_rep_name?: string | null
           legal_structure?: string | null
+          monthly_rate_bp?: number
           name: string
           operating_notice?: string | null
           province_code?: string | null
@@ -91,21 +83,21 @@ export type Database = {
           ruc_dv?: string | null
         }
         Update: {
-          cutoff_day?: number
-          default_installments?: number
-          grace_days?: number
-          installment_days?: number
-          late_rate_bp?: number
-          monthly_rate_bp?: number
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
+          cutoff_day?: number
+          default_installments?: number
           district_code?: string | null
+          grace_days?: number
           id?: string
+          installment_days?: number
+          late_rate_bp?: number
           legal_name?: string | null
           legal_rep_id?: string | null
           legal_rep_name?: string | null
           legal_structure?: string | null
+          monthly_rate_bp?: number
           name?: string
           operating_notice?: string | null
           province_code?: string | null
@@ -167,9 +159,9 @@ export type Database = {
       }
       customers: {
         Row: {
-          credit_limit_cents: number | null
           business_id: string
           created_at: string
+          credit_limit_cents: number | null
           credit_score: number | null
           id: string
           name: string
@@ -178,9 +170,9 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
-          credit_limit_cents?: number | null
           business_id: string
           created_at?: string
+          credit_limit_cents?: number | null
           credit_score?: number | null
           id?: string
           name: string
@@ -189,9 +181,9 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
-          credit_limit_cents?: number | null
           business_id?: string
           created_at?: string
+          credit_limit_cents?: number | null
           credit_score?: number | null
           id?: string
           name?: string
@@ -456,36 +448,36 @@ export type Database = {
       }
       sales: {
         Row: {
-          grace_days: number
-          late_rate_bp: number
-          monthly_rate_bp: number
           balance_cents: number
           business_id: string
           created_at: string
           customer_id: string
+          grace_days: number
           id: string
+          late_rate_bp: number
+          monthly_rate_bp: number
           total_cents: number
         }
         Insert: {
-          grace_days?: number
-          late_rate_bp?: number
-          monthly_rate_bp?: number
           balance_cents: number
           business_id: string
           created_at?: string
           customer_id: string
+          grace_days?: number
           id?: string
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           total_cents: number
         }
         Update: {
-          grace_days?: number
-          late_rate_bp?: number
-          monthly_rate_bp?: number
           balance_cents?: number
           business_id?: string
           created_at?: string
           customer_id?: string
+          grace_days?: number
           id?: string
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           total_cents?: number
         }
         Relationships: [
@@ -541,7 +533,13 @@ export type Database = {
       is_member: { Args: { p_business_id: string }; Returns: boolean }
       is_owner: { Args: { p_business_id: string }; Returns: boolean }
       is_sale_customer: { Args: { p_sale_id: string }; Returns: boolean }
-      my_shop_names: { Args: Record<string, never>; Returns: { business_id: string; name: string }[] }
+      my_shop_names: {
+        Args: never
+        Returns: {
+          business_id: string
+          name: string
+        }[]
+      }
       redeem_customer_invite: { Args: { p_code: string }; Returns: string }
       register_payment: {
         Args: {
