@@ -15,6 +15,7 @@ export type Creditor = {
   balanceCents: number
   score: number | null
   breakdown: ScoreBreakdown
+  weights: ScoreBreakdown
   overdue: boolean
 }
 
@@ -90,6 +91,7 @@ export const getMeData = cache(async (): Promise<MeData> => {
       balanceCents: account.balanceCents,
       score: account.score,
       breakdown: account.breakdown,
+      weights: account.weights,
       overdue: account.status === "OVERDUE",
     })
 

@@ -64,13 +64,14 @@ export default async function CreditPage() {
                     <ul className="mt-6 flex flex-col gap-4">
                       {FACTORS.map(({ key, label, hint }) => {
                         const points = shop.breakdown[key]
+                        const max = shop.weights[key]
                         return (
                           <li key={key}>
                             <div className="flex items-baseline justify-between gap-3">
                               <span className="text-[15px] text-marron">{label}</span>
                               <span className="shrink-0 text-[15px] tabular-nums text-marron">
-                                {/* Un factor que el motor no pudo calcular aporta 0 y se dice. */}
-                                {points === 0 ? "—" : `${points} pts`}
+                                {/* Peso cero es "no se pudo medir", no "saco cero". */}
+                                {max === 0 ? "Not set" : `${points} of ${max}`}
                               </span>
                             </div>
                             <p className="mt-0.5 text-[13px] text-marron/55">{hint}</p>
