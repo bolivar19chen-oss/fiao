@@ -35,6 +35,8 @@ export type CustomerAccount = {
   status: AccountStatus
   score: number | null
   breakdown: ScoreBreakdown
+  /** Cuantos puntos podia dar cada factor. Cero = no se pudo medir. */
+  weights: ScoreBreakdown
   installments: Installment[]
 }
 
@@ -72,7 +74,7 @@ export function customerAccount(sales: SaleRow[], asOf: IsoDate = today()): Cust
   const yearAgo = `${Number(asOf.slice(0, 4)) - 1}${asOf.slice(4)}`
   const salesLast12Months = sales.filter((sale) => dateOf(sale.created_at) >= yearAgo).length
 
-  const { score, breakdown } = creditScore({
+  const { score, breakdown, weights } = creditScore({
     installments,
     currentBalanceCents: balanceCents,
     creditLimitCents: null,
@@ -86,6 +88,7 @@ export function customerAccount(sales: SaleRow[], asOf: IsoDate = today()): Cust
     status: accountStatus({ balanceCents, installments, graceDays: 0, asOf }),
     score,
     breakdown,
+    weights,
     installments,
   }
 }
