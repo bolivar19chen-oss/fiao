@@ -91,7 +91,12 @@ function frequency(salesLast12Months: number, firstSaleDate: IsoDate | null): Fr
  * de las partes ya redondeadas, nunca al reves. Si la suma no diera, la explicacion que
  * ve el dueno seria falsa.
  */
-export function creditScore(input: ScoreInput): { score: number | null; breakdown: ScoreBreakdown } {
+export function creditScore(input: ScoreInput): {
+  score: number | null
+  breakdown: ScoreBreakdown
+  /** Cuantos puntos podia dar cada factor tras renormalizar. Cero = no se pudo medir. */
+  weights: ScoreBreakdown
+} {
   const factors = {
     punctuality: punctuality(input.installments, input.asOf),
     debtRatio: debtRatio(input.currentBalanceCents, input.creditLimitCents),
@@ -105,7 +110,11 @@ export function creditScore(input: ScoreInput): { score: number | null; breakdow
   )
 
   const breakdown: ScoreBreakdown = { punctuality: 0, debtRatio: 0, tenure: 0, frequency: 0 }
-  if (availableWeight === 0) return { score: null, breakdown }
+  // Cuantos puntos podia dar cada factor DESPUES de renormalizar. Cero significa "no se
+  // pudo medir", no "saco cero": sin esto la pantalla ensena "0/30" y se lee como que el
+  // cliente perdio 30 puntos, que es justo lo que la renormalizacion evita.
+  const weights: ScoreBreakdown = { punctuality: 0, debtRatio: 0, tenure: 0, frequency: 0 }
+  if (availableWeight === 0) return { score: null, breakdown, weights }
 
   for (const key of Object.keys(factors) as (keyof typeof factors)[]) {
     const fraction = factors[key]
@@ -113,8 +122,9 @@ export function creditScore(input: ScoreInput): { score: number | null; breakdow
     // peso efectivo = WEIGHTS[key] * 100 / availableWeight, resuelto dentro de la misma
     // division para no redondear dos veces.
     breakdown[key] = divideRoundHalfUp(fraction.numerator * WEIGHTS[key] * 100, fraction.denominator * availableWeight)
+    weights[key] = divideRoundHalfUp(WEIGHTS[key] * 100, availableWeight)
   }
 
   const score = breakdown.punctuality + breakdown.debtRatio + breakdown.tenure + breakdown.frequency
-  return { score, breakdown }
+  return { score, breakdown, weights }
 }

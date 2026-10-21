@@ -56,7 +56,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
         </Card>
         <Card>
           <CardTitle>Store credit score</CardTitle>
-          <CreditScore score={account.score} breakdown={account.breakdown} />
+          <CreditScore score={account.score} breakdown={account.breakdown} weights={account.weights} />
         </Card>
       </div>
       <div className="mt-4">
