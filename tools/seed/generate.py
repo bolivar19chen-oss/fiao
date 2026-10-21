@@ -18,6 +18,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from random import Random
 
+from oracle import engine
 from oracle.dates import add_days
 from oracle.money import divide_round_half_up
 
@@ -51,6 +52,14 @@ CUSTOMERS = [
 ]
 
 METHODS = ("cash", "cash", "cash", "yappy", "card")
+
+# Los cuatro comportamientos de pago que reparte el plan, en ciclo.
+MOROSO, PUNTUAL, A_MEDIAS, MIRAR = 0, 1, 2, 3
+
+# La venta del perfil MIRAR, en dias hacia atras. Con 3 cuotas quincenales, las dos
+# primeras ya vencieron (hace 25 y 10 dias) y la tercera vence en 5: es lo que lo deja
+# fuera de mora hoy aunque pague tarde siempre.
+VENTA_RECIENTE_DIAS = 40
 
 
 @dataclass(frozen=True)
@@ -114,9 +123,15 @@ def generate(today: str, seed: int = 19) -> Dataset:
     plan = list(range(len(CUSTOMERS))) + list(range(0, len(CUSTOMERS), 2))
 
     for position, customer_index in enumerate(plan):
+        behaviour = position % 4
+
         # Las ventas se reparten hacia atras en el tiempo: las primeras del plan son las
         # mas viejas, asi que son las que acumulan mora.
-        age_days = 85 - position * 4
+        #
+        # El perfil "paga tarde pero hoy esta al dia" es la excepcion: solo existe si le
+        # queda una cuota que todavia no vence, asi que su venta lleva fecha propia y
+        # reciente en vez de la que le tocaria por posicion.
+        age_days = VENTA_RECIENTE_DIAS if behaviour == MIRAR else 85 - position * 4
         created_at = add_days(today, -age_days)
 
         items = [
@@ -129,7 +144,7 @@ def generate(today: str, seed: int = 19) -> Dataset:
         ]
         total_cents = sum(i.quantity * i.unit_price_cents for i in items)
 
-        count = rng.choice((2, 3, 4))
+        count = 3 if behaviour == MIRAR else rng.choice((2, 3, 4))
         amounts = split_cents(total_cents, count)
         installments = [
             Installment(
@@ -141,7 +156,7 @@ def generate(today: str, seed: int = 19) -> Dataset:
             for n, amount in enumerate(amounts)
         ]
 
-        payments = _payments_for(rng, today, created_at, amounts, position)
+        payments = _payments_for(rng, today, created_at, amounts, behaviour)
         paid = sum(p.amount_cents for p in payments)
         sales.append(
             Sale(
@@ -161,18 +176,31 @@ def generate(today: str, seed: int = 19) -> Dataset:
 
 
 def _payments_for(
-    rng: Random, today: str, created_at: str, amounts: list[int], position: int
+    rng: Random, today: str, created_at: str, amounts: list[int], behaviour: int
 ) -> list[Payment]:
-    """Abonos de una venta.
+    """Abonos de una venta, segun el comportamiento que le toca al cliente.
 
-    Tres comportamientos, repartidos en ciclo para que el panel muestre los tres estados:
-    quien paga todo, quien va a medias y quien no ha pagado nada.
+    Cuatro, repartidos en ciclo para que el panel muestre los cuatro estados que sabe
+    distinguir: quien no ha pagado nada, quien paga todo, quien va a medias, y quien paga
+    siempre tarde pero hoy no esta en mora.
     """
-    behaviour = position % 3
-    if behaviour == 0:  # no ha pagado: este es el moroso
+    if behaviour == MOROSO:
         return []
 
-    covered = len(amounts) if behaviour == 1 else max(1, len(amounts) // 2)
+    if behaviour == MIRAR:
+        # Paga, pero siempre entre 8 y 30 dias tarde, que es la franja que el motor
+        # castiga a 3 decimos de 10 (src/lib/credit/scoring.ts). La ultima cuota todavia
+        # no vence, asi que el estado es CURRENT y no OVERDUE: el cliente que hay que
+        # mirar ANTES de que se atrase, que es para lo que existe la carpeta Watch.
+        pagos = []
+        for n, amount in enumerate(amounts):
+            due = add_days(created_at, 15 * (n + 1))
+            if due > today:
+                break  # todavia no vence: no se paga
+            pagos.append(Payment(amount_cents=amount, paid_at=add_days(due, 20 - n * 11), method="cash"))
+        return pagos
+
+    covered = len(amounts) if behaviour == PUNTUAL else max(1, len(amounts) // 2)
     payments = []
     for n in range(covered):
         # Puntual o con unos dias de atraso, nunca antes de la venta.
@@ -188,6 +216,39 @@ def _payments_for(
             )
         )
     return payments
+
+
+def _bands(dataset: Dataset) -> dict[int, str]:
+    """Banda y estado de cada cliente, calculados con el oraculo.
+
+    El panel agrupa por cliente y no por venta, asi que se juntan las cuotas de todas sus
+    ventas, igual que hace `customerAccount` en TypeScript. Se usa el oraculo y no una
+    cuenta a mano: es la implementacion que ya verifica el motor en CI.
+    """
+    por_cliente: dict[int, dict] = {}
+    for sale in dataset.sales:
+        acc = por_cliente.setdefault(
+            sale.customer_index, {"installments": [], "balance": 0, "first": sale.created_at, "sales": 0}
+        )
+        settled = engine.settle_installments(
+            [{"dueDate": i.due_date, "amountCents": i.amount_cents} for i in sale.installments],
+            [{"date": p.paid_at, "cents": p.amount_cents} for p in sale.payments],
+        )
+        acc["installments"] += settled
+        acc["balance"] += sale.balance_cents
+        acc["first"] = min(acc["first"], sale.created_at)
+        acc["sales"] += 1
+
+    salida = {}
+    for index, acc in por_cliente.items():
+        status = engine.account_status(acc["balance"], acc["installments"], 0, dataset.today)
+        score = engine.credit_score(
+            acc["installments"], acc["balance"], None, acc["first"], acc["sales"], dataset.today
+        )["score"]
+        # Los mismos cortes que src/lib/credit/bands.ts: good 70, fair 40.
+        band = "new" if score is None else "good" if score >= 70 else "fair" if score >= 40 else "watch"
+        salida[index] = f"{band}/{status}"
+    return salida
 
 
 def _check(dataset: Dataset) -> None:
@@ -209,3 +270,12 @@ def _check(dataset: Dataset) -> None:
             isinstance(value, int)
             for value in (sale.total_cents, sale.balance_cents, *[i.amount_cents for i in sale.installments])
         ), "dinero que no es entero"
+
+    # Los datos existen para que el panel se vea, asi que tiene que haber al menos un
+    # cliente en cada carpeta. La de Watch es la que se queda vacia sola: filtra por
+    # "banda watch pero hoy no esta en mora", y sin el perfil MIRAR nadie cae ahi.
+    estados = set(_bands(dataset).values())
+    assert any(e.endswith("/OVERDUE") for e in estados), "nadie en mora: la carpeta Overdue sale vacia"
+    assert any(
+        e.startswith("watch/") and not e.endswith("/OVERDUE") for e in estados
+    ), f"nadie para la carpeta Watch; estados generados: {sorted(estados)}"
