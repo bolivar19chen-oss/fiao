@@ -60,7 +60,12 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
     province,
   })
 
-  if (error) return { error: "We couldn't save your details. Try again." }
+  if (error) {
+    // El mensaje al usuario es generico a proposito, pero sin esto la causa real se
+    // pierde y no hay forma de diagnosticar un alta fallida.
+    console.error("completeCustomer insert failed:", error)
+    return { error: "We couldn't save your details. Try again." }
+  }
   // A /me y no a la pantalla del codigo: vincular una tienda no es parte del alta. El
   // cliente se registra desde su casa y pide el codigo cuando pasa por el mostrador.
   redirect("/me")
