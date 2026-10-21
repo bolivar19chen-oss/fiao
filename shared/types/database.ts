@@ -1,3 +1,7 @@
+// `register_sale` esta escrita a mano: su migracion (20261021120000) todavia no se ha
+// aplicado. Al correr `supabase gen types` otra vez debe seguir aqui; si desaparece,
+// es que la migracion no se aplico.
+
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -541,6 +545,10 @@ export type Database = {
         }[]
       }
       redeem_customer_invite: { Args: { p_code: string }; Returns: string }
+      register_sale: {
+        Args: { p_client_token: string; p_customer_id: string; p_installments: Json; p_items: Json }
+        Returns: string
+      }
       register_payment: {
         Args: {
           p_amount_cents: number
