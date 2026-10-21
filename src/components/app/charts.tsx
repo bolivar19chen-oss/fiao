@@ -206,7 +206,7 @@ export function StatusDonut({ slices }: { slices: StatusSlice[] }) {
         </ResponsiveContainer>
         {/* El total va escrito, no deducido del angulo. */}
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-marron/50">Outstanding</span>
+          <span className="text-[11px] font-semibold text-marron/50">Outstanding</span>
           <span className="font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
             {formatCents(total)}
           </span>

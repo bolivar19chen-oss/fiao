@@ -102,7 +102,7 @@ export function Table({ head, children }: { head: string[]; children: React.Reac
     <div className="-mx-2 overflow-x-auto">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/50">
+          <tr className="text-xs font-semibold text-marron/50">
             {head.map((h, i) => (
               <th key={h} className={`px-2 pb-3 font-semibold ${i > 0 ? "text-right" : ""}`}>
                 {h}
@@ -203,7 +203,7 @@ export function Stat({
 }) {
   return (
     <Card className={className}>
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/55">{label}</p>
+      <p className="text-[13px] text-marron/55">{label}</p>
       <p className="mt-3 font-display text-[28px] font-semibold tabular-nums leading-[34px] tracking-[-0.015em] text-marron">
         {value}
       </p>
