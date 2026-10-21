@@ -5,7 +5,7 @@ import { AlertTriangle, CalendarClock, ReceiptText, TrendingUp, Wallet } from "l
 import { requireBusiness } from "@/lib/business"
 import { addDays, eachDay } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
-import { formatCents, formatCount } from "@/lib/format"
+import { formatCents, formatCount, kpiDelta } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
 import { StatusDonut, TopDebtors, type Debtor, type StatusSlice } from "@/components/app/charts"
 import { Card, CardTitle, EmptyState, KpiCard, PageHeader } from "@/components/app/ui"
@@ -22,13 +22,6 @@ type CustomerRow = { id: string; name: string } & { sales: SaleRow[] }
 const dayLabel = (iso: string) =>
   // Mediodia UTC: la fecha ya viene resuelta en Panama, y asi ningun huso la corre un dia.
   new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { day: "numeric", timeZone: "UTC" })
-
-/** Variacion porcentual entera, o null cuando el periodo anterior fue cero: un "+100%"
- *  nacido de la nada es ruido, no una noticia. */
-function delta(now: number, before: number): number | null {
-  if (before === 0) return null
-  return Math.round(((now - before) / before) * 100)
-}
 
 export default async function DashboardPage() {
   const business = await requireBusiness()
@@ -139,7 +132,7 @@ export default async function DashboardPage() {
           icon={AlertTriangle}
           label="Overdue"
           value={formatCents(overdue)}
-          goodWhenUp={false}
+
           since="Past the due date"
         />
         <KpiCard icon={CalendarClock} label="Due this week" value={formatCents(dueThisWeek)} since="Next 7 days" />
@@ -147,7 +140,7 @@ export default async function DashboardPage() {
           icon={TrendingUp}
           label="Collected this week"
           value={formatCents(thisWeek)}
-          delta={delta(thisWeek, priorWeek)}
+          delta={kpiDelta(thisWeek, priorWeek)}
           since="vs the 7 days before"
         />
       </div>

@@ -1,6 +1,8 @@
 import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
 
+import type { Delta } from "@/lib/format"
+
 // Piezas de interfaz comunes a las pantallas de la aplicacion. Mismo lenguaje que la
 // landing: cristal sobre la luz de marca, botones redondeados.
 
@@ -245,17 +247,15 @@ export function KpiCard({
   value,
   delta,
   since,
-  goodWhenUp = true,
 }: {
   icon: LucideIcon
   label: string
   value: string
-  delta?: number | null
+  delta?: Delta | null
   since?: string
-  goodWhenUp?: boolean
 }) {
-  const bueno = delta === undefined || delta === null || delta === 0 ? null : delta > 0 === goodWhenUp
-  const tono = bueno === null ? "text-marron/45" : bueno ? "text-estado-al-dia" : "text-estado-mora"
+  // `kpiDelta` ya decidio si la noticia es buena, mala o neutra. La ficha solo pinta.
+  const tono = !delta || delta.good === null ? "text-marron/45" : delta.good ? "text-estado-al-dia" : "text-estado-mora"
 
   return (
     <div className="rounded-xl border border-marron/10 bg-fondo p-5">
@@ -267,9 +267,7 @@ export function KpiCard({
         <p className="font-display text-[26px] font-semibold tabular-nums leading-tight tracking-[-0.015em] text-marron">
           {value}
         </p>
-        <span className={`text-[13px] font-semibold tabular-nums ${tono}`}>
-          {delta === undefined || delta === null ? "—" : `${delta > 0 ? "+" : ""}${delta}%`}
-        </span>
+        <span className={`text-[13px] font-semibold tabular-nums ${tono}`}>{delta?.text ?? "—"}</span>
       </div>
       {since && <p className="mt-1 text-xs text-marron/50">{since}</p>}
     </div>
