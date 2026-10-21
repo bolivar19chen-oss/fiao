@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { formatCents } from "@/lib/format"
+import { WeekChart } from "@/components/app/lazy-charts"
 import { StatusBar, type StatusSlice } from "@/components/app/status"
-import { WeekChart } from "@/components/app/week-chart"
 
 import { getMeData } from "./data"
 import { Panel, Row, Rows } from "./ui"
