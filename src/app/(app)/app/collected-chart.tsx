@@ -44,7 +44,12 @@ export function CollectedChart({ days }: { days: DayBar[] }) {
           ))}
         </div>
       </div>
-      <WeekColumns days={visible} />
+      {/* Treinta barras en cero no informan de nada. Mismo criterio que en /me. */}
+      {total === 0 ? (
+        <p className="text-[15px] text-marron/60">No payments in the last {rango.label}.</p>
+      ) : (
+        <WeekColumns days={visible} />
+      )}
     </>
   )
 }
