@@ -45,11 +45,23 @@ export function AppShell({ businessName, children }: { businessName: string; chi
   // El titulo de la barra sale de la ruta, como en el original: la pantalla se nombra sola.
   const actual = [...TODOS].reverse().find((item) => isActive(item.href))
 
+  // El buscador busca EN la pantalla donde estas. Antes decia "Search customers" en
+  // todas y siempre llevaba a clientes: en Inventory era una caja que buscaba otra cosa.
+  // Donde no hay lista que filtrar no se ensena.
+  const BUSQUEDA: Record<string, string> = {
+    "/app/products": "products",
+    "/app/sales": "sales",
+    "/app/customers": "customers",
+    "/app": "customers",
+  }
+  const buscable = BUSQUEDA[actual?.href ?? ""]
+
   function buscar(event: React.FormEvent) {
     event.preventDefault()
+    if (!buscable) return
     const needle = query.trim()
-    // El buscador lleva a la lista de clientes, que es donde hay algo que buscar.
-    router.push(needle ? `/app/customers?q=${encodeURIComponent(needle)}` : "/app/customers")
+    const destino = `/app/${buscable === "customers" ? "customers" : buscable}`
+    router.push(needle ? `${destino}?q=${encodeURIComponent(needle)}` : destino)
   }
 
   return (
@@ -125,24 +137,26 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 <p className="truncate text-[13px] text-marron/55 md:hidden">{businessName}</p>
               </div>
 
-              <form onSubmit={buscar} className="order-last w-full sm:order-none sm:w-auto">
-                <div className="relative">
-                  <Search
-                    className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/40"
-                    strokeWidth={1.75}
-                    aria-hidden
-                  />
-                  <input
-                    id="app-search"
-                    type="search"
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="Search customers"
-                    aria-label="Search customers"
-                    className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-64"
-                  />
-                </div>
-              </form>
+              {buscable && (
+                <form onSubmit={buscar} className="order-last w-full sm:order-none sm:w-auto">
+                  <div className="relative">
+                    <Search
+                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/40"
+                      strokeWidth={1.75}
+                      aria-hidden
+                    />
+                    <input
+                      id="app-search"
+                      type="search"
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                      placeholder={`Search ${buscable}`}
+                      aria-label={`Search ${buscable}`}
+                      className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-64"
+                    />
+                  </div>
+                </form>
+              )}
 
               <ThemeToggle />
             </div>

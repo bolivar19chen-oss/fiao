@@ -10,7 +10,10 @@ import { StockBadge } from "./stock-badge"
 
 export const metadata: Metadata = { title: "Inventory - FIA'O" }
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  // `q` lo manda el buscador de la barra superior.
+  const { q } = await searchParams
+  const needle = (q ?? "").trim().toLowerCase()
   const business = await requireBusiness()
   const supabase = await createClient()
   const { data } = await supabase
@@ -18,7 +21,7 @@ export default async function ProductsPage() {
     .select("id, name, price_cents, stock, low_stock_threshold")
     .eq("business_id", business.id)
     .order("name")
-  const products = data ?? []
+  const products = (data ?? []).filter((product) => !needle || product.name.toLowerCase().includes(needle))
 
   return (
     <>
