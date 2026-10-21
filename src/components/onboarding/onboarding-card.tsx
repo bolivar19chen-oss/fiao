@@ -210,7 +210,8 @@ export function CardSelect({
   label: string
   icon: ReactNode
   hint?: string
-  options: string[]
+  /** `value` es lo que se envia; `label` lo que se lee. */
+  options: { value: string; label: string }[]
   placeholder: string
 } & React.SelectHTMLAttributes<HTMLSelectElement>) {
   const id = select.id ?? select.name ?? slug(label)
@@ -231,8 +232,8 @@ export function CardSelect({
         >
           <option value="">{placeholder}</option>
           {options.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </select>
