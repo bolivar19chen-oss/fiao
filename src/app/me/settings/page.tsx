@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { LogOut } from "lucide-react"
 
+import { provinceLabel } from "@/data/stores"
 import { signOut } from "@/components/app/actions"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
@@ -26,7 +27,7 @@ export default async function SettingsPage() {
             <span className="min-w-0 flex-1 text-[15px] text-marron">Province</span>
             <span className="shrink-0 text-right text-[15px] text-marron/70">
               {/* Sin provincia el perfil es anterior a la migracion 20261020120000. */}
-              {profile.province ?? "Not set"}
+              {profile.province ? provinceLabel(profile.province) : "Not set"}
             </span>
           </Row>
         </Rows>

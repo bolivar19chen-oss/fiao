@@ -68,7 +68,7 @@ export function MeShell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[9px] font-medium leading-tight transition duration-200 ease-apple ${
+              className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[11px] font-medium leading-tight transition duration-200 ease-apple ${
                 active ? "bg-marron/[0.08] text-marron" : "text-marron/65"
               }`}
             >

@@ -175,7 +175,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 key={href}
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[10px] font-medium transition-colors ${
+                className={`relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[11px] font-medium leading-tight transition-colors ${
                   active ? "text-rojo" : "text-marron/70"
                 }`}
               >
@@ -189,7 +189,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 <motion.span animate={{ scale: active ? 1.12 : 1 }} transition={RESORTE} className="relative">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </motion.span>
-                <span className="relative">{label}</span>
+                <span className="relative w-full truncate text-center">{label}</span>
               </Link>
             )
           })}

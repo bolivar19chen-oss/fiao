@@ -4,7 +4,7 @@ import { useActionState } from "react"
 import { motion } from "framer-motion"
 import { ArrowLeft, ArrowRight, AtSign, Calendar, IdCard, LoaderCircle, MapPin, Phone, User } from "lucide-react"
 
-import { PROVINCES } from "@/data/stores"
+import { provinceLabel, PROVINCES } from "@/data/stores"
 import { AvatarField } from "@/components/onboarding/avatar-field"
 import {
   CardBanner,
@@ -82,7 +82,7 @@ export function CustomerForm({ email, onBack }: { email: string; onBack: () => v
               icon={<MapPin className="h-4 w-4" aria-hidden />}
               name="province"
               required
-              options={PROVINCES}
+              options={PROVINCES.map((province) => ({ value: province, label: provinceLabel(province) }))}
               placeholder="Where do you live?"
               hint="You can only buy on credit at shops in your province."
             />

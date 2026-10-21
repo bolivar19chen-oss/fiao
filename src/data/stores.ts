@@ -682,3 +682,19 @@ export const PROVINCES: string[] = [...new Set(stores.map((store) => store.provi
 export function storesInProvince(province: string): Store[] {
   return stores.filter((store) => store.province === province).sort((a, b) => a.name.localeCompare(b.name, "es"))
 }
+
+/**
+ * La provincia como se escribe, no como viene del listado.
+ *
+ * El PDF del MINSA esta todo en mayusculas, y "CHIRIQUÍ" en pantalla grita. La guia de
+ * Apple pide caja de frase siempre, y en espanol el nombre propio va capitalizado:
+ * "PANAMÁ OESTE" -> "Panamá Oeste". Solo cambia como se ve; el valor guardado y el
+ * `check` de la base siguen en mayusculas.
+ */
+export function provinceLabel(province: string): string {
+  return province
+    .toLocaleLowerCase("es")
+    .split(" ")
+    .map((word) => word.charAt(0).toLocaleUpperCase("es") + word.slice(1))
+    .join(" ")
+}
