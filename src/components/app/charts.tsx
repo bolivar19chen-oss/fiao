@@ -1,10 +1,11 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
-import { AlertTriangle, Check, Clock } from "lucide-react"
+import { useReducedMotion } from "framer-motion"
 import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import { formatCents } from "@/lib/format"
+
+import { STATUS_META, type StatusSlice } from "./status"
 
 // Reglas que vienen de la guia de visualizacion y de docs/DISENO.md:
 // - Los colores de estado son reservados y SIEMPRE van con icono y etiqueta, nunca solos.
@@ -27,66 +28,6 @@ function MoneyTooltip({ active, payload, label }: { active?: boolean; payload?: 
       <p className="text-xs text-marron/60">{label}</p>
       <p className="font-display text-sm font-semibold tabular-nums text-marron">{formatCents(payload[0].value)}</p>
     </div>
-  )
-}
-
-export type StatusSlice = { key: "on-time" | "due-soon" | "overdue"; cents: number }
-
-const STATUS_META = {
-  "on-time": { label: "On time", fill: "bg-estado-al-dia", ink: "text-estado-al-dia", Icon: Check },
-  "due-soon": { label: "Due soon", fill: "bg-estado-por-vencer", ink: "text-estado-por-vencer", Icon: Clock },
-  overdue: { label: "Overdue", fill: "bg-estado-mora", ink: "text-estado-mora", Icon: AlertTriangle },
-} as const
-
-/**
- * Cartera por estado. Barra apilada horizontal.
- *
- * Esta no va en Recharts: se arma con divs para que el separador entre segmentos mida
- * exactamente 2px a cualquier ancho. Un SVG estirado lo deforma (docs/UI-DASHBOARD.md
- * seccion 1). La leyenda ya trae cada valor escrito, asi que no le falta hover.
- */
-export function StatusBar({ slices }: { slices: StatusSlice[] }) {
-  const reduced = useReducedMotion()
-  const total = slices.reduce((sum, slice) => sum + slice.cents, 0)
-  const visible = slices.filter((slice) => slice.cents > 0)
-
-  if (total === 0) return <p className="text-[15px] text-marron/60">Nothing owed right now.</p>
-
-  const label = visible.map((s) => `${STATUS_META[s.key].label} ${formatCents(s.cents)}`).join(", ")
-
-  return (
-    <>
-      <div
-        className="flex h-12 gap-0.5 overflow-hidden rounded-lg"
-        role="img"
-        aria-label={`Portfolio by status: ${label}`}
-      >
-        {visible.map((slice) => (
-          <motion.div
-            key={slice.key}
-            className={`${STATUS_META[slice.key].fill} first:rounded-l-lg last:rounded-r-lg`}
-            initial={reduced ? false : { width: 0 }}
-            animate={{ width: `${(slice.cents / total) * 100}%` }}
-            transition={{ type: "spring", stiffness: 120, damping: 20 }}
-          />
-        ))}
-      </div>
-
-      <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-        {slices.map((slice) => {
-          const { label: name, ink, Icon } = STATUS_META[slice.key]
-          return (
-            <li key={slice.key} className="flex items-center gap-2 text-[13px]">
-              <Icon className={`h-4 w-4 shrink-0 ${ink}`} aria-hidden />
-              <span className="font-semibold text-marron">{name}</span>
-              <span className="text-marron/60">
-                {formatCents(slice.cents)} - {Math.round((slice.cents / total) * 100)}%
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-    </>
   )
 }
 

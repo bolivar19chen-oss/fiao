@@ -3,7 +3,8 @@
 import { useState } from "react"
 
 import { formatCents } from "@/lib/format"
-import { WeekColumns, type DayBar } from "@/components/app/charts"
+import type { DayBar } from "@/components/app/charts"
+import { WeekChart } from "@/components/app/week-chart"
 
 // Las pestanas de periodo de DashSpace (alli 12 months / 30 days / 7 days / 24 hours).
 // Aca solo 30 y 7 dias: son los unicos periodos de los que la consulta trae datos, y una
@@ -48,7 +49,7 @@ export function CollectedChart({ days }: { days: DayBar[] }) {
       {total === 0 ? (
         <p className="text-[15px] text-marron/60">No payments in the last {rango.label}.</p>
       ) : (
-        <WeekColumns days={visible} />
+        <WeekChart days={visible} />
       )}
     </>
   )

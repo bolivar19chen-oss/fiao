@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { formatCents } from "@/lib/format"
-import { StatusBar, WeekColumns, type StatusSlice } from "@/components/app/charts"
+import { StatusBar, type StatusSlice } from "@/components/app/status"
+import { WeekChart } from "@/components/app/week-chart"
 
 import { getMeData } from "./data"
 import { Panel, Row, Rows } from "./ui"
@@ -64,7 +65,7 @@ export default async function OverviewPage() {
               <p className="mb-4 font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
                 {formatCents(paidThisWeek)}
               </p>
-              <WeekColumns days={week} />
+              <WeekChart days={week} />
             </>
           )}
         </Panel>
