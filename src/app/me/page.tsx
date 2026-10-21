@@ -55,10 +55,18 @@ export default async function OverviewPage() {
         </Panel>
 
         <Panel title="What you paid this week">
-          <p className="mb-4 font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
-            {formatCents(paidThisWeek)}
-          </p>
-          <WeekColumns days={week} />
+          {/* Siete barras en cero no informan de nada y ocupan media pantalla: cuando no
+              hubo pagos se dice con una frase. */}
+          {paidThisWeek === 0 ? (
+            <p className="text-[15px] text-marron/60">No payments in the last 7 days.</p>
+          ) : (
+            <>
+              <p className="mb-4 font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
+                {formatCents(paidThisWeek)}
+              </p>
+              <WeekColumns days={week} />
+            </>
+          )}
         </Panel>
       </div>
 
