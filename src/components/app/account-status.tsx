@@ -9,9 +9,9 @@ import type { AccountStatus, ScoreBreakdown } from "@/lib/credit"
 // llegan a separarse lo suficiente para daltonismo dentro de la banda de luminosidad que
 // exige el fondo, asi que la identidad no puede descansar en el color.
 const STATUS = {
-  NO_DEBT: { label: "No debt", icon: Check, className: "bg-estado-al-dia/12 text-estado-al-dia" },
-  CURRENT: { label: "On time", icon: Check, className: "bg-estado-al-dia/12 text-estado-al-dia" },
-  OVERDUE: { label: "Overdue", icon: AlertTriangle, className: "bg-rojo/12 text-rojo" },
+  NO_DEBT: { label: "No debt", icon: Check, className: "bg-estado-al-dia/[0.12] text-estado-al-dia" },
+  CURRENT: { label: "On time", icon: Check, className: "bg-estado-al-dia/[0.12] text-estado-al-dia" },
+  OVERDUE: { label: "Overdue", icon: AlertTriangle, className: "bg-rojo/[0.12] text-rojo" },
 } as const
 
 export function StatusBadge({ status }: { status: AccountStatus }) {
@@ -26,7 +26,7 @@ export function StatusBadge({ status }: { status: AccountStatus }) {
 
 export function DueSoonBadge({ label }: { label: string }) {
   return (
-    <span className="bg-estado-por-vencer/12 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-estado-por-vencer">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-estado-por-vencer/[0.12] px-3 py-1 text-xs font-semibold text-estado-por-vencer">
       <Clock className="h-3.5 w-3.5" aria-hidden />
       {label}
     </span>
@@ -114,7 +114,7 @@ export function CreditScore({
             <div key={key} className="flex items-center gap-3">
               <dt className={`w-24 shrink-0 text-xs ${medido ? "text-marron/70" : "text-marron/40"}`}>{label}</dt>
               <dd className="flex flex-1 items-center gap-3">
-                <span className="bg-marron/8 h-2 flex-1 overflow-hidden rounded-full">
+                <span className="h-2 flex-1 overflow-hidden rounded-full bg-marron/[0.08]">
                   {medido && (
                     <span
                       className="block h-full rounded-full bg-rojo/70"
