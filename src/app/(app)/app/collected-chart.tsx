@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { formatCents } from "@/lib/format"
 import type { DayBar } from "@/components/app/charts"
-import { WeekChart } from "@/components/app/week-chart"
+import { WeekChart } from "@/components/app/lazy-charts"
 
 // Las pestanas de periodo de DashSpace (alli 12 months / 30 days / 7 days / 24 hours).
 // Aca solo 30 y 7 dias: son los unicos periodos de los que la consulta trae datos, y una
