@@ -1,3 +1,5 @@
+import { getLang } from "@/lib/lang"
+
 import { getMeData } from "./data"
 import { MeShell } from "./me-shell"
 
@@ -6,5 +8,5 @@ import { MeShell } from "./me-shell"
 // pedirlo sin que cueste una segunda consulta.
 export default async function MeLayout({ children }: { children: React.ReactNode }) {
   await getMeData()
-  return <MeShell>{children}</MeShell>
+  return <MeShell lang={await getLang()}>{children}</MeShell>
 }

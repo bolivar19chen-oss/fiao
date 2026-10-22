@@ -2,10 +2,12 @@ import type { Metadata } from "next"
 
 import { requireBusiness } from "@/lib/business"
 import { basisPointsToInput, formatDate } from "@/lib/format"
+import { getLang } from "@/lib/lang"
 import { createClient } from "@/lib/supabase/server"
 import { ActionForm } from "@/components/app/action-form"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
 import { AvatarField } from "@/components/onboarding/avatar-field"
+import { LangToggle } from "@/components/ui/lang-toggle"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 import { updateBusinessName, updateCreditTerms } from "./actions"
@@ -21,6 +23,7 @@ export default async function SettingsPage() {
     .eq("business_id", business.id)
     .order("created_at")
   const members = data ?? []
+  const lang = await getLang()
 
   // Los terminos del credito. requireBusiness() solo trae identidad y rol.
   const { data: row } = await supabase
@@ -69,6 +72,14 @@ export default async function SettingsPage() {
             </li>
           ))}
         </ul>
+      </Card>
+
+      <Card className="mt-4">
+        <CardTitle>Language</CardTitle>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-marron/65">The app shows in this language for you.</p>
+          <LangToggle current={lang} />
+        </div>
       </Card>
 
       <Card className="mt-4">

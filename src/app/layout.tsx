@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
 
+import { getLang } from "@/lib/lang"
+
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -19,18 +21,20 @@ export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
   description:
     "Inventory, credit sales, payment history and a store credit score for every customer of a corner store.",
-  // UI siempre en ingles: evita que Chrome ofrezca o aplique traduccion automatica.
-  other: { google: "notranslate" },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // El idioma del documento sigue al elegido: sin esto un lector de pantalla lee el
+  // espanol con fonetica inglesa, y el chino directamente no lo lee.
+  const lang = await getLang()
+
   return (
     // suppressHydrationWarning: el script cambia la clase de <html> antes de que React hidrate.
-    <html lang="en" translate="no" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 
+import { t } from "@/lib/i18n"
+import { getLang } from "@/lib/lang"
+
 import { getMeData } from "../data"
 import { ScreenTitle } from "../ui"
 import { CreditorList } from "./creditor-list"
@@ -10,10 +13,11 @@ export const metadata: Metadata = { title: "Creditors - FIA'O" }
 // se consulta de verdad, y porque con varias tiendas necesita buscador.
 export default async function CreditorsPage() {
   const { creditors } = await getMeData()
+  const lang = await getLang()
   return (
     <>
-      <ScreenTitle title="Creditors">Every shop that sells to you on credit, and what you owe each one.</ScreenTitle>
-      <CreditorList creditors={creditors} />
+      <ScreenTitle title={t(lang, "creditors")}>{t(lang, "creditorsIntro")}</ScreenTitle>
+      <CreditorList creditors={creditors} lang={lang} />
     </>
   )
 }
