@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { CreditCard, LayoutDashboard, Plus, Settings, Store, TrendingUp } from "lucide-react"
 
+import { t, type Key, type Lang } from "@/lib/i18n"
 import { Logo } from "@/components/layout/logo"
 
 // Riel de iconos en escritorio, barra abajo en movil. Cada item es OTRA pantalla, nunca
@@ -12,16 +13,18 @@ import { Logo } from "@/components/layout/logo"
 //
 // El activo es una pastilla gris neutra. En esta parte de la aplicacion el color esta
 // reservado para los datos (la mora, el estado de cuenta), no para el cromado.
-const NAV = [
-  { href: "/me", label: "Overview", icon: LayoutDashboard },
-  { href: "/me/creditors", label: "Creditors", icon: Store },
-  { href: "/me/credit", label: "Credit", icon: TrendingUp },
-  { href: "/me/payments", label: "Payments", icon: CreditCard },
-  { href: "/me/link", label: "Link a shop", icon: Plus },
-  { href: "/me/settings", label: "Settings", icon: Settings },
+// Cada item lleva su CLAVE, no su texto: el idioma se resuelve al pintar. `short` es
+// la version que cabe en la barra de movil, donde la celda mide unos 62px.
+const NAV: { href: string; key: Key; short: Key; icon: typeof LayoutDashboard }[] = [
+  { href: "/me", key: "overview", short: "overview", icon: LayoutDashboard },
+  { href: "/me/creditors", key: "creditors", short: "creditors", icon: Store },
+  { href: "/me/credit", key: "credit", short: "credit", icon: TrendingUp },
+  { href: "/me/payments", key: "payments", short: "payments", icon: CreditCard },
+  { href: "/me/link", key: "linkShop", short: "linkShort", icon: Plus },
+  { href: "/me/settings", key: "settings", short: "settings", icon: Settings },
 ]
 
-export function MeShell({ children }: { children: React.ReactNode }) {
+export function MeShell({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   const pathname = usePathname()
   const isActive = (href: string) => (href === "/me" ? pathname === href : pathname.startsWith(href))
 
@@ -31,9 +34,10 @@ export function MeShell({ children }: { children: React.ReactNode }) {
         <Link href="/me" aria-label="FIA'O" className="mb-6">
           <Logo mark />
         </Link>
-        <nav className="flex flex-col gap-1" aria-label="My accounts">
-          {NAV.map(({ href, label, icon: Icon }) => {
+        <nav className="flex flex-col gap-1" aria-label={t(lang, "myAccounts")}>
+          {NAV.map(({ href, key, icon: Icon }) => {
             const active = isActive(href)
+            const label = t(lang, key)
             return (
               <Link
                 key={href}
@@ -59,9 +63,9 @@ export function MeShell({ children }: { children: React.ReactNode }) {
       <nav
         className="glass-bar fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 rounded-[1.5rem] p-1.5 md:hidden"
         style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}
-        aria-label="My accounts"
+        aria-label={t(lang, "myAccounts")}
       >
-        {NAV.map(({ href, label, icon: Icon }) => {
+        {NAV.map(({ href, short, icon: Icon }) => {
           const active = isActive(href)
           return (
             <Link
@@ -73,7 +77,7 @@ export function MeShell({ children }: { children: React.ReactNode }) {
               }`}
             >
               <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />
-              <span className="truncate">{label === "Link a shop" ? "Link" : label}</span>
+              <span className="truncate">{t(lang, short)}</span>
             </Link>
           )
         })}

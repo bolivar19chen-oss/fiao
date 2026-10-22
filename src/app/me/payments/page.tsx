@@ -1,45 +1,50 @@
 import type { Metadata } from "next"
 import { Banknote, CreditCard, Smartphone } from "lucide-react"
 
+import { t, type Key } from "@/lib/i18n"
+import { getLang } from "@/lib/lang"
+
 import { Panel, Row, Rows, ScreenTitle } from "../ui"
 import { CardFace } from "./card-face"
 
 export const metadata: Metadata = { title: "Payments - FIA'O" }
 
-const METHODS = [
-  { id: "cash", label: "Cash at the counter", hint: "Always available", Icon: Banknote, ready: true },
-  { id: "yappy", label: "Yappy", hint: "Waiting on the shop", Icon: Smartphone, ready: false },
-  { id: "card", label: "Card", hint: "Waiting on the shop", Icon: CreditCard, ready: false },
+// Cada metodo lleva su clave, no su texto.
+const METHODS: { id: string; label: Key; Icon: typeof Banknote; ready: boolean }[] = [
+  { id: "cash", label: "cashAtCounter", Icon: Banknote, ready: true },
+  { id: "yappy", label: "yappy", Icon: Smartphone, ready: false },
+  { id: "card", label: "card", Icon: CreditCard, ready: false },
 ]
 
-export default function PaymentsPage() {
+export default async function PaymentsPage() {
+  const lang = await getLang()
+
   return (
     <>
-      <ScreenTitle title="Payments">How you can pay what you owe, and the cards you have saved.</ScreenTitle>
+      <ScreenTitle title={t(lang, "payments")}>{t(lang, "paymentsIntro")}</ScreenTitle>
 
-      <Panel title="Methods">
+      <Panel title={t(lang, "methods")}>
         <Rows>
-          {METHODS.map(({ id, label, hint, Icon, ready }) => (
+          {METHODS.map(({ id, label, Icon, ready }) => (
             <Row key={id}>
               <Icon className="h-[18px] w-[18px] shrink-0 text-marron/40" strokeWidth={1.5} aria-hidden />
               <span className="min-w-0 flex-1">
-                <span className="block text-[15px] text-marron">{label}</span>
-                <span className="block text-[13px] text-marron/55">{hint}</span>
+                <span className="block text-[15px] text-marron">{t(lang, label)}</span>
+                <span className="block text-[13px] text-marron/55">
+                  {t(lang, ready ? "alwaysAvailable" : "waitingOnShop")}
+                </span>
               </span>
               <span className={`shrink-0 text-[13px] ${ready ? "text-estado-al-dia" : "text-marron/45"}`}>
-                {ready ? "On" : "Off"}
+                {t(lang, ready ? "on" : "off")}
               </span>
             </Row>
           ))}
         </Rows>
       </Panel>
 
-      <Panel className="mt-4" title="Saved cards">
-        <CardFace />
-        <p className="mt-6 text-[13px] leading-[18px] text-marron/55">
-          Card payments open once your shop connects its own merchant account. Your card details go straight to the
-          payment provider, never to FIA&apos;O.
-        </p>
+      <Panel className="mt-4" title={t(lang, "savedCards")}>
+        <CardFace lang={lang} />
+        <p className="mt-6 text-[13px] leading-[18px] text-marron/55">{t(lang, "cardNote")}</p>
       </Panel>
     </>
   )

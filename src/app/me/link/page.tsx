@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 
+import { t } from "@/lib/i18n"
+import { getLang } from "@/lib/lang"
+
 import { ScreenTitle } from "../ui"
 import { InviteForm } from "./invite-form"
 
@@ -10,10 +13,12 @@ export const metadata: Metadata = { title: "Link a shop - FIA'O" }
 // pasa por el mostrador y le dan el codigo. Vuelve aca cada vez que suma una tienda.
 //
 // El guardia y el riel los pone el layout de /me: aca solo va el contenido.
-export default function LinkShopPage() {
+export default async function LinkShopPage() {
+  const lang = await getLang()
+
   return (
     <>
-      <ScreenTitle title="Link a shop">Enter the invite code they give you at the counter.</ScreenTitle>
+      <ScreenTitle title={t(lang, "linkShop")}>{t(lang, "linkIntro")}</ScreenTitle>
       <InviteForm />
     </>
   )
