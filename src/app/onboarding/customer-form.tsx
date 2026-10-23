@@ -4,7 +4,7 @@ import { useActionState } from "react"
 import { motion } from "framer-motion"
 import { ArrowLeft, ArrowRight, AtSign, Calendar, IdCard, LoaderCircle, MapPin, Phone, User } from "lucide-react"
 
-import { provinceLabel, PROVINCES } from "@/data/stores"
+import { provinceLabel, PROVINCES } from "@/data/provinces"
 import { AvatarField } from "@/components/onboarding/avatar-field"
 import {
   CardBanner,

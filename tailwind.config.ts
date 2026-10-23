@@ -45,6 +45,10 @@ const config: Config = {
       // con esta: arranca rapido y se asienta, sin rebote. Es la mitad de por que una
       // interfaz de iOS se siente cara.
       transitionTimingFunction: { apple: "cubic-bezier(0.28, 0.11, 0.32, 1)" },
+      // Crossfade de llegada entre rutas. Era framer-motion en el armazon; en CSS cuesta
+      // cero JS y respeta prefers-reduced-motion sin codigo.
+      keyframes: { entrada: { from: { opacity: "0" }, to: { opacity: "1" } } },
+      animation: { entrada: "entrada 140ms cubic-bezier(0.28, 0.11, 0.32, 1) both" },
     },
   },
   plugins: [

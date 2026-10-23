@@ -1,7 +1,6 @@
 "use client"
 
-import { useActionState, useEffect, useId, useState } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useActionState, useEffect, useState } from "react"
 import { Banknote, Check, CreditCard, LoaderCircle, Smartphone, Wallet } from "lucide-react"
 
 import { centsToInput } from "@/lib/format"
@@ -20,8 +19,6 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
   const [state, action, pending] = useActionState<PaymentState, FormData>(recordPayment, null)
   const [method, setMethod] = useState<Method>("cash")
   const [token, setToken] = useState("")
-  const reduced = useReducedMotion()
-  const group = useId()
 
   // Un token por intento, generado en el navegador. Se renueva al registrar: el
   // siguiente abono es otro pago, no un reintento del anterior.
@@ -49,11 +46,24 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
 
       {/* El metodo no cobra: lo deja anotado. El dinero va directo del cliente al
           negocio (ADR 0007), asi que aca solo se registra como entro. */}
+      {/* Control segmentado al estilo del sistema: UNA pastilla que se desliza entre las
+          cuatro celdas. Era framer-motion con layoutId y costaba 43 kB en una pantalla que
+          el dueno abre todo el dia; en CSS es un translateX compuesto por la GPU, y
+          motion-reduce lo deja sin viaje. La rejilla de cuatro columnas fijas es lo que
+          permite el desplazamiento: con flex-wrap la pastilla no sabria a donde ir. */}
       <div
         role="tablist"
         aria-label="Payment method"
-        className="flex flex-wrap gap-1 rounded-full bg-marron/[0.06] p-1"
+        className="relative grid grid-cols-4 rounded-full bg-marron/[0.06] p-1"
       >
+        <span
+          aria-hidden
+          className="absolute inset-y-1 left-1 rounded-full bg-fondo shadow-sm transition-transform duration-300 ease-apple motion-reduce:transition-none"
+          style={{
+            width: "calc(25% - 0.125rem)",
+            transform: `translateX(${TABS.findIndex((tab) => tab.id === method) * 100}%)`,
+          }}
+        />
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -61,19 +71,12 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
             role="tab"
             aria-selected={method === tab.id}
             onClick={() => setMethod(tab.id)}
-            className={`relative flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full px-3 text-[13px] font-semibold transition ${
+            className={`relative flex min-h-[44px] items-center justify-center gap-1.5 rounded-full px-1 text-[13px] font-semibold transition-colors sm:px-3 ${
               method === tab.id ? "text-marron" : "text-marron/60 hover:text-marron"
             }`}
           >
-            {method === tab.id && (
-              <motion.span
-                layoutId={`${group}-tab`}
-                className="absolute inset-0 rounded-full bg-fondo shadow-sm"
-                transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
-              />
-            )}
-            <tab.Icon className="relative h-4 w-4 shrink-0" aria-hidden />
-            <span className="relative">{tab.label}</span>
+            <tab.Icon className="h-4 w-4 shrink-0" aria-hidden />
+            <span className="truncate">{tab.label}</span>
           </button>
         ))}
       </div>

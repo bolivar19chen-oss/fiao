@@ -1,4 +1,4 @@
-import { AlertTriangle, Check, Clock } from "lucide-react"
+import { AlertTriangle, Check } from "lucide-react"
 
 import type { AccountStatus, ScoreBreakdown } from "@/lib/credit"
 
@@ -19,15 +19,6 @@ export function StatusBadge({ status }: { status: AccountStatus }) {
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${className}`}>
       <Icon className="h-3.5 w-3.5" aria-hidden />
-      {label}
-    </span>
-  )
-}
-
-export function DueSoonBadge({ label }: { label: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-estado-por-vencer/[0.12] px-3 py-1 text-xs font-semibold text-estado-por-vencer">
-      <Clock className="h-3.5 w-3.5" aria-hidden />
       {label}
     </span>
   )

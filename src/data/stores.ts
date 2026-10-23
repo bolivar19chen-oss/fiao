@@ -665,36 +665,3 @@ export const stores: Store[] = [
   { id: "13-291", name: "MINI SUPER MÁXIMA", category: "minisuper", province: "PANAMÁ OESTE", district: "ARRAIJÁN" },
   { id: "13-295", name: "MINI SUPER EMERITA", category: "minisuper", province: "PANAMÁ OESTE", district: "CAPIRA" },
 ]
-
-/**
- * Las diez provincias, en el orden del listado oficial.
- *
- * Se derivan del propio arreglo y no se escriben a mano: si entra una tienda de una
- * provincia que falta, aparece sola. El `check` de la migracion
- * 20261020120000_customer_province.sql tiene estos mismos diez valores, que es el unico
- * sitio donde hay que repetirlos porque Postgres no puede leer este archivo.
- */
-export const PROVINCES: string[] = [...new Set(stores.map((store) => store.province))].sort((a, b) =>
-  a.localeCompare(b, "es"),
-)
-
-/** Tiendas del directorio en una provincia, ordenadas por nombre. */
-export function storesInProvince(province: string): Store[] {
-  return stores.filter((store) => store.province === province).sort((a, b) => a.name.localeCompare(b.name, "es"))
-}
-
-/**
- * La provincia como se escribe, no como viene del listado.
- *
- * El PDF del MINSA esta todo en mayusculas, y "CHIRIQUÍ" en pantalla grita. La guia de
- * Apple pide caja de frase siempre, y en espanol el nombre propio va capitalizado:
- * "PANAMÁ OESTE" -> "Panamá Oeste". Solo cambia como se ve; el valor guardado y el
- * `check` de la base siguen en mayusculas.
- */
-export function provinceLabel(province: string): string {
-  return province
-    .toLocaleLowerCase("es")
-    .split(" ")
-    .map((word) => word.charAt(0).toLocaleUpperCase("es") + word.slice(1))
-    .join(" ")
-}

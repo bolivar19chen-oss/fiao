@@ -1,21 +1,20 @@
 import type { Metadata } from "next"
 import { LogOut } from "lucide-react"
 
-import { provinceLabel } from "@/data/stores"
+import { provinceLabel } from "@/data/provinces"
 import { t } from "@/lib/i18n"
 import { getLang } from "@/lib/lang"
+import { requireCustomer } from "@/lib/profile"
 import { signOut } from "@/components/app/actions"
 import { LangToggle } from "@/components/ui/lang-toggle"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
-import { getMeData } from "../data"
 import { Panel, Row, Rows, ScreenTitle } from "../ui"
 
 export const metadata: Metadata = { title: "Settings - FIA'O" }
 
 export default async function SettingsPage() {
-  const { profile } = await getMeData()
-  const lang = await getLang()
+  const [profile, lang] = await Promise.all([requireCustomer(), getLang()])
 
   return (
     <>

@@ -164,15 +164,12 @@ export function AppShell({ businessName, children }: { businessName: string; chi
 
           <main className="px-5 pb-28 pt-6 sm:px-6 md:pb-10">
             {/* Crossfade entre rutas: la clave es la ruta, asi el contenido entra con
-                opacidad en vez de aparecer de golpe. */}
-            <motion.div
-              key={pathname}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-            >
+                opacidad en vez de aparecer de golpe. En CSS y no en framer-motion: este
+                fade corre DESPUES de esperar al servidor, y 180ms de JS encima de una
+                espera se sienten como lentitud. */}
+            <div key={pathname} className="motion-safe:animate-entrada">
               {children}
-            </motion.div>
+            </div>
           </main>
         </div>
 

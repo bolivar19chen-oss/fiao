@@ -1,8 +1,9 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import { PROVINCES } from "@/data/stores"
+import { PROVINCES } from "@/data/provinces"
 import { createClient } from "@/lib/supabase/server"
 
 export type FormState = { error: string } | null
@@ -126,5 +127,8 @@ export async function redeemInvite(_prev: FormState, data: FormData): Promise<Fo
 
   // Vencido, ya usado o inexistente dan el mismo mensaje: no se revela si existio.
   if (error) return { error: "That code is not valid any more. Ask your shop for a new one." }
+  // Hay un acreedor nuevo: sin esto el cache del router (staleTimes) devolveria la cartera
+  // vieja y la tienda recien vinculada no aparece.
+  revalidatePath("/me", "layout")
   redirect("/me")
 }
