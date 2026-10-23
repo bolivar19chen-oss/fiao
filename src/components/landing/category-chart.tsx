@@ -2,12 +2,14 @@
 
 import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
-import { categories } from "@/data/panama"
 import { BRAND, SERIE } from "@/lib/colors"
 
 const COLORS = [...SERIE, BRAND.marron.claro]
 
-export function CategoryChart() {
+// Las categorias llegan por prop y no por import: importar @/data/panama desde un
+// componente cliente arrastraba stores.ts entero (las 82 tiendas del MINSA, 30 kB) al
+// navegador para pintar cinco barras. El agregado se hace en el servidor.
+export function CategoryChart({ categories }: { categories: { label: string; stores: number }[] }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={categories} layout="vertical" margin={{ top: 4, right: 40, left: 0, bottom: 4 }}>

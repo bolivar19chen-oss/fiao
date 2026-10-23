@@ -1,15 +1,10 @@
 import { Card, Skeleton } from "@/components/app/ui"
 
-// Esqueleto compartido por /app y sus rutas hijas.
+// Esqueleto de /app y sus rutas hijas. Sin este archivo Next espera la consulta antes
+// de pintar nada y el clic no devuelve nada durante el viaje al servidor.
 //
-// Es lo que arregla el "boton lento": sin este archivo Next espera la consulta antes de
-// pintar nada, asi que el clic en la navegacion no devuelve nada durante el viaje al
-// servidor. Con el, la ruta cambia al instante, el item activo se marca solo y esto
-// ocupa el sitio hasta que llegan los datos.
-//
-// Forma neutra a proposito: cabecera, una ficha alta y dos mas. Es lo que tienen todas
-// las pantallas. Un esqueleto que promete tres cifras donde luego hay una tabla miente,
-// y eso se siente peor que esperar.
+// Forma neutra a proposito: un esqueleto que promete tres cifras donde luego hay una
+// tabla miente, y eso se siente peor que esperar.
 export default function Loading() {
   return (
     <div role="status" aria-busy="true">

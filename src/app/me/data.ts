@@ -1,10 +1,9 @@
 import { cache } from "react"
-import { redirect } from "next/navigation"
 
 import { addDays, eachDay } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
 import type { ScoreBreakdown } from "@/lib/credit/scoring"
-import { getCurrentProfile, type Profile } from "@/lib/profile"
+import { requireCustomer, type Profile } from "@/lib/profile"
 import { createClient } from "@/lib/supabase/server"
 
 const DAYS_SHOWN = 7
@@ -53,9 +52,7 @@ const weekdayOf = (iso: string) =>
  * las dos pantallas dijeran cosas distintas, el mostrador se convierte en discusion.
  */
 export const getMeData = cache(async (): Promise<MeData> => {
-  const profile = await getCurrentProfile()
-  if (!profile) redirect("/onboarding")
-  if (profile.role === "business") redirect("/app")
+  const profile = await requireCustomer()
 
   const supabase = await createClient()
   const asOf = today()

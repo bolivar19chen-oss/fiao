@@ -15,6 +15,9 @@ import { ChevronDown } from "lucide-react"
 // transparente) sobre un rectangulo en currentColor. Por eso el color es una clase y no
 // un archivo: sigue al tema solo.
 //
+// El PNG es gris de 8 bits, no RGBA: la mascara solo lee luminancia, asi que los tres
+// canales de blanco constante eran 49 kB que no dibujaban nada.
+//
 // Antes se escribia sola, revelada por una segunda mascara de diez trazos medidos a mano
 // con `scripts/firma/overlay.py`. Se quito a peticion: la firma aparece y ya. Los trazos
 // siguen en el historial (commit 7088113) si alguna vez vuelve.
@@ -31,6 +34,12 @@ export function Intro() {
       aria-label="Welcome"
       className="relative z-[60] flex h-[100dvh] flex-col items-center justify-center gap-10 bg-fondo px-6"
     >
+      {/* La firma es el elemento mas grande de la primera pantalla, o sea el que mide el
+          LCP, y va dentro de un <mask>: el escaner de precarga del navegador no mira ahi,
+          asi que no empezaba a bajarla hasta terminar de montar el SVG. React 19 sube este
+          link al head solo. */}
+      <link rel="preload" as="image" href="/firma.png" fetchPriority="high" />
+
       <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} className="w-full max-w-2xl text-rojo" role="img" aria-label="FIA'O">
         <defs>
           <mask id={tinta}>

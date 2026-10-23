@@ -23,7 +23,7 @@ const provinceMeta: ProvinceMeta[] = [
 ]
 
 // "SAN FÉLIX" -> "San Félix", "BOCAS DEL TORO" -> "Bocas del Toro"
-export function titleCase(value: string): string {
+function titleCase(value: string): string {
   return value
     .toLowerCase()
     .split(" ")
