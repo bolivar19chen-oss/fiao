@@ -44,6 +44,12 @@ const nextConfig = {
   // pagina queda sin CSS y la consola tira "Cannot find module './221.js'".
   distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
+  experimental: {
+    // Cache del router en el cliente. Por defecto es 0: volver a una pantalla que acabas
+    // de ver la pedia entera otra vez al servidor. Con esto, ir y venir entre pestanas es
+    // instantaneo durante 30s. Las mutaciones llaman revalidatePath, que lo tira.
+    staleTimes: { dynamic: 30, static: 180 },
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }]
   },

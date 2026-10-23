@@ -1,12 +1,13 @@
 import { getLang } from "@/lib/lang"
+import { requireCustomer } from "@/lib/profile"
 
-import { getMeData } from "./data"
 import { MeShell } from "./me-shell"
 
-// El guardia vive aca y no en cada pantalla: getMeData redirige si no hay perfil o si el
-// perfil es de negocio. Esta cacheado por request, asi que la pagina de dentro vuelve a
-// pedirlo sin que cueste una segunda consulta.
+// El guardia vive aca y no en cada pantalla. Pide el perfil, no la cartera: el layout
+// bloquea el stream, asi que lo que espere aca retrasa hasta el esqueleto. Antes llamaba
+// a getMeData() y /me/settings, /me/link y /me/payments pagaban la consulta grande sin
+// usarla. Las pantallas que si la necesitan la piden ellas, y cache() la comparte.
 export default async function MeLayout({ children }: { children: React.ReactNode }) {
-  await getMeData()
-  return <MeShell lang={await getLang()}>{children}</MeShell>
+  const [, lang] = await Promise.all([requireCustomer(), getLang()])
+  return <MeShell lang={lang}>{children}</MeShell>
 }

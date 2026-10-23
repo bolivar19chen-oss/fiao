@@ -1,4 +1,5 @@
 import { cache } from "react"
+import { redirect } from "next/navigation"
 
 import { createClient } from "@/lib/supabase/server"
 
@@ -33,3 +34,12 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
     province: data.province,
   }
 })
+
+// Para el layout y las pantallas de /me. Es el guardia solo: una fila por PK, no la
+// cartera entera. Espeja a requireBusiness en lib/business.
+export async function requireCustomer(): Promise<Profile> {
+  const profile = await getCurrentProfile()
+  if (!profile) redirect("/onboarding")
+  if (profile.role === "business") redirect("/app")
+  return profile
+}

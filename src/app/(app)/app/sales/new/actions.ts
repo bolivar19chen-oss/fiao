@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 import { requireBusiness } from "@/lib/business"
@@ -88,5 +89,7 @@ export async function createSale(_prev: FormState, formData: FormData): Promise<
     return { error: "We couldn't record the sale. Try again." }
   }
 
+  // La venta toca saldo, inventario y portada: se tira el cache del router de todo /app.
+  revalidatePath("/app", "layout")
   redirect(`/app/sales/${saleId}`)
 }

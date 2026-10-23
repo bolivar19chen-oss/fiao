@@ -4,21 +4,11 @@ import { useEffect } from "react"
 import Link from "next/link"
 import { RotateCcw } from "lucide-react"
 
-/**
- * Red de seguridad para un fallo en marcha.
- *
- * No es el 404: `not-found.tsx` atiende rutas que no existen, esto atiende codigo que
- * revento. Son dos cosas distintas y el usuario tiene que poder distinguirlas, porque lo
- * que puede hacer al respecto es distinto: ahi se volvio a escribir la direccion, aqui
- * se vuelve a intentar.
- *
- * `reset()` vuelve a montar el arbol que fallo sin recargar la pagina entera: si fue un
- * tropiezo puntual, se sale con un toque y sin perder el sitio.
- *
- * Esto NO sustituye arreglar la causa. Una pantalla de error bonita sobre un fallo que se
- * repite solo hace que nadie se entere de que se repite; por eso queda escrito en la
- * consola del navegador.
- */
+// Red de seguridad para un fallo en marcha. No es el 404: not-found.tsx atiende rutas
+// que no existen, esto atiende codigo que revento, y lo que el usuario puede hacer es
+// distinto. reset() vuelve a montar el arbol que fallo sin recargar la pagina.
+//
+// No sustituye arreglar la causa: por eso el fallo queda escrito en la consola.
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     // Sin esto el fallo desaparece sin dejar rastro en produccion.

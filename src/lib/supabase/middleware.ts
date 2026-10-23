@@ -30,16 +30,10 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims()
   const signedIn = Boolean(data?.claims)
 
+  // El matcher ya acota las rutas: todo lo que llega aca es protegido menos /login.
   const { pathname } = request.nextUrl
-  const isProtected =
-    pathname === "/app" ||
-    pathname.startsWith("/app/") ||
-    pathname === "/me" ||
-    pathname.startsWith("/me/") ||
-    pathname === "/onboarding" ||
-    pathname.startsWith("/onboarding/")
 
-  if (!signedIn && isProtected) return redirect(request, response, "/login")
+  if (!signedIn && pathname !== "/login") return redirect(request, response, "/login")
   // A /onboarding y no a /app: es la unica pagina que sabe enrutar por rol, y aca no se
   // puede saber cual es sin consultar la base. Mandar a /app hacia que un cliente diera
   // tres saltos (/app -> /onboarding -> /me) antes de llegar.
