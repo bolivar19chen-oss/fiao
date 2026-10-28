@@ -43,7 +43,7 @@ const CAJA = { w: 599, h: 181 }
 const O = { cx: 504.5, cy: 97 }
 
 // Lo que tarda la animacion completa, igual que en tailwind.config.ts.
-const DURACION = 3600
+const DURACION = 2400
 
 // Rectangulo de fondo con el hueco de la O. Va de -2000 a 2600 para cubrir cualquier
 // pantalla con el logo a su tamano de reposo; el segundo trazo es la elipse interior del
