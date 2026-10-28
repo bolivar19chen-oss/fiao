@@ -63,8 +63,8 @@ const config: Config = {
       },
       animation: {
         entrada: "entrada 140ms cubic-bezier(0.28, 0.11, 0.32, 1) both",
-        intro: "intro 3600ms cubic-bezier(0.28, 0.11, 0.32, 1) both",
-        "intro-ojo": "intro-ojo 3600ms linear both",
+        intro: "intro 2400ms cubic-bezier(0.28, 0.11, 0.32, 1) both",
+        "intro-ojo": "intro-ojo 2400ms linear both",
       },
     },
   },
