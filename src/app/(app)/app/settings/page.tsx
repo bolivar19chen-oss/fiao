@@ -17,20 +17,23 @@ export const metadata: Metadata = { title: "Settings - FIA'O" }
 export default async function SettingsPage() {
   const business = await requireBusiness()
   const supabase = await createClient()
-  const { data } = await supabase
-    .from("business_members")
-    .select("user_id, role, created_at")
-    .eq("business_id", business.id)
-    .order("created_at")
+  // Las dos consultas juntas: no dependen una de otra, y en serie la pagina pagaba dos
+  // viajes a Supabase (~280 ms cada uno) en vez de uno.
+  const [{ data }, { data: row }, lang] = await Promise.all([
+    supabase
+      .from("business_members")
+      .select("user_id, role, created_at")
+      .eq("business_id", business.id)
+      .order("created_at"),
+    // Los terminos del credito. requireBusiness() solo trae identidad y rol.
+    supabase
+      .from("businesses")
+      .select("monthly_rate_bp, late_rate_bp, grace_days, default_installments, installment_days")
+      .eq("id", business.id)
+      .single(),
+    getLang(),
+  ])
   const members = data ?? []
-  const lang = await getLang()
-
-  // Los terminos del credito. requireBusiness() solo trae identidad y rol.
-  const { data: row } = await supabase
-    .from("businesses")
-    .select("monthly_rate_bp, late_rate_bp, grace_days, default_installments, installment_days")
-    .eq("id", business.id)
-    .single()
   const terms = row ?? {
     monthly_rate_bp: 0,
     late_rate_bp: 0,

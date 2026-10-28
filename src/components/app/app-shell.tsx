@@ -86,6 +86,9 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                       <li key={href}>
                         <Link
                           href={href}
+                          // prefetch "a secas" es prefetch completo: trae los datos del servidor antes del clic.
+                          // Sin el, Next solo precarga el esqueleto y cada pestana espera a Supabase al pulsarla.
+                          prefetch
                           aria-current={active ? "page" : undefined}
                           className={`relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
                             active ? "text-rojo" : "text-marron/70 hover:bg-papel hover:text-marron"
@@ -185,6 +188,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
               <Link
                 key={href}
                 href={href}
+                prefetch
                 aria-current={active ? "page" : undefined}
                 className={`relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[11px] font-medium leading-tight transition-colors ${
                   active ? "text-rojo" : "text-marron/70"
