@@ -47,8 +47,25 @@ const config: Config = {
       transitionTimingFunction: { apple: "cubic-bezier(0.28, 0.11, 0.32, 1)" },
       // Crossfade de llegada entre rutas. Era framer-motion en el armazon; en CSS cuesta
       // cero JS y respeta prefers-reduced-motion sin codigo.
-      keyframes: { entrada: { from: { opacity: "0" }, to: { opacity: "1" } } },
-      animation: { entrada: "entrada 140ms cubic-bezier(0.28, 0.11, 0.32, 1) both" },
+      keyframes: {
+        entrada: { from: { opacity: "0" }, to: { opacity: "1" } },
+        // La entrada del logo: se asienta con la curva de Apple, aguanta, y la ultima
+        // parte acelera, que es como se siente una camara que empuja en vez de un
+        // elemento que crece. Ver src/components/landing/intro.tsx.
+        intro: {
+          "0%": { opacity: "0", transform: "scale(1.06)" },
+          "14%": { opacity: "1", transform: "scale(1)" },
+          "66%": { transform: "scale(1)", animationTimingFunction: "cubic-bezier(0.6, 0, 0.85, 0.4)" },
+          "100%": { transform: "scale(26)" },
+        },
+        // La tapa del hueco de la O, que se abre justo cuando empieza el empuje.
+        "intro-ojo": { "0%, 60%": { opacity: "1" }, "72%, 100%": { opacity: "0" } },
+      },
+      animation: {
+        entrada: "entrada 140ms cubic-bezier(0.28, 0.11, 0.32, 1) both",
+        intro: "intro 3600ms cubic-bezier(0.28, 0.11, 0.32, 1) both",
+        "intro-ojo": "intro-ojo 3600ms linear both",
+      },
     },
   },
   plugins: [
