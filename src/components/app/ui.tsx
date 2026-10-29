@@ -227,7 +227,11 @@ export function PrimaryCell({ href, title, sub }: { href: string; title: string;
 // Bloque en gris de los esqueletos de carga. El pulso se apaga si el sistema pide menos
 // movimiento: un parpadeo constante marea y hay quien no lo tolera.
 export function Skeleton({ className = "" }: { className?: string }) {
-  return <div aria-hidden className={`animate-pulse rounded-xl bg-marron/10 motion-reduce:animate-none ${className}`} />
+  // Dos `rounded-*` en el mismo elemento no se resuelven por el orden en que se escriben
+  // sino por el del CSS generado, y `rounded-xl` gana a `rounded-full`: la dona salia
+  // cuadrada. Solo se pone el de por defecto si quien llama no trae el suyo.
+  const shape = className.includes("rounded") ? "" : "rounded-xl"
+  return <div aria-hidden className={`animate-pulse bg-marron/10 motion-reduce:animate-none ${shape} ${className}`} />
 }
 
 /**
