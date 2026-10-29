@@ -1,10 +1,14 @@
 import { cache } from "react"
+import { redirect } from "next/navigation"
+
 import { createClient } from "@/lib/supabase/server"
 
 export type Profile = {
   userId: string
   role: "business" | "customer"
   fullName: string
+  /** Null en los perfiles creados antes de la migracion 20261020120000. */
+  province: string | null
 }
 
 // Perfil del usuario actual, o null si todavia no eligio rol. Es lo que decide a donde
@@ -18,10 +22,24 @@ export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
   // La RLS ya limita a la fila propia; el filtro es para que la consulta use la PK.
   const { data } = await supabase
     .from("profiles")
-    .select("user_id, role, full_name")
+    .select("user_id, role, full_name, province")
     .eq("user_id", auth.claims.sub)
     .maybeSingle()
 
   if (!data) return null
-  return { userId: data.user_id, role: data.role as Profile["role"], fullName: data.full_name }
+  return {
+    userId: data.user_id,
+    role: data.role as Profile["role"],
+    fullName: data.full_name,
+    province: data.province,
+  }
 })
+
+// Para el layout y las pantallas de /me. Es el guardia solo: una fila por PK, no la
+// cartera entera. Espeja a requireBusiness en lib/business.
+export async function requireCustomer(): Promise<Profile> {
+  const profile = await getCurrentProfile()
+  if (!profile) redirect("/onboarding")
+  if (profile.role === "business") redirect("/app")
+  return profile
+}

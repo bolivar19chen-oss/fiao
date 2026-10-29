@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react"
+
 import { RoleFlipCard, type Role } from "@/components/onboarding/role-flip-card"
+
 import { BusinessForm } from "./business-form"
 import { CustomerForm } from "./customer-form"
 

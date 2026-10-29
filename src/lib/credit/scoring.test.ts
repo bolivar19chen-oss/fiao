@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { creditScore, type ScoreInput } from "./scoring"
 import type { Installment } from "./types"
 
@@ -150,6 +151,39 @@ describe("creditScore", () => {
       if (score === null) continue
       expect(score).toBeGreaterThanOrEqual(0)
       expect(score).toBeLessThanOrEqual(100)
+    }
+  })
+})
+
+describe("pesos renormalizados", () => {
+  const base: ScoreInput = {
+    installments: [paid("2026-02-01", "2026-02-01")],
+    currentBalanceCents: 1000,
+    creditLimitCents: null,
+    firstSaleDate: "2026-01-01",
+    salesLast12Months: 1,
+    asOf: "2026-03-01",
+  }
+
+  it("reparte el peso del factor que no se pudo medir", () => {
+    // Sin limite de credito, debtRatio sale del reparto y sus 30 puntos se reparten
+    // entre los otros tres sobre 70: 40 -> 57, 20 -> 29, 10 -> 14.
+    const { weights } = creditScore(base)
+    expect(weights.debtRatio).toBe(0)
+    expect(weights.punctuality).toBe(57)
+    expect(weights.tenure).toBe(29)
+    expect(weights.frequency).toBe(14)
+  })
+
+  it("con los cuatro factores devuelve los pesos nominales", () => {
+    const { weights } = creditScore({ ...base, creditLimitCents: 5000 })
+    expect(weights).toEqual({ punctuality: 40, debtRatio: 30, tenure: 20, frequency: 10 })
+  })
+
+  it("ningun factor aporta mas puntos de los que su peso permite", () => {
+    const { breakdown, weights } = creditScore(base)
+    for (const key of ["punctuality", "debtRatio", "tenure", "frequency"] as const) {
+      expect(breakdown[key]).toBeLessThanOrEqual(weights[key])
     }
   })
 })

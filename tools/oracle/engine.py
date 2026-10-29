@@ -168,13 +168,17 @@ def credit_score(
     available = sum(WEIGHTS[key] for key, value in factors.items() if value is not None)
 
     breakdown = {"punctuality": 0, "debtRatio": 0, "tenure": 0, "frequency": 0}
+    # Cuantos puntos podia dar cada factor DESPUES de renormalizar. Cero significa "no se
+    # pudo medir", no "saco cero". Lo consume la interfaz para no ensenar "0/30".
+    weights = {"punctuality": 0, "debtRatio": 0, "tenure": 0, "frequency": 0}
     if available == 0:
-        return {"score": None, "breakdown": breakdown}
+        return {"score": None, "breakdown": breakdown, "weights": weights}
 
     for key, value in factors.items():
         if value is None:
             continue
         numerator, denominator = value
         breakdown[key] = divide_round_half_up(numerator * WEIGHTS[key] * 100, denominator * available)
+        weights[key] = divide_round_half_up(WEIGHTS[key] * 100, available)
 
-    return {"score": sum(breakdown.values()), "breakdown": breakdown}
+    return {"score": sum(breakdown.values()), "breakdown": breakdown, "weights": weights}

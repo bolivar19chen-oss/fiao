@@ -1,3 +1,7 @@
+// `register_sale` esta escrita a mano: su migracion (20261021120000) todavia no se ha
+// aplicado. Al correr `supabase gen types` otra vez debe seguir aqui; si desaparece,
+// es que la migracion no se aplico.
+
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
@@ -42,12 +46,18 @@ export type Database = {
           address: string | null
           corregimiento_code: string | null
           created_at: string
+          cutoff_day: number
+          default_installments: number
           district_code: string | null
+          grace_days: number
           id: string
+          installment_days: number
+          late_rate_bp: number
           legal_name: string | null
           legal_rep_id: string | null
           legal_rep_name: string | null
           legal_structure: string | null
+          monthly_rate_bp: number
           name: string
           operating_notice: string | null
           province_code: string | null
@@ -58,12 +68,18 @@ export type Database = {
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
+          cutoff_day?: number
+          default_installments?: number
           district_code?: string | null
+          grace_days?: number
           id?: string
+          installment_days?: number
+          late_rate_bp?: number
           legal_name?: string | null
           legal_rep_id?: string | null
           legal_rep_name?: string | null
           legal_structure?: string | null
+          monthly_rate_bp?: number
           name: string
           operating_notice?: string | null
           province_code?: string | null
@@ -74,12 +90,18 @@ export type Database = {
           address?: string | null
           corregimiento_code?: string | null
           created_at?: string
+          cutoff_day?: number
+          default_installments?: number
           district_code?: string | null
+          grace_days?: number
           id?: string
+          installment_days?: number
+          late_rate_bp?: number
           legal_name?: string | null
           legal_rep_id?: string | null
           legal_rep_name?: string | null
           legal_structure?: string | null
+          monthly_rate_bp?: number
           name?: string
           operating_notice?: string | null
           province_code?: string | null
@@ -143,6 +165,7 @@ export type Database = {
         Row: {
           business_id: string
           created_at: string
+          credit_limit_cents: number | null
           credit_score: number | null
           id: string
           name: string
@@ -153,6 +176,7 @@ export type Database = {
         Insert: {
           business_id: string
           created_at?: string
+          credit_limit_cents?: number | null
           credit_score?: number | null
           id?: string
           name: string
@@ -163,6 +187,7 @@ export type Database = {
         Update: {
           business_id?: string
           created_at?: string
+          credit_limit_cents?: number | null
           credit_score?: number | null
           id?: string
           name?: string
@@ -350,6 +375,7 @@ export type Database = {
           full_name: string
           national_id: string
           phone: string
+          province: string | null
           role: string
           user_id: string
         }
@@ -359,6 +385,7 @@ export type Database = {
           full_name: string
           national_id: string
           phone: string
+          province?: string | null
           role: string
           user_id: string
         }
@@ -368,6 +395,7 @@ export type Database = {
           full_name?: string
           national_id?: string
           phone?: string
+          province?: string | null
           role?: string
           user_id?: string
         }
@@ -428,7 +456,10 @@ export type Database = {
           business_id: string
           created_at: string
           customer_id: string
+          grace_days: number
           id: string
+          late_rate_bp: number
+          monthly_rate_bp: number
           total_cents: number
         }
         Insert: {
@@ -436,7 +467,10 @@ export type Database = {
           business_id: string
           created_at?: string
           customer_id: string
+          grace_days?: number
           id?: string
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           total_cents: number
         }
         Update: {
@@ -444,7 +478,10 @@ export type Database = {
           business_id?: string
           created_at?: string
           customer_id?: string
+          grace_days?: number
           id?: string
+          late_rate_bp?: number
+          monthly_rate_bp?: number
           total_cents?: number
         }
         Relationships: [
@@ -500,7 +537,18 @@ export type Database = {
       is_member: { Args: { p_business_id: string }; Returns: boolean }
       is_owner: { Args: { p_business_id: string }; Returns: boolean }
       is_sale_customer: { Args: { p_sale_id: string }; Returns: boolean }
+      my_shop_names: {
+        Args: never
+        Returns: {
+          business_id: string
+          name: string
+        }[]
+      }
       redeem_customer_invite: { Args: { p_code: string }; Returns: string }
+      register_sale: {
+        Args: { p_client_token: string; p_customer_id: string; p_installments: Json; p_items: Json }
+        Returns: string
+      }
       register_payment: {
         Args: {
           p_amount_cents: number

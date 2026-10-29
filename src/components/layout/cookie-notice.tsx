@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 const KEY = "fiao.cookie-notice.seen"
 
@@ -37,7 +37,11 @@ export function CookieNotice() {
 
   return (
     // No bloquea la pagina ni atrapa el foco: es una banda, no un dialogo.
-    <div className="fixed inset-x-0 bottom-0 z-50 p-4" role="region" aria-label="Cookie notice">
+    //
+    // z-[70]: por encima de la cabecera fija (z-50) Y de la intro (z-[60]), que ocupa la
+    // pantalla entera. Con z-50 el aviso quedaba debajo de la intro en la primera visita:
+    // invisible e imposible de aceptar hasta bajar. Un consentimiento tapado no se da.
+    <div className="fixed inset-x-0 bottom-0 z-[70] p-4" role="region" aria-label="Cookie notice">
       <div className="glass mx-auto flex w-full max-w-3xl flex-col items-start gap-3 rounded-2xl p-4 sm:flex-row sm:items-center sm:gap-5 sm:p-5">
         <p className="text-sm leading-relaxed text-marron/80">
           FIA&apos;O only uses the cookies needed to keep you signed in. No tracking, no advertising.{" "}

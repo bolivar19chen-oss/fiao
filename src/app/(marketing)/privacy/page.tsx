@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+
 import { Aurora } from "@/components/ui/aurora"
 
 export const metadata: Metadata = {

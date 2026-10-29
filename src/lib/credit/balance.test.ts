@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { balanceFrom, dailyBalances, verifyBalance } from "./balance"
 import type { Movement } from "./types"
 

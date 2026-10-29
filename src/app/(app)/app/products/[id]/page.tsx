@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ActionForm } from "@/components/app/action-form"
-import { Card, Field, PageHeader } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { centsToInput } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { ActionForm } from "@/components/app/action-form"
+import { Card, Field, PageHeader } from "@/components/app/ui"
+
 import { updateProduct } from "../actions"
 import { StockBadge } from "../stock-badge"
 

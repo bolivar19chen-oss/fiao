@@ -57,7 +57,7 @@ Banco General tiene un producto para comercios. **Hay que leer su documentacion 
 de escribir una linea contra ella:** que expone, como confirma el pago, si hay webhook y
 con que garantias de entrega.
 
-No se asume la forma de una API que no leimos. Es la regla de CLAUDE.md y aca importa mas
+No se asume la forma de una API que no leimos. Es la regla de CONVENCIONES.md y aca importa mas
 que en ningun otro lado, porque del otro lado hay plata.
 
 ## Cambios de schema

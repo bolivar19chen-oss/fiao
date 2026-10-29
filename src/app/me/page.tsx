@@ -1,83 +1,112 @@
 import type { Metadata } from "next"
-import { Plus } from "lucide-react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { Logo } from "@/components/layout/logo"
-import { Aurora } from "@/components/ui/aurora"
-import { AvatarField } from "@/components/onboarding/avatar-field"
+
 import { formatCents } from "@/lib/format"
-import { getCurrentProfile } from "@/lib/profile"
-import { createClient } from "@/lib/supabase/server"
+import { LOCALE, t, type Lang } from "@/lib/i18n"
+import { getLang } from "@/lib/lang"
+import { WeekChart } from "@/components/app/lazy-charts"
+import { StatusBar, type StatusSlice } from "@/components/app/status"
 
-export const metadata: Metadata = { title: "My accounts - FIA'O" }
+import { getMeData } from "./data"
+import { Panel, Row, Rows } from "./ui"
 
-export default async function MePage() {
-  const profile = await getCurrentProfile()
-  if (!profile) redirect("/onboarding")
-  if (profile.role === "business") redirect("/app")
+export const metadata: Metadata = { title: "Overview - FIA'O" }
 
-  // La RLS limita a las filas del propio cliente: no hace falta filtrar por user_id.
-  const supabase = await createClient()
-  const { data: accounts } = await supabase
-    .from("customers")
-    .select("id, business_id, businesses(name), sales(balance_cents)")
+// Mediodia UTC para que ningun huso corra la fecha un dia. El locale viene del idioma:
+// "Nov 5" en ingles, "5 nov" en espanol, "11月5日" en chino.
+const fecha = (iso: string, lang: Lang) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString(LOCALE[lang], {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  })
 
-  const cards = (accounts ?? []).map((account) => ({
-    id: account.id,
-    name: account.businesses?.name ?? "Shop",
-    balance: (account.sales ?? []).reduce((total, sale) => total + sale.balance_cents, 0),
-  }))
+// La pregunta de esta pantalla: cuanto debo y que me toca pagar ahora. La cifra que la
+// responde es la mas grande de la pantalla, y el hallazgo va justo debajo.
+export default async function OverviewPage() {
+  const { profile, creditors, totalCents, overdueCents, next, week } = await getMeData()
+  const lang = await getLang()
 
+  const slices: StatusSlice[] = [
+    { key: "on-time", cents: totalCents - overdueCents },
+    { key: "overdue", cents: overdueCents },
+  ]
+  const paidThisWeek = week.reduce((sum, day) => sum + day.cents, 0)
+  const owing = creditors.filter((c) => c.balanceCents > 0)
   return (
-    <main className="relative isolate min-h-[100dvh] overflow-hidden px-4 py-14">
-      <Aurora />
-      <div className="mx-auto w-full max-w-xl">
-        <Logo />
-
-        <div className="glass mt-8 rounded-[1.75rem] p-3">
-          <AvatarField />
-        </div>
-
-        <p className="eyebrow mt-10">My accounts</p>
-        <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-marron">
-          Hello, {profile.fullName.split(" ")[0]}
+    <>
+      <header>
+        <h1 className="text-[17px] font-semibold text-marron">
+          {t(lang, "hello")}, {profile.fullName.split(" ")[0]}
         </h1>
+        <p className="mt-6 text-[13px] text-marron/55">{t(lang, "youOweAcross")}</p>
+        <p className="mt-1 font-display text-[36px] font-semibold tabular-nums leading-none tracking-[-0.02em] text-marron">
+          {formatCents(totalCents)}
+        </p>
+        <p className="mt-3 text-[15px] leading-[20px] text-marron/70">
+          {next ? (
+            <>
+              {next.overdue ? t(lang, "lateSince") : t(lang, "nextPayment")} {fecha(next.dueDate, lang)}:{" "}
+              <span className={`font-semibold ${next.overdue ? "text-estado-mora" : "text-marron"}`}>
+                {formatCents(next.amountCents)}
+              </span>{" "}
+              at {next.shop}.
+            </>
+          ) : totalCents > 0 ? (
+            t(lang, "noDueDates")
+          ) : (
+            t(lang, "allPaidUp")
+          )}
+        </p>
+      </header>
 
-        {cards.length === 0 ? (
-          <div className="glass mt-8 rounded-[2rem] p-8 text-center">
-            <p className="text-[15px] leading-relaxed text-marron/70">
-              You are not linked to any shop yet. Next time you buy on credit, ask for an invite code at the counter.
-            </p>
-          </div>
-        ) : (
-          <ul className="mt-8 space-y-4">
-            {cards.map((card) => (
-              <li key={card.id} className="glass rounded-[2rem] p-6">
-                <p className="font-display text-lg font-semibold text-marron">{card.name}</p>
-                <p className="mt-1 text-sm text-marron/60">You owe</p>
-                <p className="mt-1 font-display text-3xl font-bold tracking-tight text-marron">
-                  {formatCents(card.balance)}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className="mt-8 grid gap-4 lg:grid-cols-2">
+        <Panel title={t(lang, "byStatus")}>
+          <StatusBar slices={slices} />
+        </Panel>
 
-        {/* Siempre disponible, con cuentas o sin ellas: un cliente suma tiendas con el
-            tiempo, y cada una trae su propio codigo. */}
-        <Link
-          href="/me/link"
-          className="glass mt-4 flex items-center gap-4 rounded-[2rem] p-6 transition hover:-translate-y-px"
-        >
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-crema text-marron">
-            <Plus className="h-5 w-5" aria-hidden />
-          </span>
-          <span>
-            <span className="block font-display text-base font-semibold text-marron">Link a shop</span>
-            <span className="block text-sm text-marron/60">Enter the invite code they give you at the counter.</span>
-          </span>
-        </Link>
+        <Panel title={t(lang, "paidThisWeek")}>
+          {/* Siete barras en cero no informan de nada y ocupan media pantalla: cuando no
+              hubo pagos se dice con una frase. */}
+          {paidThisWeek === 0 ? (
+            <p className="text-[15px] text-marron/60">{t(lang, "noPaymentsWeek")}</p>
+          ) : (
+            <>
+              <p className="mb-4 font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
+                {formatCents(paidThisWeek)}
+              </p>
+              <WeekChart days={week} />
+            </>
+          )}
+        </Panel>
       </div>
-    </main>
+
+      <Panel className="mt-4" title={t(lang, "whoYouOwe")}>
+        {owing.length === 0 ? (
+          <p className="text-[15px] text-marron/60">{t(lang, "oweNothing")}</p>
+        ) : (
+          <>
+            <Rows>
+              {owing.slice(0, 4).map((shop) => (
+                <Row key={shop.id}>
+                  <span className="min-w-0 flex-1 truncate text-[15px] text-marron">{shop.name}</span>
+                  {shop.overdue && (
+                    <span className="shrink-0 text-[13px] font-semibold text-estado-mora">{t(lang, "late")}</span>
+                  )}
+                  <span className="shrink-0 text-right text-[15px] tabular-nums text-marron">
+                    {formatCents(shop.balanceCents)}
+                  </span>
+                </Row>
+              ))}
+            </Rows>
+            {owing.length > 4 && (
+              <Link href="/me/creditors" className="mt-5 inline-block text-[13px] font-semibold text-rojo">
+                {t(lang, "viewAll")} {owing.length}
+              </Link>
+            )}
+          </>
+        )}
+      </Panel>
+    </>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
+import { createContext, useContext, useRef, useState } from "react"
 import Link from "next/link"
-import type { LucideIcon } from "lucide-react"
 import {
   AnimatePresence,
   motion,
@@ -11,7 +11,7 @@ import {
   type MotionValue,
   type SpringOptions,
 } from "framer-motion"
-import { createContext, useContext, useRef, useState } from "react"
+import type { LucideIcon } from "lucide-react"
 
 // Dock estilo macOS adaptado al header (base: componente "dock" de 21st.dev).
 // Cambios: los iconos crecen hacia abajo, la etiqueta sale debajo y cada item es un Link.

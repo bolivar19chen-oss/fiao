@@ -1,19 +1,24 @@
 import type { Metadata } from "next"
 import { Plus, Users } from "lucide-react"
-import { StatusBadge } from "@/components/app/account-status"
-import { CustomerFolder, type FolderCustomer } from "@/components/app/customer-folder"
-import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { scoreBand } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
 import { formatCents } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { StatusBadge } from "@/components/app/account-status"
+import { CustomerFolder, type FolderCustomer } from "@/components/app/customer-folder"
+import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 
 export const metadata: Metadata = { title: "Customers - FIA'O" }
 
 type Row = { id: string; name: string; phone: string | null; sales: SaleRow[] }
 
-export default async function CustomersPage() {
+export default async function CustomersPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  // `q` lo manda el buscador de la barra superior. Se filtra en el servidor por nombre
+  // y telefono, que es lo que el dueno recuerda de un cliente.
+  const { q } = await searchParams
+  const needle = (q ?? "").trim().toLowerCase()
   const business = await requireBusiness()
   const supabase = await createClient()
   const asOf = today()
@@ -28,15 +33,22 @@ export default async function CustomersPage() {
 
   // El estado lo decide el motor, no una consulta: la regla de que es mora vive en un
   // solo lugar (src/lib/credit/status.ts).
-  const customers = ((data ?? []) as Row[]).map((customer) => {
-    const account = customerAccount(customer.sales, asOf)
-    return {
-      ...customer,
-      balance: account.balanceCents,
-      status: account.status,
-      band: scoreBand(account.score),
-    }
-  })
+  const customers = ((data ?? []) as Row[])
+    .filter(
+      (customer) =>
+        !needle ||
+        customer.name.toLowerCase().includes(needle) ||
+        (customer.phone ?? "").toLowerCase().includes(needle),
+    )
+    .map((customer) => {
+      const account = customerAccount(customer.sales, asOf)
+      return {
+        ...customer,
+        balance: account.balanceCents,
+        status: account.status,
+        band: scoreBand(account.score),
+      }
+    })
 
   const toFolder = (c: (typeof customers)[number]): FolderCustomer => ({
     id: c.id,
@@ -87,7 +99,7 @@ export default async function CustomersPage() {
         ) : (
           <Table head={["Customer", "Status", "Balance"]}>
             {customers.map((c) => (
-              <tr key={c.id} className="hover:bg-fondo/50">
+              <tr key={c.id} className="hover:bg-papel">
                 <PrimaryCell href={`/app/customers/${c.id}`} title={c.name} sub={c.phone ?? undefined} />
                 <td className="px-2 py-3">
                   <StatusBadge status={c.status} />

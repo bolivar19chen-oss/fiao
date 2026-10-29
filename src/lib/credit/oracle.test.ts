@@ -1,8 +1,9 @@
 import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 import { describe, expect, it } from "vitest"
-import { settleInstallments } from "./allocation"
+
 import { accrueInterest, accrueLateFee } from "./accrual"
+import { settleInstallments } from "./allocation"
 import { balanceFrom, dailyBalances } from "./balance"
 import { creditScore } from "./scoring"
 import { accountStatus } from "./status"

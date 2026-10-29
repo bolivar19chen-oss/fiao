@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
+
 import { ActionForm } from "@/components/app/action-form"
 import { Card, Field, PageHeader } from "@/components/app/ui"
+
 import { createCustomer } from "../actions"
 
 export const metadata: Metadata = { title: "New customer - FIA'O" }

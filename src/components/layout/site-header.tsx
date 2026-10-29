@@ -1,10 +1,12 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
 import { House, Info, LayoutGrid, LogIn, Menu, ShieldCheck, X } from "lucide-react"
+
 import { Dock, DockItem } from "@/components/ui/dock"
+
 import { Logo } from "./logo"
 
 const nav = [

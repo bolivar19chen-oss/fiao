@@ -4,7 +4,7 @@ La idea: que el dueno no mueva a nadie de carpeta a mano. Si hay que arrastrar c
 entre carpetas, volvimos al cuaderno, solo que en pantalla.
 
 Reglas del credito en [MODELO-CREDITO.md](MODELO-CREDITO.md). Estado del dashboard en
-[FASE-3-DASHBOARD.md](FASE-3-DASHBOARD.md).
+el dashboard del negocio.
 
 ## 1. Lo que ya existe
 

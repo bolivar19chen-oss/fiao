@@ -1,24 +1,46 @@
 import type { Metadata } from "next"
+
+import { requireBusiness } from "@/lib/business"
+import { basisPointsToInput, formatDate } from "@/lib/format"
+import { getLang } from "@/lib/lang"
+import { createClient } from "@/lib/supabase/server"
 import { ActionForm } from "@/components/app/action-form"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
 import { AvatarField } from "@/components/onboarding/avatar-field"
+import { LangToggle } from "@/components/ui/lang-toggle"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
-import { requireBusiness } from "@/lib/business"
-import { formatDate } from "@/lib/format"
-import { createClient } from "@/lib/supabase/server"
-import { updateBusinessName } from "./actions"
+
+import { updateBusinessName, updateCreditTerms } from "./actions"
 
 export const metadata: Metadata = { title: "Settings - FIA'O" }
 
 export default async function SettingsPage() {
   const business = await requireBusiness()
   const supabase = await createClient()
-  const { data } = await supabase
-    .from("business_members")
-    .select("user_id, role, created_at")
-    .eq("business_id", business.id)
-    .order("created_at")
+  // Las dos consultas juntas: no dependen una de otra, y en serie la pagina pagaba dos
+  // viajes a Supabase (~280 ms cada uno) en vez de uno.
+  const [{ data }, { data: row }, lang] = await Promise.all([
+    supabase
+      .from("business_members")
+      .select("user_id, role, created_at")
+      .eq("business_id", business.id)
+      .order("created_at"),
+    // Los terminos del credito. requireBusiness() solo trae identidad y rol.
+    supabase
+      .from("businesses")
+      .select("monthly_rate_bp, late_rate_bp, grace_days, default_installments, installment_days")
+      .eq("id", business.id)
+      .single(),
+    getLang(),
+  ])
   const members = data ?? []
+  const terms = row ?? {
+    monthly_rate_bp: 0,
+    late_rate_bp: 0,
+    grace_days: 0,
+    default_installments: 2,
+    installment_days: 15,
+  }
 
   return (
     <div className="max-w-2xl">
@@ -56,6 +78,14 @@ export default async function SettingsPage() {
       </Card>
 
       <Card className="mt-4">
+        <CardTitle>Language</CardTitle>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-marron/65">The app shows in this language for you.</p>
+          <LangToggle current={lang} />
+        </div>
+      </Card>
+
+      <Card className="mt-4">
         <CardTitle>Appearance</CardTitle>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-marron/65">Follows your device unless you pick light or dark.</p>
@@ -64,8 +94,64 @@ export default async function SettingsPage() {
       </Card>
 
       <Card className="mt-4">
-        <CardTitle>Interest rates</CardTitle>
-        <p className="text-sm text-marron/65">You will set your credit interest rates here once credit sales open.</p>
+        <CardTitle>Credit terms</CardTitle>
+        {/* ADR 0009: los pone la tienda. FIA'O no trae ninguno y no comprueba que sean
+            legales, asi que lo dice donde se configuran. */}
+        <p className="mb-6 text-sm text-marron/65">
+          These are your terms, not ours. FIA&apos;O records what you and your customer agree on; it does not check them
+          against the law where you sell. Leave the rates at zero if you do not charge interest.
+        </p>
+        {business.role === "owner" ? (
+          <ActionForm action={updateCreditTerms} submitLabel="Save terms" pendingLabel="Saving...">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Monthly interest"
+                name="monthly_rate"
+                look="amount"
+                inputMode="decimal"
+                defaultValue={basisPointsToInput(terms.monthly_rate_bp)}
+                hint="Percent per month. 0 means you charge none."
+              />
+              <Field
+                label="Late fee"
+                name="late_rate"
+                look="amount"
+                inputMode="decimal"
+                defaultValue={basisPointsToInput(terms.late_rate_bp)}
+                hint="Percent added once a payment is overdue."
+              />
+              <Field
+                label="Grace period"
+                name="grace_days"
+                look="amount"
+                inputMode="numeric"
+                defaultValue={String(terms.grace_days)}
+                hint="Days after the due date before a payment counts as late."
+              />
+              <Field
+                label="Installments"
+                name="default_installments"
+                look="amount"
+                inputMode="numeric"
+                defaultValue={String(terms.default_installments)}
+                hint="How many payments a sale is split into by default."
+              />
+              <Field
+                label="Days between installments"
+                name="installment_days"
+                look="amount"
+                inputMode="numeric"
+                defaultValue={String(terms.installment_days)}
+                hint="15 is every two weeks."
+              />
+            </div>
+          </ActionForm>
+        ) : (
+          <p className="text-[15px] text-marron/70">Only the owner can change the credit terms.</p>
+        )}
+        <p className="mt-5 text-xs text-marron/55">
+          Changing these does not touch sales you already recorded: each sale keeps the terms it was made under.
+        </p>
       </Card>
     </div>
   )

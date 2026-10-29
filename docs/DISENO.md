@@ -79,9 +79,19 @@ Dos hallazgos de esa validacion, y los dos cambian como se dibuja:
 ## Principios de interfaz
 
 - **Toda la interfaz en ingles.** Landing y app. Cero texto en espanol en la UI.
-- **Fondo blanco.** El color de marca entra como luz difusa (`Aurora`) detras de superficies de
-  cristal: blur + relleno translucido + borde especular (`.glass`, `.btn-glass`, `.btn-glass-red`
-  en `src/app/globals.css`). Sin luz detras, el cristal no se ve sobre blanco.
+- **Dos superficies, segun lo que hace la pantalla.** La aurora es para llegar; la
+  superficie limpia es para trabajar. El dueno abre la app a mirar numeros, no a que lo
+  impresionen.
+  - **Llegar** (landing, login, onboarding, `/me`, privacidad): fondo blanco con el color de
+    marca como luz difusa (`Aurora`) detras de superficies de cristal: blur, relleno
+    translucido y borde especular (`.glass`, `.btn-glass`, `.btn-glass-red` en
+    `src/app/globals.css`). Sin luz detras, el cristal no se ve sobre blanco.
+  - **Trabajar** (todo lo que cuelga de `AppShell`: dashboard, clientes, inventario, ventas,
+    reportes, ajustes): superficie limpia. Pagina en `bg-papel`, tarjetas en `bg-fondo` con un
+    borde de un pelo. Sin aurora y sin cristal: separan el tono y el aire, no una sombra.
+- **Dentro de una tarjeta limpia, lo anidado va en `bg-papel`**: filas, campos y el hover de
+  las tablas. `bg-fondo/50` solo se veia porque detras habia cristal; sobre blanco solido es
+  blanco sobre blanco.
 - Interfaz limpia y minimalista. Simple, moderno y claro.
 - Responsive: movil, tablet y PC. El movil manda, el publico usa celulares de gama baja.
 - Microinteracciones discretas.

@@ -1,6 +1,8 @@
 import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
 
+import type { Delta } from "@/lib/format"
+
 // Piezas de interfaz comunes a las pantallas de la aplicacion. Mismo lenguaje que la
 // landing: cristal sobre la luz de marca, botones redondeados.
 
@@ -16,7 +18,7 @@ export function PageHeader({
   action?: React.ReactNode
 }) {
   return (
-    <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <header className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
       <div className="min-w-0">
         {back && (
           <Link href={back.href} className="text-sm font-medium text-marron/60 hover:text-rojo">
@@ -24,10 +26,13 @@ export function PageHeader({
           </Link>
         )}
         {/* title=: en la ficha de cliente este h1 es el nombre, y truncado no habia forma de leerlo entero. */}
-        <h1 title={title} className="section-title mt-1 truncate">
+        <h1
+          title={title}
+          className="mt-1 truncate font-display text-[34px] font-bold leading-[41px] tracking-[-0.015em] text-marron sm:text-[40px] sm:leading-[46px]"
+        >
           {title}
         </h1>
-        {description && <p className="mt-1 text-[15px] text-marron/65">{description}</p>}
+        {description && <p className="mt-2 text-[17px] leading-[22px] text-marron/65">{description}</p>}
       </div>
       {action}
     </header>
@@ -35,11 +40,21 @@ export function PageHeader({
 }
 
 export function Card({ className = "", children }: { className?: string; children: React.ReactNode }) {
-  return <section className={`glass rounded-[1.75rem] p-5 sm:p-6 ${className}`}>{children}</section>
+  // Superficie limpia: separan el tono y el aire, no una sombra. El cristal se queda en
+  // el sitio publico, donde hay una aurora detras que lo justifica.
+  return (
+    <section className={`rounded-[1.75rem] border border-marron/10 bg-fondo p-7 sm:p-9 ${className}`}>
+      {children}
+    </section>
+  )
 }
 
 export function CardTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-4 font-display text-lg font-semibold text-marron">{children}</h2>
+  return (
+    <h2 className="mb-6 font-display text-[22px] font-semibold leading-[28px] tracking-[-0.01em] text-marron">
+      {children}
+    </h2>
+  )
 }
 
 export function EmptyState({
@@ -54,14 +69,16 @@ export function EmptyState({
   action?: { href: string; label: string }
 }) {
   return (
-    <div className="flex flex-col items-center px-4 py-10 text-center">
-      <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rojo/10 text-rojo">
-        <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
+    <div className="flex flex-col items-center px-4 py-14 text-center">
+      <span className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] bg-rojo/10 text-rojo">
+        <Icon className="h-7 w-7" strokeWidth={1.75} aria-hidden />
       </span>
-      <p className="mt-4 font-display text-lg font-semibold text-marron">{title}</p>
-      <p className="mt-1 max-w-sm text-sm text-marron/65">{body}</p>
+      <p className="mt-6 font-display text-[22px] font-semibold leading-[28px] tracking-[-0.01em] text-marron">
+        {title}
+      </p>
+      <p className="mt-2 max-w-sm text-[17px] leading-[22px] text-marron/65">{body}</p>
       {action && (
-        <Link href={action.href} className="btn btn-glass-red mt-5">
+        <Link href={action.href} className="btn btn-glass-red mt-7">
           {action.label}
         </Link>
       )}
@@ -85,7 +102,7 @@ export function Table({ head, children }: { head: string[]; children: React.Reac
     <div className="-mx-2 overflow-x-auto">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="text-xs font-semibold uppercase tracking-[0.12em] text-marron/50">
+          <tr className="text-xs font-semibold text-marron/50">
             {head.map((h, i) => (
               <th key={h} className={`px-2 pb-3 font-semibold ${i > 0 ? "text-right" : ""}`}>
                 {h}
@@ -116,7 +133,7 @@ export function Badge({ tone, children }: { tone: "red" | "yellow" | "neutral"; 
 // agrega aca: escribir las clases otra vez en una pantalla obliga a acordarse de varios
 // archivos el dia que cambie el foco o el radio.
 const FIELD_BASE =
-  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-fondo/70 text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-papel text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
 
 const FIELD_LOOK = {
   default: "h-12 px-4 text-[15px]",
@@ -186,11 +203,11 @@ export function Stat({
 }) {
   return (
     <Card className={className}>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-marron/55 sm:text-xs">{label}</p>
-      <p className="mt-2 font-display text-2xl font-semibold tracking-tight text-marron tabular-nums sm:text-3xl">
+      <p className="text-[13px] text-marron/55">{label}</p>
+      <p className="mt-3 font-display text-[28px] font-semibold tabular-nums leading-[34px] tracking-[-0.015em] text-marron">
         {value}
       </p>
-      {note && <p className="mt-1 text-xs text-marron/55">{note}</p>}
+      {note && <p className="mt-2 text-[13px] leading-[18px] text-marron/55">{note}</p>}
     </Card>
   )
 }
@@ -204,5 +221,55 @@ export function PrimaryCell({ href, title, sub }: { href: string; title: string;
       </Link>
       {sub && <span className="block text-xs text-marron/55">{sub}</span>}
     </td>
+  )
+}
+
+// Bloque en gris de los esqueletos de carga. El pulso se apaga si el sistema pide menos
+// movimiento: un parpadeo constante marea y hay quien no lo tolera.
+export function Skeleton({ className = "" }: { className?: string }) {
+  return <div aria-hidden className={`animate-pulse rounded-xl bg-marron/10 motion-reduce:animate-none ${className}`} />
+}
+
+/**
+ * Ficha de indicador al estilo DashSpace: icono en circulo tintado, etiqueta, cifra y
+ * variacion. Copiada a peticion del usuario.
+ *
+ * `delta` es opcional y a proposito: una variacion que no se puede calcular se imprime
+ * como raya, nunca como cero ni como un verde inventado. Hoy solo lo cobrado tiene
+ * periodo anterior con el que compararse; la cartera y la mora no se guardan historicas.
+ *
+ * `goodWhenUp` dice en que direccion es buena la noticia. La mora que sube es roja
+ * aunque el numero crezca.
+ */
+export function KpiCard({
+  icon: Icon,
+  label,
+  value,
+  delta,
+  since,
+}: {
+  icon: LucideIcon
+  label: string
+  value: string
+  delta?: Delta | null
+  since?: string
+}) {
+  // `kpiDelta` ya decidio si la noticia es buena, mala o neutra. La ficha solo pinta.
+  const tono = !delta || delta.good === null ? "text-marron/45" : delta.good ? "text-estado-al-dia" : "text-estado-mora"
+
+  return (
+    <div className="rounded-xl border border-marron/10 bg-fondo p-5">
+      <span className="grid h-11 w-11 place-items-center rounded-full bg-rojo/[0.09] text-rojo">
+        <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+      </span>
+      <p className="mt-4 text-[13px] text-marron/55">{label}</p>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <p className="font-display text-[26px] font-semibold tabular-nums leading-tight tracking-[-0.015em] text-marron">
+          {value}
+        </p>
+        <span className={`text-[13px] font-semibold tabular-nums ${tono}`}>{delta?.text ?? "—"}</span>
+      </div>
+      {since && <p className="mt-1 text-xs text-marron/50">{since}</p>}
+    </div>
   )
 }

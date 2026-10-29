@@ -13,7 +13,8 @@
 
 # next.js
 /.next/
-/.next-build/
+# Cualquier carpeta de build de Next: el script next-dist.mjs las nombra por rama.
+/.next-*/
 /out/
 
 # production
@@ -44,3 +45,12 @@ __pycache__/
 .hypothesis/
 .pytest_cache/
 /tools/oracle/py-results.json
+
+# Carpeta de trabajo de la skill de diseno (capturas, informes del inspector).
+/.taste-skill/
+
+# SQL de demostracion: se regenera con tools/seed/render_sql.py.
+/tools/seed/demo.sql
+
+# Configuracion local del editor, no del proyecto
+.idea/

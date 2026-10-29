@@ -1,13 +1,16 @@
 import type { Metadata } from "next"
 import { Plus, ReceiptText } from "lucide-react"
-import { Badge, ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { Badge, ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
 
 export const metadata: Metadata = { title: "Sales - FIA'O" }
 
-export default async function SalesPage() {
+export default async function SalesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams
+  const needle = (q ?? "").trim().toLowerCase()
   const business = await requireBusiness()
   const supabase = await createClient()
   const { data } = await supabase
@@ -15,7 +18,8 @@ export default async function SalesPage() {
     .select("id, total_cents, balance_cents, created_at, customers(name)")
     .eq("business_id", business.id)
     .order("created_at", { ascending: false })
-  const sales = data ?? []
+  // Se busca por cliente: es lo que el dueno recuerda de una venta, no su monto.
+  const sales = (data ?? []).filter((sale) => !needle || (sale.customers?.name ?? "").toLowerCase().includes(needle))
 
   return (
     <>
@@ -39,7 +43,7 @@ export default async function SalesPage() {
         ) : (
           <Table head={["Customer", "Total", "Balance"]}>
             {sales.map((s) => (
-              <tr key={s.id} className="hover:bg-fondo/50">
+              <tr key={s.id} className="hover:bg-papel">
                 <PrimaryCell href={`/app/sales/${s.id}`} title={s.customers.name} sub={formatDate(s.created_at)} />
                 <td className="px-2 py-3 text-right tabular-nums">{formatCents(s.total_cents)}</td>
                 <td className="px-2 py-3 text-right">

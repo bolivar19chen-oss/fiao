@@ -1,42 +1,84 @@
 import type { Metadata } from "next"
-import { CalendarClock, ClipboardCheck, ShoppingBasket, UserRound } from "lucide-react"
-import { Card, PageHeader } from "@/components/app/ui"
+import { Package, Users } from "lucide-react"
+
+import { requireBusiness } from "@/lib/business"
+import { today } from "@/lib/credit-account"
+import { createClient } from "@/lib/supabase/server"
+import { Card, EmptyState, PageHeader } from "@/components/app/ui"
+
+import { NewSaleForm, type SaleCustomer } from "./new-sale-form"
 
 export const metadata: Metadata = { title: "New sale - FIA'O" }
 
-// Contenedor con los pasos. El flujo (con intereses y cronograma) es de la fase siguiente:
-// se registra en una sola transaccion del servidor, no desde aca.
-const steps = [
-  { icon: UserRound, title: "Customer", body: "Pick who is buying on credit." },
-  { icon: ShoppingBasket, title: "Products", body: "Add items and quantities from your inventory." },
-  { icon: CalendarClock, title: "Payment plan", body: "Choose the installments and due dates." },
-  { icon: ClipboardCheck, title: "Review", body: "Confirm the total and save the sale." },
-]
+export default async function NewSalePage() {
+  const business = await requireBusiness()
+  const supabase = await createClient()
 
-export default function NewSalePage() {
+  const [{ data: customers }, { data: products }, { data: terms }] = await Promise.all([
+    supabase.from("customers").select("id, name").eq("business_id", business.id).order("name"),
+    supabase
+      .from("products")
+      .select("id, name, price_cents, stock")
+      .eq("business_id", business.id)
+      .gt("stock", 0)
+      .order("name"),
+    supabase.from("businesses").select("default_installments, installment_days").eq("id", business.id).single(),
+  ])
+
+  // Sin clientes o sin existencias no hay venta que registrar, y decirlo es mas util que
+  // un formulario con dos desplegables vacios.
+  if (!customers?.length) {
+    return (
+      <div className="max-w-2xl">
+        <PageHeader title="New sale" back={{ href: "/app/sales", label: "Sales" }} />
+        <Card>
+          <EmptyState
+            icon={Users}
+            title="No customers yet"
+            body="Add the person who is buying on credit before you record the sale."
+            action={{ href: "/app/customers/new", label: "Add a customer" }}
+          />
+        </Card>
+      </div>
+    )
+  }
+
+  if (!products?.length) {
+    return (
+      <div className="max-w-2xl">
+        <PageHeader title="New sale" back={{ href: "/app/sales", label: "Sales" }} />
+        <Card>
+          <EmptyState
+            icon={Package}
+            title="Nothing in stock"
+            body="Add products with stock before you sell them on credit."
+            action={{ href: "/app/products/new", label: "Add a product" }}
+          />
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-2xl">
-      <PageHeader title="New sale" back={{ href: "/app/sales", label: "Sales" }} />
-      <Card>
-        <ol className="flex flex-col gap-3">
-          {steps.map(({ icon: Icon, title, body }, i) => (
-            <li key={title} className="flex items-center gap-4 rounded-2xl bg-fondo/50 p-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-rojo/10 text-rojo">
-                <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-              </span>
-              <div>
-                <p className="font-display font-semibold text-marron">
-                  {i + 1}. {title}
-                </p>
-                <p className="text-sm text-marron/65">{body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p role="status" className="mt-5 rounded-2xl bg-amarillo/20 px-4 py-3 text-sm text-marron/85">
-          Recording credit sales arrives in the next update.
-        </p>
-      </Card>
+      <PageHeader
+        title="New sale"
+        description="Pick the customer, add what they are taking, and agree the payment plan."
+        back={{ href: "/app/sales", label: "Sales" }}
+      />
+      <NewSaleForm
+        customers={customers as SaleCustomer[]}
+        products={(products as { id: string; name: string; price_cents: number; stock: number }[]).map((product) => ({
+          id: product.id,
+          name: product.name,
+          priceCents: product.price_cents,
+          stock: product.stock,
+        }))}
+        defaultInstallments={terms?.default_installments ?? 2}
+        defaultDays={terms?.installment_days ?? 15}
+        // Hoy lo resuelve el servidor en la zona del negocio: el telefono puede ir corrido.
+        soldOn={today()}
+      />
     </div>
   )
 }

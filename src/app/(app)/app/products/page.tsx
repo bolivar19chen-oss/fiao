@@ -1,14 +1,19 @@
 import type { Metadata } from "next"
 import { Package, Plus } from "lucide-react"
-import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
+
 import { requireBusiness } from "@/lib/business"
 import { formatCents, formatCount } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { ButtonLink, Card, EmptyState, PageHeader, PrimaryCell, Table } from "@/components/app/ui"
+
 import { StockBadge } from "./stock-badge"
 
 export const metadata: Metadata = { title: "Inventory - FIA'O" }
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  // `q` lo manda el buscador de la barra superior.
+  const { q } = await searchParams
+  const needle = (q ?? "").trim().toLowerCase()
   const business = await requireBusiness()
   const supabase = await createClient()
   const { data } = await supabase
@@ -16,7 +21,7 @@ export default async function ProductsPage() {
     .select("id, name, price_cents, stock, low_stock_threshold")
     .eq("business_id", business.id)
     .order("name")
-  const products = data ?? []
+  const products = (data ?? []).filter((product) => !needle || product.name.toLowerCase().includes(needle))
 
   return (
     <>
@@ -43,7 +48,7 @@ export default async function ProductsPage() {
         ) : (
           <Table head={["Product", "Price", "Stock"]}>
             {products.map((p) => (
-              <tr key={p.id} className="hover:bg-fondo/50">
+              <tr key={p.id} className="hover:bg-papel">
                 <PrimaryCell href={`/app/products/${p.id}`} title={p.name} />
                 <td className="px-2 py-3 text-right tabular-nums">{formatCents(p.price_cents)}</td>
                 <td className="px-2 py-3 text-right">

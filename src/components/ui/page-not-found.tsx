@@ -3,12 +3,12 @@
 // 404 animado, adaptado de un componente de 21st.dev: el fondo rojo de marca se llena de
 // circulos blancos hasta quedar en blanco, pasan las figuras y aparece el mensaje sobre
 // cristal. Con prefers-reduced-motion se muestra directo el estado final.
-
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
 import { ArrowLeft, House } from "lucide-react"
+
 import { Aurora } from "@/components/ui/aurora"
 
 function prefersReducedMotion() {
@@ -39,7 +39,7 @@ function MessageDisplay() {
 
   return (
     <div
-      className={`absolute inset-0 z-[100] isolate flex flex-col items-center justify-center px-4 text-center transition-opacity duration-500 ${
+      className={`absolute inset-0 isolate z-[100] flex flex-col items-center justify-center px-4 text-center transition-opacity duration-500 ${
         isVisible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >

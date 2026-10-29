@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
-import { centsToInput, formatCents, formatCount, formatDate, parseCents } from "./format"
+
+import { centsToInput, formatCents, formatCount, formatDate, kpiDelta, parseCents } from "./format"
 
 describe("formatCents", () => {
   it("formats whole dollars", () => {
@@ -68,5 +69,32 @@ describe("centsToInput", () => {
     expect(centsToInput(5)).toBe("0.05")
     expect(centsToInput(120000)).toBe("1200.00")
     expect(parseCents(centsToInput(98765))).toBe(98765)
+  })
+})
+
+describe("kpiDelta", () => {
+  it("no compara contra un periodo vacio", () => {
+    // Un "+100%" nacido de cero se lee como una mejora y es solo el primer dato.
+    expect(kpiDelta(5000, 0)).toBeNull()
+  })
+
+  it("da el porcentaje cuando el salto es legible", () => {
+    expect(kpiDelta(11000, 10000)).toEqual({ text: "+10%", good: true })
+    expect(kpiDelta(9000, 10000)).toEqual({ text: "-10%", good: false })
+  })
+
+  it("cambia el porcentaje por el punto de partida cuando el salto no informa", () => {
+    // El caso real que lo motivo: 71.67 sobre 4.84 daba +1381%.
+    expect(kpiDelta(7167, 484)).toEqual({ text: "from $4.84", good: true })
+  })
+
+  it("respeta en que direccion es buena la noticia", () => {
+    // La mora que sube es mala aunque el numero crezca.
+    expect(kpiDelta(11000, 10000, false)).toEqual({ text: "+10%", good: false })
+    expect(kpiDelta(9000, 10000, false)).toEqual({ text: "-10%", good: true })
+  })
+
+  it("no pinta un cambio nulo de ningun color", () => {
+    expect(kpiDelta(10000, 10000)).toEqual({ text: "0%", good: null })
   })
 })

@@ -1,9 +1,11 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import type { FormState } from "@/components/app/action-form"
+
 import { requireBusiness } from "@/lib/business"
 import { createClient } from "@/lib/supabase/server"
+import type { FormState } from "@/components/app/action-form"
 
 export async function createCustomer(_prev: FormState, formData: FormData): Promise<FormState> {
   const business = await requireBusiness()
@@ -24,5 +26,7 @@ export async function createCustomer(_prev: FormState, formData: FormData): Prom
     .single()
   if (error) return { error: "We couldn't save the customer. Try again." }
 
+  // Con el cache del router (staleTimes) la lista vieja seguiria en memoria sin esto.
+  revalidatePath("/app/customers")
   redirect(`/app/customers/${data.id}`)
 }

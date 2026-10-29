@@ -1,9 +1,12 @@
 import Link from "next/link"
 import { ArrowDownRight, ArrowRight, Check } from "lucide-react"
-import { Aurora } from "@/components/ui/aurora"
-import { ScoreRing } from "@/components/ui/score-ring"
+
 import { provinces, totalStores } from "@/data/panama"
 import { formatCents } from "@/lib/format"
+import { Aurora } from "@/components/ui/aurora"
+import { ScoreRing } from "@/components/ui/score-ring"
+
+import { Petals } from "./petals"
 
 export function Hero() {
   return (
@@ -11,6 +14,7 @@ export function Hero() {
       {/* Panel con bordes redondeados y margen: el hero se lee como una pieza propia. */}
       <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-crema-claro to-fondo pb-20 pt-32 ring-1 ring-marron/[0.06] sm:pt-40">
         <Aurora />
+        <Petals />
         <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
           <div>
             <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-marron/80">
@@ -24,7 +28,7 @@ export function Hero() {
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-marron/70">
               FIA&apos;O turns the store notebook into a secure ledger: inventory, credit sales, payment history and a
-              credit score for every customer, on any phone.
+              credit score for every customer of your store, on any phone.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/login" className="btn btn-glass-red h-12 px-6 text-[15px]">
@@ -47,7 +51,7 @@ export function Hero() {
                 </div>
               </div>
               <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/65">
-                {["Works offline", "Installs on any phone", "Data isolated per store"].map((item) => (
+                {["Works in any phone browser", "Nothing to install", "Data isolated per store"].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-rojo" strokeWidth={2.5} aria-hidden />
                     {item}
@@ -103,7 +107,7 @@ function HeroPreview() {
       <div className="glass absolute -left-6 -top-8 hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex">
         <ScoreRing score={82} />
         <div>
-          <div className="text-xs text-marron/55">Credit score</div>
+          <div className="text-xs text-marron/55">Store credit score</div>
           <div className="text-sm font-semibold">Rosa M. · Good</div>
         </div>
       </div>

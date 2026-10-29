@@ -1,5 +1,6 @@
-import { redirect } from "next/navigation"
 import { cache } from "react"
+import { redirect } from "next/navigation"
+
 import { createClient } from "@/lib/supabase/server"
 
 // Negocio activo del usuario. Si tiene varios, el primero que creo o al que lo sumaron:

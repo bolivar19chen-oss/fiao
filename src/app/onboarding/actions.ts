@@ -1,6 +1,9 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+
+import { PROVINCES } from "@/data/provinces"
 import { createClient } from "@/lib/supabase/server"
 
 export type FormState = { error: string } | null
@@ -43,6 +46,11 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
   // insert fallaba con un mensaje que no dice nada.
   if (!auth) return { error: "Your session expired. Log in again." }
 
+  // La provincia decide en que tiendas puede pedir fiado, asi que se valida aca y no
+  // solo en el `check` de la base: el navegador puede mandar cualquier cosa.
+  const province = field(data, "province")
+  if (!PROVINCES.includes(province)) return { error: "Choose your province." }
+
   const { error } = await supabase.from("profiles").insert({
     user_id: auth.claims.sub,
     role: "customer",
@@ -50,9 +58,15 @@ export async function completeCustomer(_prev: FormState, data: FormData): Promis
     national_id: field(data, "national_id"),
     phone: field(data, "phone"),
     date_of_birth: field(data, "date_of_birth"),
+    province,
   })
 
-  if (error) return { error: "We couldn't save your details. Try again." }
+  if (error) {
+    // El mensaje al usuario es generico a proposito, pero sin esto la causa real se
+    // pierde y no hay forma de diagnosticar un alta fallida.
+    console.error("completeCustomer insert failed:", error)
+    return { error: "We couldn't save your details. Try again." }
+  }
   // A /me y no a la pantalla del codigo: vincular una tienda no es parte del alta. El
   // cliente se registra desde su casa y pide el codigo cuando pasa por el mostrador.
   redirect("/me")
@@ -113,5 +127,8 @@ export async function redeemInvite(_prev: FormState, data: FormData): Promise<Fo
 
   // Vencido, ya usado o inexistente dan el mismo mensaje: no se revela si existio.
   if (error) return { error: "That code is not valid any more. Ask your shop for a new one." }
+  // Hay un acreedor nuevo: sin esto el cache del router (staleTimes) devolveria la cartera
+  // vieja y la tienda recien vinculada no aparece.
+  revalidatePath("/me", "layout")
   redirect("/me")
 }

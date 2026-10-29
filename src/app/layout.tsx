@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
+
+import { getLang } from "@/lib/lang"
+
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -16,19 +19,28 @@ const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t=
 
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
-  description: "Inventory, credit sales, payment history and customer credit scores for corner stores.",
-  // UI siempre en ingles: evita que Chrome ofrezca o aplique traduccion automatica.
+  description:
+    "Inventory, credit sales, payment history and a store credit score for every customer of a corner store.",
+  // La aplicacion ya tiene su propio selector de idioma: la traduccion automatica del
+  // navegador sobra, y ademas rompe. Chrome traduce reescribiendo los nodos de texto por
+  // debajo de React, y entonces React intenta quitar un nodo que ya no es suyo:
+  // "Failed to execute 'removeChild' on 'Node'". Con tres idiomas propios esto importa
+  // mas que antes, no menos.
   other: { google: "notranslate" },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // El idioma del documento sigue al elegido: sin esto un lector de pantalla lee el
+  // espanol con fonetica inglesa, y el chino directamente no lo lee.
+  const lang = await getLang()
+
   return (
     // suppressHydrationWarning: el script cambia la clase de <html> antes de que React hidrate.
-    <html lang="en" translate="no" suppressHydrationWarning>
+    <html lang={lang} translate="no" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>

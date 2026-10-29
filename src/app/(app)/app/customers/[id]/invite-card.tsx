@@ -1,8 +1,10 @@
 "use client"
 
-import { Check, LoaderCircle, Smartphone } from "lucide-react"
 import { useActionState } from "react"
+import { Check, LoaderCircle, Smartphone } from "lucide-react"
+
 import { Card, CardTitle, Field } from "@/components/app/ui"
+
 import { createInvite, type InviteState } from "./actions"
 
 export function InviteCard({ customerId, linked }: { customerId: string; linked: boolean }) {

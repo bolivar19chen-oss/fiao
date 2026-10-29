@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ReceiptText, Wallet } from "lucide-react"
-import { CreditScore, StatusBadge } from "@/components/app/account-status"
-import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
-import { customerAccount } from "@/lib/credit-account"
+
 import { requireBusiness } from "@/lib/business"
+import { customerAccount } from "@/lib/credit-account"
 import { formatCents, formatDate } from "@/lib/format"
 import { createClient } from "@/lib/supabase/server"
+import { CreditScore, StatusBadge } from "@/components/app/account-status"
+import { Card, CardTitle, EmptyState, PageHeader, PrimaryCell, Stat, Table } from "@/components/app/ui"
+
 import { InviteCard } from "./invite-card"
 
 export const metadata: Metadata = { title: "Customer - FIA'O" }
@@ -53,8 +55,8 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           </p>
         </Card>
         <Card>
-          <CardTitle>Credit score</CardTitle>
-          <CreditScore score={account.score} breakdown={account.breakdown} />
+          <CardTitle>Store credit score</CardTitle>
+          <CreditScore score={account.score} breakdown={account.breakdown} weights={account.weights} />
         </Card>
       </div>
       <div className="mt-4">
@@ -74,7 +76,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           ) : (
             <Table head={["Date", "Total", "Balance"]}>
               {sales.map((s) => (
-                <tr key={s.id} className="hover:bg-fondo/50">
+                <tr key={s.id} className="hover:bg-papel">
                   <PrimaryCell href={`/app/sales/${s.id}`} title={formatDate(s.created_at)} />
                   <td className="px-2 py-3 text-right tabular-nums">{formatCents(s.total_cents)}</td>
                   <td className="px-2 py-3 text-right font-semibold tabular-nums">{formatCents(s.balance_cents)}</td>

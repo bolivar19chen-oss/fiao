@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
-import { StatusBar, TopDebtors, WeekColumns } from "./charts"
+
+import { TopDebtors, WeekColumns } from "./charts"
+import { StatusBar } from "./status"
 
 // Se prueba lo que el usuario ve y lo que lee un lector de pantalla, nunca clases de CSS.
 //

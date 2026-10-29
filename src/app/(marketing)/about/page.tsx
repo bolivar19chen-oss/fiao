@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Coins, Compass, Eye, HeartHandshake, KeyRound, Sparkles } from "lucide-react"
+
 import { Cta } from "@/components/landing/cta"
 import { IconTile } from "@/components/ui/icon-tile"
 import { PageHero } from "@/components/ui/page-hero"
@@ -53,7 +54,11 @@ const roadmap = [
   {
     stage: "Later",
     title: "Credit that grows the business",
-    items: ["Customer credit scores", "Automatic payment reminders", "A beta with real stores across Panama"],
+    items: [
+      "A credit score for every customer of your store",
+      "Automatic payment reminders",
+      "A beta with real stores across Panama",
+    ],
   },
 ]
 

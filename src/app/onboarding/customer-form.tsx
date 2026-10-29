@@ -1,19 +1,23 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { ArrowLeft, ArrowRight, AtSign, Calendar, IdCard, LoaderCircle, Phone, User } from "lucide-react"
 import { useActionState } from "react"
+import { motion } from "framer-motion"
+import { ArrowLeft, ArrowRight, AtSign, Calendar, IdCard, LoaderCircle, MapPin, Phone, User } from "lucide-react"
+
+import { provinceLabel, PROVINCES } from "@/data/provinces"
+import { AvatarField } from "@/components/onboarding/avatar-field"
 import {
   CardBanner,
   CardBody,
   CardError,
   CardField,
   CardHeading,
+  CardSelect,
   FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
-import { AvatarField } from "@/components/onboarding/avatar-field"
 import { CustomerArt } from "@/components/onboarding/role-art"
+
 import { completeCustomer, type FormState } from "./actions"
 
 export function CustomerForm({ email, onBack }: { email: string; onBack: () => void }) {
@@ -72,6 +76,15 @@ export function CustomerForm({ email, onBack }: { email: string; onBack: () => v
               defaultValue={email}
               readOnly
               disabled
+            />
+            <CardSelect
+              label="Province"
+              icon={<MapPin className="h-4 w-4" aria-hidden />}
+              name="province"
+              required
+              options={PROVINCES.map((province) => ({ value: province, label: provinceLabel(province) }))}
+              placeholder="Where do you live?"
+              hint="You can only buy on credit at shops in your province."
             />
             <CardField
               label="Phone"
