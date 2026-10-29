@@ -68,7 +68,7 @@ sincronizar, como ya exige PLAN.md Fase 3.
 - Se agrega un despliegue: el servicio Python. Es el unico servicio extra permitido.
 - El contrato entre Next.js y el motor se define en `docs/MOTOR-FINANCIERO.md` y se
   versiona. Un cambio de contrato es un cambio de los dos lados.
-- CLAUDE.md deja de decir que Python esta descartado. Java y C++ siguen descartados.
+- CONVENCIONES.md deja de decir que Python esta descartado. Java y C++ siguen descartados.
 - El motor no sustituye las Edge Functions: las operaciones que escriben en la base
   (registrar abono, cerrar venta) siguen en TypeScript, junto a los datos y bajo RLS.
 - Si el servicio esta caido, la aplicacion sigue funcionando para todo lo que no sea

@@ -51,3 +51,6 @@ __pycache__/
 
 # SQL de demostracion: se regenera con tools/seed/render_sql.py.
 /tools/seed/demo.sql
+
+# Config de herramientas de edicion, no del proyecto
+.claude/

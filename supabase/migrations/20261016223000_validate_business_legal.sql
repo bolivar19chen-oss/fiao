@@ -14,7 +14,7 @@
 --      el check de tabla con un error crudo de Postgres en vez del mensaje propio. El
 --      formulario los marca required, pero required es HTML y se evade.
 --
--- Regla del proyecto que esto cumple (CLAUDE.md): validacion del lado del servidor
+-- Regla del proyecto que esto cumple (CONVENCIONES.md): validacion del lado del servidor
 -- siempre.
 
 create or replace function public.update_business_legal(

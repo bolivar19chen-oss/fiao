@@ -107,24 +107,23 @@ Al competir por el mejor codigo y desarrollo, estas practicas pesan tanto como e
   de 1, 7 y 30 dias, abonos parciales, normalizacion por monto) con cobertura alta.
 - **CI/CD con calidad automatica:** en cada push, lint + typecheck + tests + build; deploy
   a preview por pull request.
-- **Archivo CLAUDE.md y ADRs:** documentacion de decisiones de arquitectura (Architecture
+- **Convenciones escritas y ADRs:** documentacion de decisiones de arquitectura (Architecture
   Decision Records). Senal inequivoca de equipo profesional.
 - **PWA evaluable:** Lighthouse PWA >= 90 y flujo offline demostrable en la exposicion.
 
-## 4. Plan de trabajo con Claude Code (27 semanas)
+## 4. Plan de trabajo (27 semanas)
 
-Claude Code actua como copiloto del equipo: genera modulos completos con pruebas, revisa
-diffs y mantiene la coherencia arquitectonica. La regla de uso es pedir un modulo
-completo por sesion y revisar cada cambio antes de aceptarlo.
+El trabajo se parte en modulos completos: cada entrega lleva su codigo, sus pruebas y su
+revision humana antes de entrar. Un modulo, un responsable.
 
-| Fase                  | Semanas | Entregable                                                                                                                                                                                             |
-| --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0 - Setup y diseno    | 1-2     | Repo, CLAUDE.md, schema de BD + politicas RLS, especificacion escrita del algoritmo de puntaje (ej.: 40% puntualidad, 30% ratio deuda, 20% antiguedad, 10% frecuencia; decaimiento por dias de atraso) |
-| 1 - Backend de datos  | 2-4     | Migraciones + seed; Edge Functions `calculateCreditScore` y `registerPayment` (saldo y puntaje en la misma transaccion); tests del calculo de saldos y puntaje                                         |
-| 2 - Core funcional    | 4-11    | Auth y onboarding; CRUD de clientes y productos; flujo de venta a credito con cronograma; registro de abonos y estado de cuenta; dashboard principal (cartera, morosos, cobros de la semana)           |
-| 3 - PWA y offline     | 11-17   | Manifest, iconos y service worker (network-first con cache de respaldo); cola de operaciones offline con IndexedDB y tabla `pending_sync`; resolucion de conflictos validada del lado del servidor     |
-| 4 - Reportes y pulido | 17-23   | Graficas Recharts (cartera, morosidad, top deudores); notificaciones por email; auditoria de calidad (Lighthouse >= 90, cobertura de tests, ADRs completados)                                          |
-| 5 - Beta              | 24-27   | 2-3 negocios reales usando el sistema; correccion de hallazgos; preparacion de la demo para la exposicion                                                                                              |
+| Fase                  | Semanas | Entregable                                                                                                                                                                                                |
+| --------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 - Setup y diseno    | 1-2     | Repo, convenciones, schema de BD + politicas RLS, especificacion escrita del algoritmo de puntaje (ej.: 40% puntualidad, 30% ratio deuda, 20% antiguedad, 10% frecuencia; decaimiento por dias de atraso) |
+| 1 - Backend de datos  | 2-4     | Migraciones + seed; Edge Functions `calculateCreditScore` y `registerPayment` (saldo y puntaje en la misma transaccion); tests del calculo de saldos y puntaje                                            |
+| 2 - Core funcional    | 4-11    | Auth y onboarding; CRUD de clientes y productos; flujo de venta a credito con cronograma; registro de abonos y estado de cuenta; dashboard principal (cartera, morosos, cobros de la semana)              |
+| 3 - PWA y offline     | 11-17   | Manifest, iconos y service worker (network-first con cache de respaldo); cola de operaciones offline con IndexedDB y tabla `pending_sync`; resolucion de conflictos validada del lado del servidor        |
+| 4 - Reportes y pulido | 17-23   | Graficas Recharts (cartera, morosidad, top deudores); notificaciones por email; auditoria de calidad (Lighthouse >= 90, cobertura de tests, ADRs completados)                                             |
+| 5 - Beta              | 24-27   | 2-3 negocios reales usando el sistema; correccion de hallazgos; preparacion de la demo para la exposicion                                                                                                 |
 
 El 65% del esfuerzo se concentra en el core funcional, la PWA y los reportes.
 
