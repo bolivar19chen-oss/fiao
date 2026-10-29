@@ -1,6 +1,6 @@
 import { categories, maxStores, provinces, totalStores } from "@/data/panama"
 import { formatCount } from "@/lib/format"
-import { CategoryChart } from "@/components/landing/category-chart"
+import { LazyCategoryChart } from "@/components/landing/lazy-category-chart"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { SourceNote } from "@/components/ui/source-note"
 
@@ -73,7 +73,7 @@ export function Market() {
           <h3 className="font-display text-lg font-semibold">Stores by type</h3>
           <p className="mt-1 text-sm text-marron/60">Registered food stores across Panama</p>
           <div className="mt-6 min-h-[260px] flex-1">
-            <CategoryChart categories={categories} />
+            <LazyCategoryChart categories={categories} />
           </div>
         </div>
       </div>
