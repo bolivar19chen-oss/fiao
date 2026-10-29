@@ -1,7 +1,7 @@
 # FIA'O - El cuerpo de la aplicacion
 
 Lo que ve el usuario despues del login. Amplia el mapa de rutas de
-[FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md) con dos tipos de usuario, pagos, ajustes y
+la estructura de rutas con dos tipos de usuario, pagos, ajustes y
 tema.
 
 Las dos decisiones que este documento planteaba ya estan tomadas:
@@ -97,7 +97,7 @@ Reglas que no se negocian:
 
 ### El resto del negocio
 
-Las rutas ya estan en [FASE-2-ESTRUCTURA.md](FASE-2-ESTRUCTURA.md) seccion 4: clientes,
+Las rutas del negocio ya estan montadas: clientes,
 inventario, ventas, reportes y ajustes.
 
 ## 3. El lado del cliente

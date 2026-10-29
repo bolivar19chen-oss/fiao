@@ -67,7 +67,7 @@ y `hypothesis` genera casos de prueba que ninguna persona escribiria a mano.
 ## Consecuencias
 
 - `engine/` como servicio no se construye. El contrato HTTP de
-  [MOTOR-FINANCIERO.md](../MOTOR-FINANCIERO.md) queda sin efecto; sus reglas de dominio y
+  el contrato HTTP del motor como servicio queda sin efecto; sus reglas de dominio y
   su diseno de pruebas se conservan y se trasladan al modulo TypeScript.
 - Aparece `tools/` con los dos programas Python y su propio CI, separado del de la
   aplicacion.
