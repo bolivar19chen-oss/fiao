@@ -53,5 +53,4 @@ __pycache__/
 /tools/seed/demo.sql
 
 # Configuracion local del editor, no del proyecto
-.claude/
 .idea/
