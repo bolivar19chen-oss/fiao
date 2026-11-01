@@ -16,7 +16,8 @@ import { createRequire } from "node:module"
 const require = createRequire(import.meta.url)
 const args = process.argv.slice(2)
 
-const distDir = process.env.NEXT_DIST_DIR || (process.env.CI ? ".next" : ".next-build")
+// VERCEL ademas de CI: el comentario de arriba prometia .next en Vercel, pero solo se miraba CI.
+const distDir = process.env.NEXT_DIST_DIR || (process.env.CI || process.env.VERCEL ? ".next" : ".next-build")
 
 const result = spawnSync(process.execPath, [require.resolve("next/dist/bin/next"), ...args], {
   stdio: "inherit",
