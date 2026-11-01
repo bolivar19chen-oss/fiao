@@ -44,6 +44,12 @@ const nextConfig = {
   // pagina queda sin CSS y la consola tira "Cannot find module './221.js'".
   distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
+  images: {
+    // Las fotos de origen miden 1672 px de ancho. Por defecto Next ofrece variantes de 1920,
+    // 2048 y 3840: pedirlas es ampliar la foto, y una pantalla de alta densidad bajaba 213 KB
+    // sin ganar nitidez. El techo es el ancho real de la fuente.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1672],
+  },
   experimental: {
     // Cache del router en el cliente. Por defecto es 0: volver a una pantalla que acabas
     // de ver la pedia entera otra vez al servidor. Con esto, ir y venir entre pestanas es

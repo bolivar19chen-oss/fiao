@@ -1,7 +1,9 @@
+import Image from "next/image"
 import { Check, Lock, Store } from "lucide-react"
 
 import { IconTile } from "@/components/ui/icon-tile"
 import { SectionHeading } from "@/components/ui/section-heading"
+import shunYi from "@/assets/img/mini-market-shun-yi.webp"
 
 const principles = [
   { icon: Check, title: "Exact to the cent", body: "Every amount is stored as whole cents. No rounding drift, ever." },
@@ -27,6 +29,19 @@ export function About() {
           notebook.
         </p>
       </SectionHeading>
+
+      {/* Una tienda de verdad ancla lo que dice el parrafo: el cuaderno vive en un mostrador real.
+          Va bajo el pliegue, asi que carga diferida; las medidas salen del import (R-40). */}
+      <figure className="mt-14 lg:ml-[240px]">
+        <Image
+          src={shunYi}
+          alt="Front of Mini Market Shun Yi, a corner store with a red and orange sign in Spanish and Chinese above its glass entrance, cars parked outside."
+          sizes="(min-width: 1024px) 960px, calc(100vw - 48px)"
+          placeholder="blur"
+          className="aspect-[21/9] w-full rounded-3xl object-cover object-[50%_62%]"
+        />
+        <figcaption className="mt-3 text-sm text-marron/70">A neighborhood store in Panama City.</figcaption>
+      </figure>
 
       <div className="mt-16 grid gap-10 md:grid-cols-3 lg:ml-[240px]">
         {principles.map(({ icon, title, body }) => (

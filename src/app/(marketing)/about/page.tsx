@@ -4,6 +4,7 @@ import { Coins, Compass, Eye, HeartHandshake, KeyRound, Sparkles } from "lucide-
 import { Cta } from "@/components/landing/cta"
 import { IconTile } from "@/components/ui/icon-tile"
 import { PageHero } from "@/components/ui/page-hero"
+import alex from "@/assets/img/mini-market-alex.webp"
 
 export const metadata: Metadata = {
   title: "About Us - FIA'O",
@@ -73,6 +74,8 @@ export default function AboutPage() {
           </>
         }
         lead="We build software for the stores that have always sold on trust, so they can keep doing it without losing track of a single cent."
+        image={alex}
+        imagePosition="50% 78%"
       />
 
       {/* The name */}

@@ -15,6 +15,7 @@ import { Cta } from "@/components/landing/cta"
 import { IconTile } from "@/components/ui/icon-tile"
 import { PageHero } from "@/components/ui/page-hero"
 import { ScoreRing } from "@/components/ui/score-ring"
+import shunYi from "@/assets/img/mini-market-shun-yi.webp"
 
 export const metadata: Metadata = {
   title: "Services - FIA'O",
@@ -109,6 +110,8 @@ export default function ServicesPage() {
           </>
         }
         lead="From the first sale on credit to the last payment, FIA'O keeps every balance, product and customer in one place."
+        image={shunYi}
+        imagePosition="50% 52%"
       />
 
       {/* How it works */}

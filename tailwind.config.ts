@@ -14,8 +14,13 @@ import { BRAND, ESTADO, TEMA } from "./src/lib/colors"
 // Van como canales "r g b" para que sigan funcionando los modificadores (text-marron/60).
 const v = (token: keyof typeof TEMA) => `rgb(var(--${token}) / <alpha-value>)`
 const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ")
-const vars = (mode: 0 | 1) =>
-  Object.fromEntries(Object.entries(TEMA).map(([token, pair]) => [`--${token}`, channels(pair[mode])]))
+// `--foto` no es un color: es cuanta foto de fondo se ve (1 en claro, 0 en oscuro). Una foto
+// clara por detras sube el fondo oscuro lo bastante como para que `rojo.suave` caiga de 4.6:1
+// a 3.4:1; en oscuro vuelve la Aurora, que es el caso que ya pasa AA (ver PageHero).
+const vars = (mode: 0 | 1) => ({
+  ...Object.fromEntries(Object.entries(TEMA).map(([token, pair]) => [`--${token}`, channels(pair[mode])])),
+  "--foto": String(1 - mode),
+})
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
