@@ -140,3 +140,37 @@ contraste de `cases.json` es un trabajo distinto que necesita los dos lenguajes.
 4. `tools/seed/`.
 
 El oraculo no puede ir primero: sin implementacion que contrastar no verifica nada.
+
+## Rendimiento: `tools/perf/`
+
+Dos herramientas que cuidan el peso de lo que se le sirve al usuario. Corren desde `tools/`
+y siguen la misma regla: nada de esto se importa desde `src/`.
+
+### Imagenes: `python -m perf.images`
+
+```
+python -m perf.images --src-dir RUTA_DE_LOS_PNG [--only NOMBRE]
+```
+
+Convierte las fotos de `perf/images.json` a WebP en `src/assets/img/`. Por imagen: difumina
+las cajas `blur` (placas y telefonos, en pixeles de la imagen original), achica solo si es
+mas ancha que `max_width`, y busca la calidad mas alta que cabe en `max_bytes`. Si ni con
+`min_quality` cabe, reduce el ancho de a 15% (piso 640 px) y, si sigue sin caber, sale con
+codigo 1 sin escribir nada. Protege dos cosas: que una foto de 2 MB no llegue a la pagina
+y que datos de terceros no salgan publicados. Al agregar una foto con vehiculos o
+telefonos, hay que mirar el resultado antes de commitear.
+
+### Presupuesto de JS: `python -m perf.budget`
+
+```
+pnpm build
+cd tools && python -m perf.budget --dist ../.next
+```
+
+Calcula el First Load JS de cada ruta (chunks `.js` de su entrada en
+`app-build-manifest.json`, comprimidos con gzip, en kB de 1000 bytes), la misma cuenta que
+imprime `next build`, y la compara con `perf/budgets.json`: lista de `{ruta, max_kb}` con
+patrones `fnmatch`, gana el primero que coincide. Sale con codigo 1 y nombra la ruta que se
+pase. En CI corre despues del build; en local `pnpm build` escribe en `.next-build`, asi que
+se pasa `--dist ../.next-build`. Para subir un limite hay que editar `budgets.json` en
+el mismo cambio, a la vista de quien revisa.

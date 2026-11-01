@@ -1,0 +1,7 @@
+[
+  { "ruta": "/", "max_kb": 165 },
+  { "ruta": "/onboarding", "max_kb": 170 },
+  { "ruta": "/app*", "max_kb": 125 },
+  { "ruta": "/me*", "max_kb": 125 },
+  { "ruta": "*", "max_kb": 120 }
+]

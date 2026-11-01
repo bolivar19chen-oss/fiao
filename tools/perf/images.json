@@ -1,0 +1,25 @@
+[
+  {
+    "name": "mini-market-shun-yi",
+    "src": "mini-market-shun-yi.png",
+    "out": "src/assets/img/mini-market-shun-yi.webp",
+    "max_width": 1672,
+    "max_bytes": 200000,
+    "blur": [
+      [78, 852, 82, 46],
+      [614, 779, 74, 44],
+      [780, 54, 102, 22]
+    ]
+  },
+  {
+    "name": "mini-market-alex",
+    "src": "mini-market-alex.png",
+    "out": "src/assets/img/mini-market-alex.webp",
+    "max_width": 1672,
+    "max_bytes": 200000,
+    "blur": [
+      [1298, 768, 32, 26],
+      [855, 775, 24, 26]
+    ]
+  }
+]

@@ -41,11 +41,6 @@ def daily_balances(movements: list[dict], start: str, end: str) -> list[int]:
     return result
 
 
-def verify_balance(movements: list[dict], cached_cents: int) -> dict:
-    expected = balance_from(movements)
-    return {"expectedCents": expected, "cachedCents": cached_cents, "matches": expected == cached_cents}
-
-
 # --- Imputacion de abonos --------------------------------------------------------
 
 

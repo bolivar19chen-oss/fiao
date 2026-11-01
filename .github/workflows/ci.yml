@@ -80,3 +80,9 @@ jobs:
       - name: Build
         if: always()
         run: pnpm build
+
+      # Lee los manifiestos del build de arriba: protege el JS inicial de cada ruta.
+      - name: Presupuesto de peso
+        if: always()
+        run: python -m perf.budget --dist ../.next
+        working-directory: tools

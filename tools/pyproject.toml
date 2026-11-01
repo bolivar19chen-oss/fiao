@@ -6,10 +6,10 @@ requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "hypothesis>=6"]
+dev = ["pytest>=8", "hypothesis>=6", "Pillow>=10"]
 
 [tool.pytest.ini_options]
-testpaths = ["oracle/tests"]
+testpaths = ["oracle/tests", "perf/tests"]
 
 [tool.setuptools]
-packages = ["oracle", "seed"]
+packages = ["oracle", "seed", "perf"]
