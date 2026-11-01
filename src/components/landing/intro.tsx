@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 
-import { BRAND } from "@/lib/colors"
+import { LOGO } from "@/lib/colors"
 
 /**
  * Pantalla de entrada: el logo aguanta unos segundos y la camara entra por la O.
@@ -91,18 +91,18 @@ export function Intro() {
           // recorta y el rojo solo cubriria la franja del logo.
           className="w-full overflow-visible"
         >
-          <path d={FONDO} fillRule="evenodd" fill={BRAND.rojo.DEFAULT} />
+          <path d={FONDO} fillRule="evenodd" fill={LOGO.rojo} />
           {/* Tapa el hueco mientras el logo esta quieto: si no, se leen los titulares de la
             landing dentro de la O y parece un fallo de pintado. Se va justo cuando
             arranca el empuje, que es cuando el hueco pasa a ser la puerta. */}
-          <circle cx={O.cx} cy={O.cy} r={44} fill={BRAND.rojo.DEFAULT} className="animate-intro-ojo" />
+          <circle cx={O.cx} cy={O.cy} r={44} fill={LOGO.rojo} className="animate-intro-ojo" />
           <path
-            fill="#fff"
+            fill={LOGO.claro}
             fillRule="evenodd"
             d="M10,19H118V46H46V82H109V109H46V159H10ZM142,19H178V159H142ZM196,159L258,19H293L355,159H319L307,131H243L231,159ZM254,105H296L275,52ZM385,9C397,9 406,17 406,29C406,39 401,49 397,58L387,81H368L376,49C377,47 375,47 373,46C367,43 365,36 365,29C365,17 373,9 385,9Z"
           />
           <path
-            fill={BRAND.amarillo.DEFAULT}
+            fill={LOGO.amarillo}
             fillRule="evenodd"
             d="M423,97a81.5,76 0 1 0 163,0a81.5,76 0 1 0 -163,0ZM461,96.5a43,45.5 0 1 0 86,0a43,45.5 0 1 0 -86,0Z"
           />

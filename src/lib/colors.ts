@@ -18,6 +18,14 @@ export const BRAND = {
 } as const
 
 /**
+ * Los colores del logo original, tal como vienen en public/brand/fiao-logo.svg. No son los
+ * del tema: el logo es un archivo con sus propios tonos, un poco distintos de BRAND. Solo
+ * lo lee quien dibuja el logo a mano (la intro de la landing); en todo lo demas se usa el
+ * archivo y no hace falta tocar nada de aca.
+ */
+export const LOGO = { rojo: "#af1311", claro: "#f1f1f1", amarillo: "#f2c92c" } as const
+
+/**
  * Colores de estado de cuenta, validados con el script de la guia de visualizacion y no
  * elegidos a ojo.
  *
