@@ -13,8 +13,10 @@ import {
 } from "framer-motion"
 import type { LucideIcon } from "lucide-react"
 
-// Dock estilo macOS adaptado al header (base: componente "dock" de 21st.dev).
-// Cambios: los iconos crecen hacia abajo, la etiqueta sale debajo y cada item es un Link.
+// Dock estilo macOS (base: componente "dock" de 21st.dev), ahora en la barra superior del
+// dashboard. Cambios: los iconos crecen hacia abajo, la etiqueta sale debajo y cada item es
+// un Link. Superficie solida y no cristal: la barra de la app ya es cristal, y seis
+// circulos mas de cristal encima son la dosis que R-10 pide no pasar.
 
 interface DockContextValue {
   mouseX: MotionValue<number>
@@ -86,13 +88,15 @@ export function DockItem({ href, label, icon: Icon, active = false }: DockItemPr
     <motion.div ref={ref} style={{ width: size, height: size }} className="relative shrink-0">
       <Link
         href={href}
+        // Igual que el lateral: con prefetch completo la pantalla ya esta cargada al pulsar.
+        prefetch
         aria-label={label}
         aria-current={active ? "page" : undefined}
         onMouseEnter={() => setShowLabel(true)}
         onMouseLeave={() => setShowLabel(false)}
         onFocus={() => setShowLabel(true)}
         onBlur={() => setShowLabel(false)}
-        className={`glass grid h-full w-full place-items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40 ${
+        className={`grid h-full w-full place-items-center rounded-full border border-marron/10 bg-papel transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40 ${
           active ? "text-rojo" : "text-marron/70 hover:text-rojo"
         }`}
       >
@@ -113,7 +117,7 @@ export function DockItem({ href, label, icon: Icon, active = false }: DockItemPr
             exit={{ opacity: 0, y: 0 }}
             transition={{ duration: 0.18 }}
             style={{ x: "-50%" }}
-            className="glass pointer-events-none absolute left-1/2 top-full mt-2 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-marron"
+            className="pointer-events-none absolute left-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-marron/10 bg-fondo px-3 py-1 text-xs font-semibold text-marron shadow-sm"
             aria-hidden
           >
             {label}

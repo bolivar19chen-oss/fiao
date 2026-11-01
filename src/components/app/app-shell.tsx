@@ -7,6 +7,7 @@ import { motion, MotionConfig } from "framer-motion"
 import { ChartColumn, LayoutDashboard, LogOut, Package, ReceiptText, Search, Settings, Users } from "lucide-react"
 
 import { Logo } from "@/components/layout/logo"
+import { Dock, DockItem } from "@/components/ui/dock"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 import { signOut } from "./actions"
@@ -139,6 +140,16 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 <p className="truncate text-[17px] font-semibold text-marron">{actual?.label ?? "Dashboard"}</p>
                 <p className="truncate text-[13px] text-marron/70 md:hidden">{businessName}</p>
               </div>
+
+              {/* Acceso rapido a las seis secciones sin bajar la vista al lateral. Solo desde xl:
+                  por debajo no cabe junto al buscador, y ahi mandan el lateral y la barra inferior. */}
+              <nav aria-label="Quick access" className="hidden xl:block">
+                <Dock>
+                  {TODOS.map((item) => (
+                    <DockItem key={item.href} {...item} active={isActive(item.href)} />
+                  ))}
+                </Dock>
+              </nav>
 
               {buscable && (
                 <form onSubmit={buscar} className="order-last w-full sm:order-none sm:w-auto">
