@@ -69,7 +69,7 @@ export default function PrivacyPage() {
       <div className="container-x max-w-3xl">
         <p className="eyebrow">Legal</p>
         <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight sm:text-5xl">Privacy Policy</h1>
-        <p className="mt-4 text-sm text-marron/55">Last updated: October 15, 2026</p>
+        <p className="mt-4 text-sm text-marron/70">Last updated: October 15, 2026</p>
 
         <div className="glass mt-12 rounded-[2rem] p-8 sm:p-12">
           <div className="space-y-10">

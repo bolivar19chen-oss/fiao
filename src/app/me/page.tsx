@@ -39,7 +39,7 @@ export default async function OverviewPage() {
         <h1 className="text-[17px] font-semibold text-marron">
           {t(lang, "hello")}, {profile.fullName.split(" ")[0]}
         </h1>
-        <p className="mt-6 text-[13px] text-marron/55">{t(lang, "youOweAcross")}</p>
+        <p className="mt-6 text-[13px] text-marron/70">{t(lang, "youOweAcross")}</p>
         <p className="mt-1 font-display text-[36px] font-semibold tabular-nums leading-none tracking-[-0.02em] text-marron">
           {formatCents(totalCents)}
         </p>
@@ -69,7 +69,7 @@ export default async function OverviewPage() {
           {/* Siete barras en cero no informan de nada y ocupan media pantalla: cuando no
               hubo pagos se dice con una frase. */}
           {paidThisWeek === 0 ? (
-            <p className="text-[15px] text-marron/60">{t(lang, "noPaymentsWeek")}</p>
+            <p className="text-[15px] text-marron/70">{t(lang, "noPaymentsWeek")}</p>
           ) : (
             <>
               <p className="mb-4 font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
@@ -83,7 +83,7 @@ export default async function OverviewPage() {
 
       <Panel className="mt-4" title={t(lang, "whoYouOwe")}>
         {owing.length === 0 ? (
-          <p className="text-[15px] text-marron/60">{t(lang, "oweNothing")}</p>
+          <p className="text-[15px] text-marron/70">{t(lang, "oweNothing")}</p>
         ) : (
           <>
             <Rows>

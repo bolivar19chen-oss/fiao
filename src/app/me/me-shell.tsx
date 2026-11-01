@@ -46,7 +46,7 @@ export function MeShell({ lang, children }: { lang: Lang; children: React.ReactN
                 title={label}
                 aria-current={active ? "page" : undefined}
                 className={`grid h-11 w-11 place-items-center rounded-2xl transition duration-200 ease-apple ${
-                  active ? "bg-marron/[0.08] text-marron" : "text-marron/55 hover:bg-papel hover:text-marron"
+                  active ? "bg-marron/[0.08] text-marron" : "text-marron/70 hover:bg-papel hover:text-marron"
                 }`}
               >
                 <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden />
@@ -73,7 +73,7 @@ export function MeShell({ lang, children }: { lang: Lang; children: React.ReactN
               href={href}
               aria-current={active ? "page" : undefined}
               className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 text-[11px] font-medium leading-tight transition duration-200 ease-apple ${
-                active ? "bg-marron/[0.08] text-marron" : "text-marron/65"
+                active ? "bg-marron/[0.08] text-marron" : "text-marron/70"
               }`}
             >
               <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden />

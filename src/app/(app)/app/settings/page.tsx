@@ -69,7 +69,7 @@ export default async function SettingsPage() {
             <li key={m.user_id} className="flex items-center justify-between gap-3 py-3">
               <div>
                 <p className="font-medium text-marron">{m.user_id === business.userId ? "You" : "Team member"}</p>
-                <p className="text-xs text-marron/55">Joined {formatDate(m.created_at)}</p>
+                <p className="text-xs text-marron/70">Joined {formatDate(m.created_at)}</p>
               </div>
               <Badge tone={m.role === "owner" ? "red" : "neutral"}>{m.role === "owner" ? "Owner" : "Staff"}</Badge>
             </li>
@@ -80,7 +80,7 @@ export default async function SettingsPage() {
       <Card className="mt-4">
         <CardTitle>Language</CardTitle>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-marron/65">The app shows in this language for you.</p>
+          <p className="text-sm text-marron/70">The app shows in this language for you.</p>
           <LangToggle current={lang} />
         </div>
       </Card>
@@ -88,7 +88,7 @@ export default async function SettingsPage() {
       <Card className="mt-4">
         <CardTitle>Appearance</CardTitle>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-marron/65">Follows your device unless you pick light or dark.</p>
+          <p className="text-sm text-marron/70">Follows your device unless you pick light or dark.</p>
           <ThemeToggle />
         </div>
       </Card>
@@ -97,7 +97,7 @@ export default async function SettingsPage() {
         <CardTitle>Credit terms</CardTitle>
         {/* ADR 0009: los pone la tienda. FIA'O no trae ninguno y no comprueba que sean
             legales, asi que lo dice donde se configuran. */}
-        <p className="mb-6 text-sm text-marron/65">
+        <p className="mb-6 text-sm text-marron/70">
           These are your terms, not ours. FIA&apos;O records what you and your customer agree on; it does not check them
           against the law where you sell. Leave the rates at zero if you do not charge interest.
         </p>
@@ -149,7 +149,7 @@ export default async function SettingsPage() {
         ) : (
           <p className="text-[15px] text-marron/70">Only the owner can change the credit terms.</p>
         )}
-        <p className="mt-5 text-xs text-marron/55">
+        <p className="mt-5 text-xs text-marron/70">
           Changing these does not touch sales you already recorded: each sale keeps the terms it was made under.
         </p>
       </Card>

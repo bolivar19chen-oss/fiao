@@ -20,7 +20,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       <h1 className="font-display text-[34px] font-bold leading-[41px] tracking-[-0.015em] text-marron">
         Something broke
       </h1>
-      <p className="mt-3 max-w-md text-[17px] leading-[22px] text-marron/65">
+      <p className="mt-3 max-w-md text-[17px] leading-[22px] text-marron/70">
         Not your fault. Nothing you had recorded was lost: try again, and if it keeps happening tell us.
       </p>
 
@@ -36,7 +36,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
 
       {/* El digest es lo unico que identifica este fallo concreto en los registros del
           servidor. Sin el, un reporte de usuario es imposible de cruzar con nada. */}
-      {error.digest && <p className="mt-8 text-[13px] text-marron/45">Reference: {error.digest}</p>}
+      {error.digest && <p className="mt-8 text-[13px] text-marron/70">Reference: {error.digest}</p>}
     </main>
   )
 }

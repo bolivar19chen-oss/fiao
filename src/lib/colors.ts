@@ -69,6 +69,10 @@ export const TEMA = {
   crema: [BRAND.crema.DEFAULT, "#3a2b17"],
   "crema-claro": [BRAND.crema.claro, "#21180f"],
   rojo: [BRAND.rojo.DEFAULT, BRAND.rojo.suave],
+  // El relleno de un boton rojo con texto blanco. Ni `rojo` ni `rojo-marca` sirven: con el
+  // rojo claro de `rojo` el blanco cae a 4.05:1, y con `rojo-marca` el boton cae a 2.89:1
+  // contra el fondo oscuro y deja de distinguirse. `rojo.claro` cumple los dos: 5.38 y 3.48.
+  "rojo-panel": [BRAND.rojo.DEFAULT, BRAND.rojo.claro],
   fondo: [SUPERFICIE.blanco, "#17110d"],
   papel: [SUPERFICIE.papel, "#241b15"],
   // El canto con luz del cristal. En oscuro un blanco seria un marco duro: va un tono calido.

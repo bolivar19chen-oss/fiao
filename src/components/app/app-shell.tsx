@@ -78,7 +78,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
               <div key={grupo.label}>
                 {/* Minuscula y no mayusculas tracked: es el unico tell de la referencia
                     que no copio, porque empeora la legibilidad y no aporta nada. */}
-                <p className="px-3 text-[12px] font-semibold text-marron/45">{grupo.label}</p>
+                <p className="px-3 text-[12px] font-semibold text-marron/70">{grupo.label}</p>
                 <ul className="mt-2 flex flex-col gap-0.5">
                   {grupo.items.map(({ href, label, icon: Icon }) => {
                     const active = isActive(href)
@@ -118,7 +118,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
               ese bloque alli es el negocio de TailGrids, no el nuestro. */}
           <div className="mt-auto rounded-xl bg-papel p-4">
             <p className="truncate text-sm font-semibold text-marron">{businessName}</p>
-            <p className="mt-0.5 text-xs text-marron/55">Owner</p>
+            <p className="mt-0.5 text-xs text-marron/70">Owner</p>
             <form action={signOut} className="mt-3">
               <button
                 type="submit"
@@ -137,14 +137,14 @@ export function AppShell({ businessName, children }: { businessName: string; chi
             <div className="flex min-h-16 flex-wrap items-center gap-3 px-5 py-3 sm:px-6">
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[17px] font-semibold text-marron">{actual?.label ?? "Dashboard"}</p>
-                <p className="truncate text-[13px] text-marron/55 md:hidden">{businessName}</p>
+                <p className="truncate text-[13px] text-marron/70 md:hidden">{businessName}</p>
               </div>
 
               {buscable && (
                 <form onSubmit={buscar} className="order-last w-full sm:order-none sm:w-auto">
                   <div className="relative">
                     <Search
-                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/40"
+                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/70"
                       strokeWidth={1.75}
                       aria-hidden
                     />
@@ -155,7 +155,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                       onChange={(event) => setQuery(event.target.value)}
                       placeholder={`Search ${buscable}`}
                       aria-label={`Search ${buscable}`}
-                      className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-64"
+                      className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-64"
                     />
                   </div>
                 </form>

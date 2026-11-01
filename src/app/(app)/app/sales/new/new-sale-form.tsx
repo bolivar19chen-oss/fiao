@@ -94,7 +94,7 @@ export function NewSaleForm({
               <li key={product.id} className="flex items-center gap-4 py-3.5 first:pt-0 last:pb-0">
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-[15px] text-marron">{product.name}</span>
-                  <span className="block text-[13px] text-marron/55">
+                  <span className="block text-[13px] text-marron/70">
                     {formatCents(product.priceCents)} - {product.stock} in stock
                   </span>
                 </span>
@@ -154,13 +154,13 @@ export function NewSaleForm({
 
         {/* ADR 0009: los terminos se ensenan antes de guardar, resueltos. */}
         <div className="mt-6 rounded-2xl bg-papel p-5">
-          <p className="text-[13px] text-marron/55">Total</p>
+          <p className="text-[13px] text-marron/70">Total</p>
           <p className="mt-1 font-display text-[28px] font-semibold tabular-nums leading-none tracking-[-0.015em] text-marron">
             {formatCents(totalCents)}
           </p>
 
           {schedule.length === 0 ? (
-            <p className="mt-4 text-[15px] text-marron/60">Add a product to see the payment plan.</p>
+            <p className="mt-4 text-[15px] text-marron/70">Add a product to see the payment plan.</p>
           ) : (
             <ul className="mt-5 divide-y divide-marron/[0.07]">
               {schedule.map((installment) => (
@@ -168,7 +168,7 @@ export function NewSaleForm({
                   <span className="text-[15px] text-marron">
                     Payment {installment.number} of {schedule.length}
                   </span>
-                  <span className="text-[13px] text-marron/55">{fecha(installment.dueDate)}</span>
+                  <span className="text-[13px] text-marron/70">{fecha(installment.dueDate)}</span>
                   <span className="text-[15px] tabular-nums text-marron">{formatCents(installment.amountCents)}</span>
                 </li>
               ))}

@@ -7,6 +7,13 @@
     scroll-behavior: smooth;
   }
 
+  /* El scroll suave es movimiento que el usuario no dispara: con la preferencia puesta, salta. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply bg-fondo text-marron;
   }
@@ -67,7 +74,7 @@
   }
 
   .btn-glass-red {
-    @apply bg-rojo text-white;
+    @apply bg-rojo-panel text-white;
     box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.18);
   }
 

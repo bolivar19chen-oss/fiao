@@ -52,7 +52,7 @@ export function CreditScore({
     return (
       <div className="rounded-2xl border border-marron/10 bg-papel p-4">
         <p className="text-sm font-medium text-marron">Not enough history yet</p>
-        <p className="mt-1 text-xs leading-relaxed text-marron/60">
+        <p className="mt-1 text-xs leading-relaxed text-marron/70">
           A score appears once this customer has credit sales with a payment schedule.
         </p>
       </div>
@@ -89,7 +89,7 @@ export function CreditScore({
         </svg>
         <div>
           <p className="text-sm font-semibold text-marron">Store credit score</p>
-          <p className="mt-1 text-xs leading-relaxed text-marron/60">
+          <p className="mt-1 text-xs leading-relaxed text-marron/70">
             At this shop only. Anything we cannot measure is left out and its weight goes to the rest, so the breakdown
             always adds up to the score.
           </p>
@@ -103,7 +103,7 @@ export function CreditScore({
           const medido = max > 0
           return (
             <div key={key} className="flex items-center gap-3">
-              <dt className={`w-24 shrink-0 text-xs ${medido ? "text-marron/70" : "text-marron/40"}`}>{label}</dt>
+              <dt className={`w-24 shrink-0 text-xs ${medido ? "text-marron/70" : "text-marron/70"}`}>{label}</dt>
               <dd className="flex flex-1 items-center gap-3">
                 <span className="h-2 flex-1 overflow-hidden rounded-full bg-marron/[0.08]">
                   {medido && (
@@ -114,7 +114,7 @@ export function CreditScore({
                   )}
                 </span>
                 <span
-                  className={`w-16 shrink-0 text-right text-xs font-semibold tabular-nums ${medido ? "text-marron" : "text-marron/40"}`}
+                  className={`w-16 shrink-0 text-right text-xs font-semibold tabular-nums ${medido ? "text-marron" : "text-marron/70"}`}
                 >
                   {medido ? `${breakdown[key]}/${max}` : "Not set"}
                 </span>

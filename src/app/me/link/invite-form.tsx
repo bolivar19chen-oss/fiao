@@ -12,7 +12,7 @@ export function InviteForm() {
 
   return (
     <div className="glass w-full max-w-md rounded-[2rem] p-8">
-      <Link href="/me" className="flex items-center gap-1.5 text-sm font-medium text-marron/60 hover:text-marron">
+      <Link href="/me" className="flex items-center gap-1.5 text-sm font-medium text-marron/70 hover:text-marron">
         <ArrowLeft className="h-4 w-4" aria-hidden />
         My accounts
       </Link>
@@ -52,7 +52,7 @@ export function InviteForm() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-xs leading-relaxed text-marron/55">
+      <p className="mt-6 text-center text-xs leading-relaxed text-marron/70">
         No code yet? You can keep using FIA&apos;O without one. Shops hand them out at the counter.
       </p>
     </div>

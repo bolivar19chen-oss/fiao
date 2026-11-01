@@ -42,7 +42,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
       <button
         type="button"
         onClick={() => (step === 1 ? onBack() : setStep(1))}
-        className="mb-4 flex items-center gap-1.5 text-sm font-medium text-marron/60 hover:text-marron"
+        className="mb-4 flex items-center gap-1.5 text-sm font-medium text-marron/70 hover:text-marron"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Back
@@ -59,7 +59,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
                 style={{ width: step === 1 ? "50%" : "100%" }}
               />
             </span>
-            <span className="text-xs font-semibold text-marron/55">Step {step} of 2</span>
+            <span className="text-xs font-semibold text-marron/70">Step {step} of 2</span>
           </motion.div>
 
           <CardHeading

@@ -18,7 +18,7 @@ export function SiteFooter() {
       <div className="container-x flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
           <Logo />
-          <p className="text-sm text-marron/60">Your business, better organized.</p>
+          <p className="text-sm text-marron/70">Your business, better organized.</p>
         </div>
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-marron/70" aria-label="Footer">
           {links.map((l) => (
@@ -29,7 +29,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <div className="container-x flex items-center justify-between gap-4 pb-10">
-        <p className="text-xs text-marron/45">© 2026 FIA&apos;O. All rights reserved.</p>
+        <p className="text-xs text-marron/70">© 2026 FIA&apos;O. All rights reserved.</p>
         <ThemeToggle />
       </div>
     </footer>

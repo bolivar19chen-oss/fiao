@@ -29,7 +29,7 @@ export function LangToggle({ current, className = "" }: { current: Lang; classNa
           disabled={pending}
           onClick={() => startTransition(() => setLang(value))}
           className={`h-10 rounded-full px-4 text-[13px] font-semibold transition duration-200 ease-apple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40 disabled:opacity-60 ${
-            current === value ? "bg-marron/10 text-marron" : "text-marron/60 hover:text-marron"
+            current === value ? "bg-marron/10 text-marron" : "text-marron/70 hover:text-marron"
           }`}
         >
           {label}

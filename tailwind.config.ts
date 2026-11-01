@@ -27,7 +27,7 @@ const config: Config = {
         crema: { claro: v("crema-claro"), DEFAULT: v("crema") },
         // `rojo-marca` es el rojo fijo de los paneles con texto blanco (CTA, 404, banners):
         // el `rojo` que se aclara en oscuro bajaria el blanco de ese texto a 4.1:1.
-        rojo: { ...BRAND.rojo, DEFAULT: v("rojo"), marca: BRAND.rojo.DEFAULT },
+        rojo: { ...BRAND.rojo, DEFAULT: v("rojo"), marca: BRAND.rojo.DEFAULT, panel: v("rojo-panel") },
         fondo: v("fondo"),
         papel: v("papel"),
         estado: {

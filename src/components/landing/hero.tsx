@@ -18,7 +18,6 @@ export function Hero() {
         <div className="container-x grid items-center gap-16 lg:grid-cols-[1.08fr_1fr]">
           <div>
             <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-marron/80">
-              <span className="h-1.5 w-1.5 rounded-full bg-rojo" />
               Built for Panama&apos;s corner stores
             </span>
             <h1 className="mt-7 font-display text-5xl leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-[5.4rem]">
@@ -32,11 +31,11 @@ export function Hero() {
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/login" className="btn btn-glass-red h-12 px-6 text-[15px]">
-                Get started
+                Open my ledger
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <Link href="/services" className="btn btn-glass h-12 px-6 text-[15px]">
-                Explore services
+                See the six modules
               </Link>
             </div>
 
@@ -46,11 +45,11 @@ export function Hero() {
                 <div className="mt-1 font-display text-5xl font-light tabular-nums tracking-[-0.04em]">
                   {totalStores}
                 </div>
-                <div className="mt-1 text-sm text-marron/60">
+                <div className="mt-1 text-sm text-marron/70">
                   Food stores registered across {provinces.length} provinces
                 </div>
               </div>
-              <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/65">
+              <ul className="space-y-1.5 border-l border-marron/15 pl-6 text-sm text-marron/70">
                 {["Works in any phone browser", "Nothing to install", "Data isolated per store"].map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-rojo" strokeWidth={2.5} aria-hidden />
@@ -81,7 +80,7 @@ function HeroPreview() {
       <div className="glass rounded-[2rem] p-6 pt-14 sm:pt-16">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-xs font-medium uppercase tracking-wider text-marron/50">Outstanding credit</div>
+            <div className="text-xs font-medium uppercase tracking-wider text-marron/70">Outstanding credit</div>
             <div className="mt-1 font-display text-3xl font-semibold tabular-nums">
               {formatCents(rows.reduce((s, r) => s + r.cents, 0))}
             </div>
@@ -96,7 +95,7 @@ function HeroPreview() {
               </span>
               <div className="flex-1">
                 <div className="text-sm font-semibold">{r.name}</div>
-                <div className={`text-xs ${r.due.includes("late") ? "text-rojo" : "text-marron/55"}`}>{r.due}</div>
+                <div className={`text-xs ${r.due.includes("late") ? "text-rojo" : "text-marron/70"}`}>{r.due}</div>
               </div>
               <div className="text-sm font-semibold tabular-nums">{formatCents(r.cents)}</div>
             </li>
@@ -107,7 +106,7 @@ function HeroPreview() {
       <div className="glass absolute -left-6 -top-8 hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex">
         <ScoreRing score={82} />
         <div>
-          <div className="text-xs text-marron/55">Store credit score</div>
+          <div className="text-xs text-marron/70">Store credit score</div>
           <div className="text-sm font-semibold">Rosa M. · Good</div>
         </div>
       </div>
@@ -117,7 +116,7 @@ function HeroPreview() {
           <Check className="h-4 w-4" strokeWidth={3} aria-hidden />
         </span>
         <div>
-          <div className="text-xs text-marron/55">Payment received</div>
+          <div className="text-xs text-marron/70">Payment received</div>
           <div className="text-sm font-semibold tabular-nums">+{formatCents(1250)}</div>
         </div>
       </div>

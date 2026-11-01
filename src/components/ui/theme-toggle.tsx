@@ -46,7 +46,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
           aria-pressed={theme === value}
           onClick={() => choose(value)}
           className={`grid h-10 w-10 place-items-center rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40 ${
-            theme === value ? "bg-marron/10 text-marron" : "text-marron/60 hover:text-marron"
+            theme === value ? "bg-marron/10 text-marron" : "text-marron/70 hover:text-marron"
           }`}
         >
           <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />

@@ -42,6 +42,13 @@ solos.
 - **`rojo` se aclara en oscuro** (`rojo.suave`, 4.6:1 sobre el fondo). Un panel rojo con
   texto blanco usa `rojo-marca`, que no cambia: con el rojo claro, el blanco bajaria a
   4.1:1.
+- **Un boton rojo no usa ninguno de los dos: usa `rojo-panel`** (`rojo` en claro,
+  `rojo.claro` en oscuro). Un panel grande se identifica solo; un control tiene que
+  distinguirse ademas del fondo, y ahi los dos rojos fallan por lados opuestos. Con
+  `rojo-marca` el blanco encima da 6.47:1 pero el boton se queda en 2.89:1 contra el fondo
+  oscuro, por debajo del 3:1 que pide WCAG 1.4.11 para el contorno de un componente; con
+  `rojo` el boton se ve pero el blanco cae a 4.05:1. `rojo.claro` es el unico tono de la
+  paleta dentro de la ventana que cumple los dos: 5.38:1 y 3.48:1.
 - **Como dato** (SVG, Recharts, CSS plano): `rgb(var(--marron) / 0.55)`. Funciona tambien
   en atributos de SVG; verificado en Chromium.
 - **Quien manda:** sin eleccion, `prefers-color-scheme`. La eleccion del usuario (selector
@@ -70,6 +77,19 @@ Dos hallazgos de esa validacion, y los dos cambian como se dibuja:
 - **En modo oscuro, ambar y rojo no se separan lo suficiente para daltonismo** dentro de
   la banda de luminosidad que exige el fondo oscuro. Es una restriccion geometrica, no una
   mala eleccion. Por eso **todo estado va siempre con icono y etiqueta, jamas solo color**.
+
+## Contraste del texto
+
+**Suelo: `text-marron/70`.** Ningun texto baja de ahi. Medido sobre blanco, `/70` da
+4.97:1 y sobre `bg-papel` 4.74:1; el siguiente escalon, `/65`, se queda en 4.28 y no llega
+al 4.5:1 que pide AA. En oscuro la tinta clara sobre `#17110d` pasa holgada en cualquier
+opacidad, asi que el modo claro es el que manda.
+
+Antes habia siete niveles sueltos entre `/35` y `/65` repartidos por 108 sitios. No eran
+jerarquia: `/55` (3.25:1) y `/65` (4.28:1) no se distinguen a ojo, igual que pasaba con
+los dos cremas. La jerarquia del texto la llevan el tamano y el peso, que si se ven. Un
+atenuado que ademas signifique algo, como "no medido", tiene que decirlo con palabras y no
+solo con la opacidad.
 
 ## Tipografia
 

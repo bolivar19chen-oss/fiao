@@ -58,7 +58,7 @@ export default async function CreditPage() {
                     <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-marron/[0.08]">
                       <div className="h-full rounded-full bg-rojo" style={{ width: `${percent}%` }} />
                     </div>
-                    <p className="mt-2 text-[13px] text-marron/55">
+                    <p className="mt-2 text-[13px] text-marron/70">
                       {band.next
                         ? t(lang, "pointsToNext", { n: band.target - score, band: t(lang, band.next) })
                         : t(lang, "topStanding")}
@@ -77,7 +77,7 @@ export default async function CreditPage() {
                                 {max === 0 ? t(lang, "notSet") : t(lang, "outOf", { points, max })}
                               </span>
                             </div>
-                            <p className="mt-0.5 text-[13px] text-marron/55">{t(lang, hint)}</p>
+                            <p className="mt-0.5 text-[13px] text-marron/70">{t(lang, hint)}</p>
                           </li>
                         )
                       })}

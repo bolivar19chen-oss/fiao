@@ -38,7 +38,7 @@ export function StatusBar({ slices }: { slices: StatusSlice[] }) {
   const total = slices.reduce((sum, slice) => sum + slice.cents, 0)
   const visible = slices.filter((slice) => slice.cents > 0)
 
-  if (total === 0) return <p className="text-[15px] text-marron/60">Nothing owed right now.</p>
+  if (total === 0) return <p className="text-[15px] text-marron/70">Nothing owed right now.</p>
 
   const label = visible.map((s) => `${STATUS_META[s.key].label} ${formatCents(s.cents)}`).join(", ")
 
@@ -65,7 +65,7 @@ export function StatusBar({ slices }: { slices: StatusSlice[] }) {
             <li key={slice.key} className="flex items-center gap-2 text-[13px]">
               <Icon className={`h-4 w-4 shrink-0 ${ink}`} aria-hidden />
               <span className="font-semibold text-marron">{name}</span>
-              <span className="text-marron/60">
+              <span className="text-marron/70">
                 {formatCents(slice.cents)} - {Math.round((slice.cents / total) * 100)}%
               </span>
             </li>

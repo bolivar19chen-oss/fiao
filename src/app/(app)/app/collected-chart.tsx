@@ -26,7 +26,7 @@ export function CollectedChart({ days }: { days: DayBar[] }) {
           <p className="font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
             {formatCents(total)}
           </p>
-          <p className="mt-0.5 text-[13px] text-marron/55">Payments in the last {rango.label}</p>
+          <p className="mt-0.5 text-[13px] text-marron/70">Payments in the last {rango.label}</p>
         </div>
         <div role="tablist" aria-label="Period" className="flex gap-1 rounded-lg bg-papel p-1">
           {RANGOS.map((option) => (
@@ -37,7 +37,7 @@ export function CollectedChart({ days }: { days: DayBar[] }) {
               aria-selected={rango.days === option.days}
               onClick={() => setRango(option)}
               className={`h-8 rounded-md px-3 text-[13px] font-medium transition duration-200 ease-apple ${
-                rango.days === option.days ? "bg-fondo text-marron shadow-sm" : "text-marron/55 hover:text-marron"
+                rango.days === option.days ? "bg-fondo text-marron shadow-sm" : "text-marron/70 hover:text-marron"
               }`}
             >
               {option.label}
@@ -47,7 +47,7 @@ export function CollectedChart({ days }: { days: DayBar[] }) {
       </div>
       {/* Treinta barras en cero no informan de nada. Mismo criterio que en /me. */}
       {total === 0 ? (
-        <p className="text-[15px] text-marron/60">No payments in the last {rango.label}.</p>
+        <p className="text-[15px] text-marron/70">No payments in the last {rango.label}.</p>
       ) : (
         <WeekChart days={visible} />
       )}

@@ -34,7 +34,7 @@ export default async function SettingsPage() {
             </span>
           </Row>
         </Rows>
-        <p className="mt-5 text-[13px] leading-[18px] text-marron/55">{t(lang, "provinceNote")}</p>
+        <p className="mt-5 text-[13px] leading-[18px] text-marron/70">{t(lang, "provinceNote")}</p>
       </Panel>
 
       <Panel className="mt-4" title={t(lang, "language")}>

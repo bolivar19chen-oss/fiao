@@ -125,7 +125,7 @@ export default function ServicesPage() {
                 {i + 1}
               </span>
               <h3 className="mt-6 font-display text-xl font-semibold">{step.title}</h3>
-              <p className="mx-auto mt-2 max-w-xs leading-relaxed text-marron/65">{step.body}</p>
+              <p className="mx-auto mt-2 max-w-xs leading-relaxed text-marron/70">{step.body}</p>
             </li>
           ))}
         </ol>
@@ -167,10 +167,10 @@ export default function ServicesPage() {
           <div className="glass mx-auto flex w-full max-w-sm flex-col items-center rounded-[2rem] px-8 py-12 text-center">
             <ScoreRing score={82} className="h-44 w-44" />
             <div className="mt-6 font-display text-2xl font-semibold">Good standing</div>
-            <p className="mt-2 text-sm text-marron/60">Scores go from 0 to 100 and update with every payment.</p>
+            <p className="mt-2 text-sm text-marron/70">Scores go from 0 to 100 and update with every payment.</p>
             <div className="mt-6 flex w-full justify-between text-xs font-semibold uppercase tracking-wider">
               <span className="text-rojo">Risk</span>
-              <span className="text-marron/50">Fair</span>
+              <span className="text-marron/70">Fair</span>
               <span className="text-marron">Trusted</span>
             </div>
             <div className="mt-2 h-2 w-full rounded-full bg-gradient-to-r from-rojo via-amarillo to-marron/70" />
@@ -186,7 +186,7 @@ export default function ServicesPage() {
               {factors.map((f) => (
                 <div key={f.title} className="rounded-2xl border border-marron/10 p-5">
                   <dt className="font-display font-semibold">{f.title}</dt>
-                  <dd className="mt-1 text-sm leading-relaxed text-marron/65">{f.body}</dd>
+                  <dd className="mt-1 text-sm leading-relaxed text-marron/70">{f.body}</dd>
                 </div>
               ))}
             </dl>
@@ -210,7 +210,7 @@ export default function ServicesPage() {
               <IconTile icon={icon} />
               <div>
                 <h3 className="font-display font-semibold">{title}</h3>
-                <p className="mt-1 text-sm text-marron/65">{body}</p>
+                <p className="mt-1 text-sm text-marron/70">{body}</p>
               </div>
             </div>
           ))}

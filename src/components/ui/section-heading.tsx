@@ -9,7 +9,7 @@ interface SectionHeadingProps {
 export function SectionHeading({ index, label, title, children }: SectionHeadingProps) {
   return (
     <div className="grid gap-5 border-t border-marron/15 pt-6 lg:grid-cols-[240px_1fr]">
-      <p className="flex items-baseline gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-marron/50">
+      <p className="flex items-baseline gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-marron/70">
         <span className="font-display tabular-nums text-rojo">{index}</span>
         {label}
       </p>

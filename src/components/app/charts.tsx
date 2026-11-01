@@ -25,7 +25,7 @@ function MoneyTooltip({ active, payload, label }: { active?: boolean; payload?: 
   if (!active || !payload?.length) return null
   return (
     <div className="rounded-xl border border-fondo/70 bg-fondo/95 px-3 py-2 shadow-lg backdrop-blur">
-      <p className="text-xs text-marron/60">{label}</p>
+      <p className="text-xs text-marron/70">{label}</p>
       <p className="font-display text-sm font-semibold tabular-nums text-marron">{formatCents(payload[0].value)}</p>
     </div>
   )
@@ -115,7 +115,7 @@ export function StatusDonut({ slices }: { slices: StatusSlice[] }) {
   const total = slices.reduce((sum, slice) => sum + slice.cents, 0)
   const visible = slices.filter((slice) => slice.cents > 0)
 
-  if (total === 0) return <p className="text-[15px] text-marron/60">Nothing owed right now.</p>
+  if (total === 0) return <p className="text-[15px] text-marron/70">Nothing owed right now.</p>
 
   const FILL = {
     "on-time": "rgb(var(--estado-al-dia))",
@@ -147,7 +147,7 @@ export function StatusDonut({ slices }: { slices: StatusSlice[] }) {
         </ResponsiveContainer>
         {/* El total va escrito, no deducido del angulo. */}
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[11px] font-semibold text-marron/50">Outstanding</span>
+          <span className="text-[11px] font-semibold text-marron/70">Outstanding</span>
           <span className="font-display text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-marron">
             {formatCents(total)}
           </span>
@@ -161,7 +161,7 @@ export function StatusDonut({ slices }: { slices: StatusSlice[] }) {
             <li key={slice.key} className="flex items-center gap-2 text-[13px]">
               <Icon className={`h-4 w-4 shrink-0 ${ink}`} strokeWidth={2} aria-hidden />
               <span className="flex-1 font-semibold text-marron">{label}</span>
-              <span className="shrink-0 tabular-nums text-marron/60">
+              <span className="shrink-0 tabular-nums text-marron/70">
                 {formatCents(slice.cents)} - {Math.round((slice.cents / total) * 100)}%
               </span>
             </li>

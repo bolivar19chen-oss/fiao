@@ -93,7 +93,7 @@ export function AvatarUpload() {
           tarjeta de 375px el texto se quedaba sin sitio y caia a una palabra por renglon. */}
       <div className="flex flex-col items-start gap-3 rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left sm:flex-row sm:items-center sm:justify-between">
         <span className="flex min-w-0 items-center gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-crema text-marron/50">
+          <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-crema text-marron/70">
             {url ? (
               // next/image no aplica: la URL viene firmada y vence en 60 segundos, asi que
               // el optimizador la cachearia ya muerta.
@@ -105,7 +105,7 @@ export function AvatarUpload() {
           </span>
           <span className="min-w-0">
             <span className="block text-sm font-medium text-marron">Your photo</span>
-            <span className="block text-xs leading-relaxed text-marron/60">Optional. PNG or JPG, up to 2MB.</span>
+            <span className="block text-xs leading-relaxed text-marron/70">Optional. PNG or JPG, up to 2MB.</span>
           </span>
         </span>
 
@@ -114,7 +114,7 @@ export function AvatarUpload() {
             <button
               type="button"
               onClick={() => void quitar()}
-              className="rounded-full px-2.5 py-1 text-xs font-medium text-marron/60 transition hover:text-rojo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40"
+              className="rounded-full px-2.5 py-1 text-xs font-medium text-marron/70 transition hover:text-rojo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo/40"
             >
               Remove
             </button>

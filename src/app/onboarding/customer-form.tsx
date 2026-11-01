@@ -28,7 +28,7 @@ export function CustomerForm({ email, onBack }: { email: string; onBack: () => v
       <button
         type="button"
         onClick={onBack}
-        className="mb-4 flex items-center gap-1.5 text-sm font-medium text-marron/60 hover:text-marron"
+        className="mb-4 flex items-center gap-1.5 text-sm font-medium text-marron/70 hover:text-marron"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Back

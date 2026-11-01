@@ -18,7 +18,7 @@ export function Market() {
         <div className="overflow-hidden rounded-3xl border border-marron/10">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[34rem] text-left text-sm">
-              <thead className="bg-marron/[0.03] text-xs uppercase tracking-wider text-marron/55">
+              <thead className="bg-marron/[0.03] text-xs uppercase tracking-wider text-marron/70">
                 <tr>
                   <th scope="col" className="px-6 py-4 font-semibold">
                     Province
@@ -58,7 +58,7 @@ export function Market() {
                       {p.topDistrict && (
                         <>
                           {p.topDistrict.name}{" "}
-                          <span className="tabular-nums text-marron/45">({p.topDistrict.stores})</span>
+                          <span className="tabular-nums text-marron/70">({p.topDistrict.stores})</span>
                         </>
                       )}
                     </td>
@@ -71,7 +71,7 @@ export function Market() {
 
         <div className="flex flex-col rounded-3xl border border-marron/10 p-6">
           <h3 className="font-display text-lg font-semibold">Stores by type</h3>
-          <p className="mt-1 text-sm text-marron/60">Registered food stores across Panama</p>
+          <p className="mt-1 text-sm text-marron/70">Registered food stores across Panama</p>
           <div className="mt-6 min-h-[260px] flex-1">
             <LazyCategoryChart categories={categories} />
           </div>

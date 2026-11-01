@@ -2,7 +2,7 @@ import { SOURCE_URL } from "@/data/stores"
 
 export function SourceNote({ className = "" }: { className?: string }) {
   return (
-    <p className={`text-xs text-marron/50 ${className}`}>
+    <p className={`text-xs text-marron/70 ${className}`}>
       Source:{" "}
       <a
         href={SOURCE_URL}

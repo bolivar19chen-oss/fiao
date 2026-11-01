@@ -105,7 +105,7 @@ export default async function CustomersPage({ searchParams }: { searchParams: Pr
                   <StatusBadge status={c.status} />
                 </td>
                 <td
-                  className={`px-2 py-3 text-right font-semibold tabular-nums ${c.balance > 0 ? "text-rojo" : "text-marron/60"}`}
+                  className={`px-2 py-3 text-right font-semibold tabular-nums ${c.balance > 0 ? "text-rojo" : "text-marron/70"}`}
                 >
                   {formatCents(c.balance)}
                 </td>

@@ -19,7 +19,7 @@ export function CreditorList({ creditors, lang }: { creditors: Creditor[]; lang:
       {creditors.length > 4 && (
         <div className="relative mb-6">
           <Search
-            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/40"
+            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-marron/70"
             strokeWidth={1.5}
             aria-hidden
           />
@@ -30,7 +30,7 @@ export function CreditorList({ creditors, lang }: { creditors: Creditor[]; lang:
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t(lang, "searchShops")}
             aria-label={t(lang, "searchShops")}
-            className="h-10 w-full rounded-full border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+            className="h-10 w-full rounded-full border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
           />
         </div>
       )}
@@ -43,7 +43,7 @@ export function CreditorList({ creditors, lang }: { creditors: Creditor[]; lang:
             <Row key={shop.id}>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[15px] text-marron">{shop.name}</span>
-                <span className="block text-[13px] text-marron/55">
+                <span className="block text-[13px] text-marron/70">
                   {shop.score === null ? t(lang, "noScoreYet") : `${t(lang, "storeScore")} ${shop.score}`}
                 </span>
               </span>

@@ -164,7 +164,7 @@ export default async function DashboardPage() {
           <Card className="mt-4">
             <CardTitle>Top debtors</CardTitle>
             {topDebtors.length === 0 ? (
-              <p className="text-[17px] leading-[22px] text-marron/60">Nobody owes you anything right now.</p>
+              <p className="text-[17px] leading-[22px] text-marron/70">Nobody owes you anything right now.</p>
             ) : (
               <TopDebtors debtors={topDebtors} />
             )}

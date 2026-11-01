@@ -130,7 +130,7 @@ export default function AboutPage() {
                   <IconTile icon={icon} />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-semibold">{title}</h3>
-                <p className="mt-2 leading-relaxed text-marron/65">{body}</p>
+                <p className="mt-2 leading-relaxed text-marron/70">{body}</p>
               </div>
             ))}
           </div>

@@ -12,7 +12,7 @@ export function Panel({
 }) {
   return (
     <section className={`rounded-[1.5rem] border border-marron/10 bg-fondo p-6 ${className}`}>
-      {title && <h2 className="mb-5 text-[13px] font-semibold text-marron/60">{title}</h2>}
+      {title && <h2 className="mb-5 text-[13px] font-semibold text-marron/70">{title}</h2>}
       {children}
     </section>
   )
@@ -23,13 +23,13 @@ export function ScreenTitle({ title, children }: { title: string; children?: Rea
   return (
     <header className="mb-8">
       <h1 className="text-[17px] font-semibold text-marron">{title}</h1>
-      {children && <p className="mt-2 text-[15px] leading-[20px] text-marron/65">{children}</p>}
+      {children && <p className="mt-2 text-[15px] leading-[20px] text-marron/70">{children}</p>}
     </header>
   )
 }
 
 export function Empty({ children }: { children: React.ReactNode }) {
-  return <p className="text-[15px] text-marron/60">{children}</p>
+  return <p className="text-[15px] text-marron/70">{children}</p>
 }
 
 export function Rows({ children }: { children: React.ReactNode }) {

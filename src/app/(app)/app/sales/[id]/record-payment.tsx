@@ -72,7 +72,7 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
             aria-selected={method === tab.id}
             onClick={() => setMethod(tab.id)}
             className={`relative flex min-h-[44px] items-center justify-center gap-1.5 rounded-full px-1 text-[13px] font-semibold transition-colors sm:px-3 ${
-              method === tab.id ? "text-marron" : "text-marron/60 hover:text-marron"
+              method === tab.id ? "text-marron" : "text-marron/70 hover:text-marron"
             }`}
           >
             <tab.Icon className="h-4 w-4 shrink-0" aria-hidden />
@@ -108,7 +108,7 @@ export function RecordPayment({ saleId, balanceCents }: { saleId: string; balanc
           />
         )}
 
-        {method === "cash" && <p className="text-xs text-marron/55">{active.hint}</p>}
+        {method === "cash" && <p className="text-xs text-marron/70">{active.hint}</p>}
 
         {state && "error" in state && (
           <p role="alert" className="rounded-2xl bg-amarillo/20 px-4 py-3 text-sm text-marron/85">

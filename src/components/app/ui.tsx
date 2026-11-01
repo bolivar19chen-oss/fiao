@@ -21,7 +21,7 @@ export function PageHeader({
     <header className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
       <div className="min-w-0">
         {back && (
-          <Link href={back.href} className="text-sm font-medium text-marron/60 hover:text-rojo">
+          <Link href={back.href} className="text-sm font-medium text-marron/70 hover:text-rojo">
             &larr; {back.label}
           </Link>
         )}
@@ -32,7 +32,7 @@ export function PageHeader({
         >
           {title}
         </h1>
-        {description && <p className="mt-2 text-[17px] leading-[22px] text-marron/65">{description}</p>}
+        {description && <p className="mt-2 text-[17px] leading-[22px] text-marron/70">{description}</p>}
       </div>
       {action}
     </header>
@@ -76,7 +76,7 @@ export function EmptyState({
       <p className="mt-6 font-display text-[22px] font-semibold leading-[28px] tracking-[-0.01em] text-marron">
         {title}
       </p>
-      <p className="mt-2 max-w-sm text-[17px] leading-[22px] text-marron/65">{body}</p>
+      <p className="mt-2 max-w-sm text-[17px] leading-[22px] text-marron/70">{body}</p>
       {action && (
         <Link href={action.href} className="btn btn-glass-red mt-7">
           {action.label}
@@ -102,7 +102,7 @@ export function Table({ head, children }: { head: string[]; children: React.Reac
     <div className="-mx-2 overflow-x-auto">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="text-xs font-semibold text-marron/50">
+          <tr className="text-xs font-semibold text-marron/70">
             {head.map((h, i) => (
               <th key={h} className={`px-2 pb-3 font-semibold ${i > 0 ? "text-right" : ""}`}>
                 {h}
@@ -133,7 +133,7 @@ export function Badge({ tone, children }: { tone: "red" | "yellow" | "neutral"; 
 // agrega aca: escribir las clases otra vez en una pantalla obliga a acordarse de varios
 // archivos el dia que cambie el foco o el radio.
 const FIELD_BASE =
-  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-papel text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+  "mt-1.5 w-full rounded-2xl border border-marron/10 bg-papel text-marron outline-none transition placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
 
 const FIELD_LOOK = {
   default: "h-12 px-4 text-[15px]",
@@ -182,7 +182,7 @@ export function Field({
         className={`${FIELD_BASE} ${FIELD_LOOK[look]}`}
       />
       {hint && (
-        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+        <span id={hintId} className="mt-1 block text-xs text-marron/70">
           {hint}
         </span>
       )}
@@ -203,11 +203,11 @@ export function Stat({
 }) {
   return (
     <Card className={className}>
-      <p className="text-[13px] text-marron/55">{label}</p>
+      <p className="text-[13px] text-marron/70">{label}</p>
       <p className="mt-3 font-display text-[28px] font-semibold tabular-nums leading-[34px] tracking-[-0.015em] text-marron">
         {value}
       </p>
-      {note && <p className="mt-2 text-[13px] leading-[18px] text-marron/55">{note}</p>}
+      {note && <p className="mt-2 text-[13px] leading-[18px] text-marron/70">{note}</p>}
     </Card>
   )
 }
@@ -219,7 +219,7 @@ export function PrimaryCell({ href, title, sub }: { href: string; title: string;
       <Link href={href} className="font-medium text-marron hover:text-rojo">
         {title}
       </Link>
-      {sub && <span className="block text-xs text-marron/55">{sub}</span>}
+      {sub && <span className="block text-xs text-marron/70">{sub}</span>}
     </td>
   )
 }
@@ -259,21 +259,21 @@ export function KpiCard({
   since?: string
 }) {
   // `kpiDelta` ya decidio si la noticia es buena, mala o neutra. La ficha solo pinta.
-  const tono = !delta || delta.good === null ? "text-marron/45" : delta.good ? "text-estado-al-dia" : "text-estado-mora"
+  const tono = !delta || delta.good === null ? "text-marron/70" : delta.good ? "text-estado-al-dia" : "text-estado-mora"
 
   return (
     <div className="rounded-xl border border-marron/10 bg-fondo p-5">
       <span className="grid h-11 w-11 place-items-center rounded-full bg-rojo/[0.09] text-rojo">
         <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
       </span>
-      <p className="mt-4 text-[13px] text-marron/55">{label}</p>
+      <p className="mt-4 text-[13px] text-marron/70">{label}</p>
       <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
         <p className="font-display text-[26px] font-semibold tabular-nums leading-tight tracking-[-0.015em] text-marron">
           {value}
         </p>
         <span className={`text-[13px] font-semibold tabular-nums ${tono}`}>{delta?.text ?? "—"}</span>
       </div>
-      {since && <p className="mt-1 text-xs text-marron/50">{since}</p>}
+      {since && <p className="mt-1 text-xs text-marron/70">{since}</p>}
     </div>
   )
 }

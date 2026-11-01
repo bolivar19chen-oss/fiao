@@ -123,10 +123,10 @@ export function CardNote({ icon, title, note }: { icon: ReactNode; title: string
       // el icono se iba a flotar a la mitad del bloque, lejos de lo que nombra.
       className="flex items-start gap-3 rounded-lg border border-marron/10 bg-fondo/50 p-3 text-left"
     >
-      <span className="mt-0.5 shrink-0 text-marron/60">{icon}</span>
+      <span className="mt-0.5 shrink-0 text-marron/70">{icon}</span>
       <span>
         <span className="block text-sm font-medium text-marron">{title}</span>
-        <span className="block text-xs leading-relaxed text-marron/60">{note}</span>
+        <span className="block text-xs leading-relaxed text-marron/70">{note}</span>
       </span>
     </motion.div>
   )
@@ -166,16 +166,16 @@ export function CardField({
         {label}
       </label>
       <span className="relative mt-1.5 block">
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/45">{icon}</span>
+        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/70">{icon}</span>
         <input
           {...input}
           id={id}
           aria-describedby={hint ? hintId : undefined}
-          className="h-11 w-full rounded-lg border border-marron/10 bg-fondo/70 pl-9 pr-3 text-[15px] text-marron outline-none transition placeholder:text-marron/35 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
+          className="h-11 w-full rounded-lg border border-marron/10 bg-fondo/70 pl-9 pr-3 text-[15px] text-marron outline-none transition placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10"
         />
       </span>
       {hint && (
-        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+        <span id={hintId} className="mt-1 block text-xs text-marron/70">
           {hint}
         </span>
       )}
@@ -223,7 +223,7 @@ export function CardSelect({
         {label}
       </label>
       <span className="relative mt-1.5 block">
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/45">{icon}</span>
+        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-marron/70">{icon}</span>
         <select
           {...select}
           id={id}
@@ -237,12 +237,12 @@ export function CardSelect({
             </option>
           ))}
         </select>
-        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-marron/45">
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-marron/70">
           <ChevronDown className="h-4 w-4" aria-hidden />
         </span>
       </span>
       {hint && (
-        <span id={hintId} className="mt-1 block text-xs text-marron/55">
+        <span id={hintId} className="mt-1 block text-xs text-marron/70">
           {hint}
         </span>
       )}

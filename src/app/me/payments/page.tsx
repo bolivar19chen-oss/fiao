@@ -27,14 +27,14 @@ export default async function PaymentsPage() {
         <Rows>
           {METHODS.map(({ id, label, Icon, ready }) => (
             <Row key={id}>
-              <Icon className="h-[18px] w-[18px] shrink-0 text-marron/40" strokeWidth={1.5} aria-hidden />
+              <Icon className="h-[18px] w-[18px] shrink-0 text-marron/70" strokeWidth={1.5} aria-hidden />
               <span className="min-w-0 flex-1">
                 <span className="block text-[15px] text-marron">{t(lang, label)}</span>
-                <span className="block text-[13px] text-marron/55">
+                <span className="block text-[13px] text-marron/70">
                   {t(lang, ready ? "alwaysAvailable" : "waitingOnShop")}
                 </span>
               </span>
-              <span className={`shrink-0 text-[13px] ${ready ? "text-estado-al-dia" : "text-marron/45"}`}>
+              <span className={`shrink-0 text-[13px] ${ready ? "text-estado-al-dia" : "text-marron/70"}`}>
                 {t(lang, ready ? "on" : "off")}
               </span>
             </Row>
@@ -44,7 +44,7 @@ export default async function PaymentsPage() {
 
       <Panel className="mt-4" title={t(lang, "savedCards")}>
         <CardFace lang={lang} />
-        <p className="mt-6 text-[13px] leading-[18px] text-marron/55">{t(lang, "cardNote")}</p>
+        <p className="mt-6 text-[13px] leading-[18px] text-marron/70">{t(lang, "cardNote")}</p>
       </Panel>
     </>
   )

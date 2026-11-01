@@ -31,7 +31,7 @@ export function Coverage() {
         <div className="container-x grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
           <Globe markers={markers} arcs={arcs} focus={hq.location} className="mx-auto w-full max-w-[560px]" />
           <div>
-            <p className="flex items-baseline gap-3 border-t border-marron/15 pt-6 text-xs font-semibold uppercase tracking-[0.18em] text-marron/50">
+            <p className="flex items-baseline gap-3 border-t border-marron/15 pt-6 text-xs font-semibold uppercase tracking-[0.18em] text-marron/70">
               <span className="font-display tabular-nums text-rojo">04</span>
               Coverage
             </p>
@@ -48,7 +48,7 @@ export function Coverage() {
                   <MapPin className="h-4 w-4 shrink-0 text-rojo" aria-hidden />
                   <div className="min-w-0">
                     <div className="truncate text-sm font-semibold">{p.province}</div>
-                    <div className="text-xs tabular-nums text-marron/55">{formatCount(p.stores)} stores</div>
+                    <div className="text-xs tabular-nums text-marron/70">{formatCount(p.stores)} stores</div>
                   </div>
                 </li>
               ))}

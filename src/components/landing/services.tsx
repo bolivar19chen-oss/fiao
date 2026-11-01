@@ -31,12 +31,12 @@ export function Services() {
               href="/services"
               className="group grid items-center gap-x-8 gap-y-2 py-7 sm:grid-cols-[3rem_1fr_auto] lg:grid-cols-[3rem_minmax(0,1fr)_minmax(0,1.1fr)_auto]"
             >
-              <span className="font-display text-sm tabular-nums text-marron/35">{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-display text-sm tabular-nums text-marron/70">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="font-display text-3xl font-light tracking-[-0.03em] transition duration-300 group-hover:translate-x-1.5 group-hover:text-rojo sm:text-4xl">
                 {s.title}
               </h3>
-              <p className="text-marron/60 sm:col-start-2 lg:col-start-auto">{s.body}</p>
-              <span className="hidden h-11 w-11 place-items-center rounded-full border border-marron/15 text-marron/40 transition duration-300 group-hover:border-rojo-marca group-hover:bg-rojo-marca group-hover:text-white sm:col-start-3 sm:row-start-1 sm:grid lg:col-start-4">
+              <p className="text-marron/70 sm:col-start-2 lg:col-start-auto">{s.body}</p>
+              <span className="hidden h-11 w-11 place-items-center rounded-full border border-marron/15 text-marron/70 transition duration-300 group-hover:border-rojo-marca group-hover:bg-rojo-marca group-hover:text-white sm:col-start-3 sm:row-start-1 sm:grid lg:col-start-4">
                 <ArrowUpRight className="h-5 w-5 transition duration-300 group-hover:rotate-45" aria-hidden />
               </span>
             </Link>
