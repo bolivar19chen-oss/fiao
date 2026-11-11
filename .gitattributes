@@ -1,0 +1,3 @@
+# Saltos de linea LF en todas las maquinas: en Windows, autocrlf reescribia archivos a CRLF
+# y `pnpm format:check` fallaba en local con el repo intacto.
+* text=auto eol=lf
