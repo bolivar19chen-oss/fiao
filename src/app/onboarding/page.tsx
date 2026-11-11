@@ -13,7 +13,9 @@ export const metadata: Metadata = { title: "Welcome - FIA'O" }
 
 export default async function OnboardingPage() {
   // Quien ya eligio rol no vuelve a ver la tarjeta.
-  const profile = await getCurrentProfile()
+  // Perfil y negocio a la vez: en serie eran dos viajes a Supabase en la pantalla por la
+  // que pasa todo inicio de sesion.
+  const [profile, business] = await Promise.all([getCurrentProfile(), getCurrentBusiness()])
   if (profile?.role === "customer") redirect("/me")
 
   // El perfil de negocio solo sale de aca si ademas TIENE negocio. Sin esta condicion
@@ -21,7 +23,7 @@ export default async function OnboardingPage() {
   // /app por tener perfil. El perfil huerfano es alcanzable (ver la migracion
   // 20261016231500), y en ese caso lo que corresponde es volver a mostrar el formulario:
   // complete_business_onboarding es reentrante y lo completa sin duplicar nada.
-  if (profile?.role === "business" && (await getCurrentBusiness())) redirect("/app")
+  if (profile?.role === "business" && business) redirect("/app")
 
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()

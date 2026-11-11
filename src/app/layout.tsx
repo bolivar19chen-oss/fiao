@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
 
-import { getLang } from "@/lib/lang"
-
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -15,7 +13,12 @@ const poppins = Poppins({
 // Corre antes de pintar: si el usuario eligio un tema, su clase gana sobre el sistema.
 // Sin eleccion no hace nada y manda prefers-color-scheme (tailwind.config.ts). Va inline y
 // sincronico a proposito: un efecto de React llegaria tarde y la pagina parpadearia.
-const THEME_SCRIPT = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.classList.add(t)}catch(e){}`
+//
+// Tambien pone el idioma del documento, leido de la cookie `lang`: sin esto un lector de
+// pantalla lee el espanol con fonetica inglesa. Se hace aca y no con cookies() en el layout
+// porque leer una cookie en el layout raiz vuelve dinamicas TODAS las rutas: la landing se
+// generaba en el servidor en cada visita (0.7 a 1.1 s) en vez de servirse ya hecha.
+const THEME_SCRIPT = `try{var d=document.documentElement,t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.classList.add(t);var l=document.cookie.match(/(?:^|; )lang=(es|zh)/);if(l)d.lang=l[1]}catch(e){}`
 
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",
@@ -29,18 +32,14 @@ export const metadata: Metadata = {
   other: { google: "notranslate" },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // El idioma del documento sigue al elegido: sin esto un lector de pantalla lee el
-  // espanol con fonetica inglesa, y el chino directamente no lo lee.
-  const lang = await getLang()
-
   return (
-    // suppressHydrationWarning: el script cambia la clase de <html> antes de que React hidrate.
-    <html lang={lang} translate="no" suppressHydrationWarning>
+    // suppressHydrationWarning: el script cambia la clase y el lang de <html> antes de que React hidrate.
+    <html lang="en" translate="no" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
