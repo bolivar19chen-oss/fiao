@@ -1,12 +1,18 @@
 "use server"
 
 import { redirect } from "next/navigation"
+import { isAuthRetryableFetchError, type AuthError } from "@supabase/supabase-js"
 
 import { siteUrl } from "@/lib/site-url"
 import { createClient } from "@/lib/supabase/server"
 
 // email y name vuelven al formulario: React 19 lo resetea tras cada action.
 export type AuthState = { error?: string; message?: string; email?: string; name?: string } | null
+
+// Si el servicio no responde (caido o pausado), supabase-js devuelve "fetch failed": eso no
+// le dice nada a quien intenta entrar, y parece que escribio mal la clave.
+const authMessage = (error: AuthError) =>
+  isAuthRetryableFetchError(error) ? "We can't reach the server right now. Try again in a few minutes." : error.message
 
 // El navegador ya valida con required/minLength, pero eso se salta con facilidad: se
 // vuelve a validar aca.
@@ -23,7 +29,7 @@ export async function logIn(_prev: AuthState, formData: FormData): Promise<AuthS
 
   const supabase = await createClient()
   const { error } = await supabase.auth.signInWithPassword(credentials)
-  if (error) return { error: error.message, email: credentials.email }
+  if (error) return { error: authMessage(error), email: credentials.email }
 
   // A /onboarding y no a /app: es la unica pagina que sabe enrutar por rol, y aca no se
   // puede saber cual es sin consultar la base. Un cliente mandado a /app daria tres
@@ -48,7 +54,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
       emailRedirectTo: `${await siteUrl()}/auth/callback`,
     },
   })
-  if (error) return { error: error.message, email: credentials.email, name }
+  if (error) return { error: authMessage(error), email: credentials.email, name }
 
   // El registro entra directo: el proyecto tiene la confirmacion por correo apagada
   // (supabase/config.toml, auth.email.enable_confirmations), asi que signUp devuelve
