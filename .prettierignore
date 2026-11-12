@@ -1,3 +1,6 @@
 pnpm-lock.yaml
 /tools/seed/demo.sql
 /supabase/.temp/
+
+# Cartografia: datos generados, se dejan como vienen.
+src/components/landing/*.json

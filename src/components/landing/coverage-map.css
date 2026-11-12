@@ -1,0 +1,30 @@
+.coverage-map-journey {
+  min-height: 155svh;
+}
+
+.coverage-map-sticky {
+  position: sticky;
+  top: clamp(0.5rem, 5svh, 3rem);
+}
+
+.coverage-map-stage {
+  width: 100%;
+  height: clamp(15rem, 60svh, 37rem);
+  background: radial-gradient(ellipse at 50% 50%, rgb(var(--fondo)), transparent 76%);
+}
+
+@media (max-width: 640px) {
+  .coverage-map-stage {
+    height: clamp(13rem, 51svh, 28rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coverage-map-journey {
+    min-height: auto;
+  }
+
+  .coverage-map-sticky {
+    position: static;
+  }
+}

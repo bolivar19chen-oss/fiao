@@ -1,0 +1,127 @@
+:where(.fiao-globe-stage) {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.fiao-globe-canvas,
+.fiao-globe-markers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fiao-globe-canvas {
+  display: block;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.fiao-globe-stage.is-exploring .fiao-globe-canvas {
+  touch-action: none;
+}
+
+.fiao-globe-stage.is-dragging .fiao-globe-canvas {
+  cursor: grabbing;
+}
+
+.fiao-globe-canvas:focus-visible {
+  outline: 2px solid var(--fiao-highlight, #108257);
+  outline-offset: -3px;
+}
+
+.fiao-globe-markers {
+  pointer-events: none;
+}
+
+.fiao-globe-pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 100%;
+  outline-offset: -2px;
+  background: transparent;
+  color: var(--fiao-highlight, #108257);
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.fiao-globe-pin[hidden] {
+  display: none;
+}
+
+.fiao-globe-pin::before {
+  width: var(--pin-size, 12px);
+  height: var(--pin-size, 12px);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow:
+    0 0 0 1px currentColor,
+    0 1px 5px #0003;
+  content: "";
+}
+
+.fiao-globe-pin:focus-visible,
+.fiao-globe-pin:hover,
+.fiao-globe-pin[aria-pressed="true"] {
+  z-index: 1;
+}
+
+.fiao-globe-pin:focus-visible::before,
+.fiao-globe-pin:hover::before,
+.fiao-globe-pin[aria-pressed="true"]::before {
+  box-shadow:
+    0 0 0 1px currentColor,
+    0 0 0 5px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.fiao-globe-pin-label {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  max-width: 140px;
+  padding: 0.28rem 0.48rem;
+  transform: translateY(-50%);
+  border: 1px solid #dce6df;
+  border-radius: 0.3rem;
+  background: #fff;
+  color: #20362b;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.25;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fiao-globe-pin.is-near-right .fiao-globe-pin-label {
+  right: 32px;
+  left: auto;
+}
+
+.fiao-globe-pin:focus-visible .fiao-globe-pin-label,
+.fiao-globe-pin:hover .fiao-globe-pin-label,
+.fiao-globe-pin[aria-pressed="true"] .fiao-globe-pin-label {
+  opacity: 1;
+}
+
+.fiao-globe-instructions {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

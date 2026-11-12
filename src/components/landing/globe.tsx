@@ -2,20 +2,18 @@
 
 import dynamic from "next/dynamic"
 
-import type { GlobeArc, GlobeMarker } from "./globe-canvas"
+import type { GlobePin } from "./globe-engine"
 
-export type { GlobeArc, GlobeMarker }
+import "./globe-engine.css"
+import "./coverage-map.css"
 
-// cobe trae WebGL y arranca un bucle de animacion. Va en la cuarta seccion de la landing,
-// bajo el pliegue: cargarlo de entrada retrasaba la primera pintura por un canvas que
-// nadie esta mirando todavia. A demanda entra despues de la hidratacion.
-//
-// El hueco es cuadrado igual que el globo, asi que la pagina no salta cuando llega.
-const Canvas = dynamic(() => import("./globe-canvas").then((mod) => mod.GlobeCanvas), {
+export type { GlobePin }
+
+const Canvas = dynamic(() => import("./globe-canvas").then((module) => module.GlobeCanvas), {
   ssr: false,
-  loading: () => <div className="aspect-square w-full max-w-[560px]" aria-hidden />,
+  loading: () => <div className="coverage-map-journey" aria-hidden />,
 })
 
-export function Globe(props: React.ComponentProps<typeof Canvas>) {
-  return <Canvas {...props} />
+export function Globe({ pins }: { pins: GlobePin[] }) {
+  return <Canvas pins={pins} />
 }
