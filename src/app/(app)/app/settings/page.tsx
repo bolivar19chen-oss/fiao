@@ -5,6 +5,7 @@ import { basisPointsToInput, formatDate } from "@/lib/format"
 import { getLang } from "@/lib/lang"
 import { createClient } from "@/lib/supabase/server"
 import { ActionForm } from "@/components/app/action-form"
+import { FondoPicker } from "@/components/app/fondo-picker"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
 import { AvatarField } from "@/components/onboarding/avatar-field"
 import { LangToggle } from "@/components/ui/lang-toggle"
@@ -91,6 +92,8 @@ export default async function SettingsPage() {
           <p className="text-sm text-marron/70">Follows your device unless you pick light or dark.</p>
           <ThemeToggle />
         </div>
+        <p className="mb-3 mt-7 text-sm text-marron/70">Background, saved on this device.</p>
+        <FondoPicker />
       </Card>
 
       <Card className="mt-4">

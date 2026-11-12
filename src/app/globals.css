@@ -24,6 +24,68 @@
 }
 
 @layer components {
+  /* Fondo de la app, a eleccion del usuario (FondoPicker). Sin eleccion es el papel liso.
+     Los degradados salen de los tokens del tema, asi que cambian solos en oscuro. Las fotos
+     llevan un velo del color del papel para que el titulo de la pagina, que va directo
+     sobre el fondo, se siga leyendo. */
+  .app-fondo {
+    background: var(--app-fondo, rgb(var(--papel)));
+    background-attachment: fixed;
+  }
+  [data-fondo="amanecer"] {
+    --app-fondo: linear-gradient(140deg, rgb(var(--crema)) 0%, rgb(var(--papel)) 55%, rgb(var(--rojo) / 0.16) 100%);
+  }
+  [data-fondo="brasa"] {
+    --app-fondo:
+      radial-gradient(120% 90% at 100% 0%, rgb(var(--rojo) / 0.22), transparent 60%),
+      radial-gradient(90% 80% at 0% 100%, rgb(255 191 50 / 0.2), transparent 60%), rgb(var(--papel));
+  }
+  [data-fondo="arena"] {
+    --app-fondo: linear-gradient(180deg, rgb(var(--crema-claro)) 0%, rgb(var(--crema)) 100%);
+  }
+  [data-fondo="la-confianza"] {
+    --app-fondo:
+      linear-gradient(rgb(var(--papel) / 0.86), rgb(var(--papel) / 0.86)),
+      url("/fondos/la-confianza.webp") center / cover;
+  }
+  [data-fondo="san-juan"] {
+    --app-fondo:
+      linear-gradient(rgb(var(--papel) / 0.86), rgb(var(--papel) / 0.86)), url("/fondos/san-juan.webp") center / cover;
+  }
+
+  /* El texto atenuado que va directo sobre el fondo sube de 70 a 80 %: sobre la zona mas
+     oscura de las fotos el 70 % se queda en 4.0:1 y el 80 % da 5.1:1 (medido). */
+  [data-fondo] .app-sobre-fondo:not(:hover) {
+    color: rgb(var(--marron) / 0.8);
+  }
+
+  /* Con fondo elegido las fichas pasan a cristal y entran escalonadas. */
+  [data-fondo] .app-card {
+    background: rgb(var(--fondo) / 0.78);
+    backdrop-filter: blur(22px) saturate(1.2);
+    -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .app-card {
+      animation: app-card-entra 480ms cubic-bezier(0.28, 0.11, 0.32, 1) both;
+    }
+    .app-card:nth-child(2) {
+      animation-delay: 45ms;
+    }
+    .app-card:nth-child(3) {
+      animation-delay: 90ms;
+    }
+    .app-card:nth-child(n + 4) {
+      animation-delay: 135ms;
+    }
+  }
+  @keyframes app-card-entra {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
   .container-x {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
   }

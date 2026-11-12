@@ -67,7 +67,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="relative isolate min-h-[100dvh] bg-papel">
+      <div className="app-fondo relative isolate min-h-[100dvh]">
         {/* Lateral etiquetado, 248px, como el de la referencia. */}
         <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col border-r border-marron/10 bg-fondo px-4 py-6 md:flex">
           <Link href="/app" aria-label="Dashboard" className="px-2">

@@ -21,7 +21,7 @@ export function PageHeader({
     <header className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
       <div className="min-w-0">
         {back && (
-          <Link href={back.href} className="text-sm font-medium text-marron/70 hover:text-rojo">
+          <Link href={back.href} className="app-sobre-fondo text-sm font-medium text-marron/70 hover:text-rojo">
             &larr; {back.label}
           </Link>
         )}
@@ -32,7 +32,7 @@ export function PageHeader({
         >
           {title}
         </h1>
-        {description && <p className="mt-2 text-[17px] leading-[22px] text-marron/70">{description}</p>}
+        {description && <p className="app-sobre-fondo mt-2 text-[17px] leading-[22px] text-marron/70">{description}</p>}
       </div>
       {action}
     </header>
@@ -40,10 +40,10 @@ export function PageHeader({
 }
 
 export function Card({ className = "", children }: { className?: string; children: React.ReactNode }) {
-  // Superficie limpia: separan el tono y el aire, no una sombra. El cristal se queda en
-  // el sitio publico, donde hay una aurora detras que lo justifica.
+  // Superficie limpia: separan el tono y el aire, no una sombra. Solo pasa a cristal cuando
+  // el usuario elige un fondo (`app-card` en globals.css), que es lo que lo justifica.
   return (
-    <section className={`rounded-[1.75rem] border border-marron/10 bg-fondo p-7 sm:p-9 ${className}`}>
+    <section className={`app-card rounded-[1.75rem] border border-marron/10 bg-fondo p-7 sm:p-9 ${className}`}>
       {children}
     </section>
   )
