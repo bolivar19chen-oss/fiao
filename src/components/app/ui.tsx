@@ -32,7 +32,9 @@ export function PageHeader({
         >
           {title}
         </h1>
-        {description && <p className="app-sobre-fondo mt-2 text-[17px] leading-[22px] text-marron/70">{description}</p>}
+        {description && (
+          <p className="app-sobre-fondo mt-2 font-sub text-[17px] leading-[22px] text-marron/70">{description}</p>
+        )}
       </div>
       {action}
     </header>

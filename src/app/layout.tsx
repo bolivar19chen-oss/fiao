@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
-import { Inter, Poppins } from "next/font/google"
+import { DM_Sans, Inter, Montserrat } from "next/font/google"
 
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "500", "600", "700"],
-  variable: "--font-poppins",
-})
+// Titulos: Montserrat, la alternativa libre a Gotham (Gotham es de pago y no se puede
+// distribuir sin licencia). Subtitulos: DM Sans. El cuerpo sigue en Inter hasta tener los
+// archivos de Garet, que no esta en Google Fonts.
+const titulo = Montserrat({ subsets: ["latin"], variable: "--font-titulo" })
+const subtitulo = DM_Sans({ subsets: ["latin"], variable: "--font-subtitulo" })
 
 // Corre antes de pintar: si el usuario eligio un tema, su clase gana sobre el sistema.
 // Sin eleccion no hace nada y manda prefers-color-scheme (tailwind.config.ts). Va inline y
@@ -49,7 +49,9 @@ export default function RootLayout({
         "Invariant: no direct app page entry found for /_not-found".
         Verificado aislandolo: sin el, el build pasa. Vive en los layouts de grupo.
       */}
-      <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${inter.variable} ${titulo.variable} ${subtitulo.variable} font-sans antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }

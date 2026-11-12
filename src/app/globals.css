@@ -141,10 +141,51 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-rojo;
+    @apply font-sub text-xs font-semibold uppercase tracking-[0.18em] text-rojo;
   }
 
   .section-title {
     @apply font-display text-3xl font-semibold tracking-tight text-marron sm:text-4xl;
+  }
+}
+
+/* Fuera de @layer: Tailwind descarta de sus capas lo que no encuentra en el codigo, y la
+   clase `lucide` la pone la libreria, no nosotros. */
+/* Iconos con vida: al pasar el cursor o enfocar su enlace o boton, el icono responde segun
+   lo que significa. Son los mismos glifos de Lucide; lo que cambia es el movimiento. La
+   curva tiene un leve rebote, y con "reducir movimiento" no pasa nada de esto. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(a, button) svg.lucide:not(.animate-spin, [class*="rotate-"], .nimbus-item *) {
+    transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:not(.animate-spin, [class*="rotate-"], .nimbus-item *) {
+    transform: scale(1.12);
+  }
+  /* Las flechas empujan hacia donde llevan. */
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-arrow-right, .lucide-log-in) {
+    transform: translateX(3px);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-arrow-left, .lucide-log-out) {
+    transform: translateX(-3px);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-upload) {
+    transform: translateY(-2px);
+  }
+  /* Lo que gira, gira: ajustes, recargar, deshacer, brujula, el mas que abre algo. */
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-settings, .lucide-compass) {
+    transform: rotate(60deg);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-refresh-cw, .lucide-plus) {
+    transform: rotate(90deg);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-rotate-ccw) {
+    transform: rotate(-90deg);
+  }
+  /* El desplegable baja, el que cierra se encoge. */
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-chevron-down) {
+    transform: translateY(2px);
+  }
+  :is(a, button):is(:hover, :focus-visible) svg.lucide:is(.lucide-x) {
+    transform: scale(0.88) rotate(90deg);
   }
 }

@@ -63,17 +63,17 @@ se ve sucio.
 
 ## 4. Tipografia
 
-| Uso                   | Familia | Tamano | Peso | Tracking |
-| --------------------- | ------- | ------ | ---- | -------- |
-| Figura principal      | Poppins | `58px` | 700  | `-.03em` |
-| Titulo de pagina      | Poppins | `34px` | 600  | `-.02em` |
-| Titulo de seccion     | Poppins | `17px` | 600  | normal   |
-| Valor de indicador    | Poppins | `24px` | 600  | normal   |
-| Eyebrow               | Inter   | `11px` | 600  | `.18em`  |
-| Encabezado de tabla   | Inter   | `11px` | 600  | `.1em`   |
-| Celda de tabla        | Inter   | `14px` | 400  | normal   |
-| Texto secundario      | Inter   | `13px` | 400  | normal   |
-| Etiqueta de indicador | Inter   | `12px` | 400  | normal   |
+| Uso                   | Familia    | Tamano | Peso | Tracking |
+| --------------------- | ---------- | ------ | ---- | -------- |
+| Figura principal      | Montserrat | `58px` | 700  | `-.03em` |
+| Titulo de pagina      | Montserrat | `34px` | 600  | `-.02em` |
+| Titulo de seccion     | Montserrat | `17px` | 600  | normal   |
+| Valor de indicador    | Montserrat | `24px` | 600  | normal   |
+| Eyebrow               | Inter      | `11px` | 600  | `.18em`  |
+| Encabezado de tabla   | Inter      | `11px` | 600  | `.1em`   |
+| Celda de tabla        | Inter      | `14px` | 400  | normal   |
+| Texto secundario      | Inter      | `13px` | 400  | normal   |
+| Etiqueta de indicador | Inter      | `12px` | 400  | normal   |
 
 La figura principal lleva `line-height: 1`. Eyebrow y encabezado de tabla van en
 mayusculas.
@@ -139,7 +139,7 @@ etiquetas.
 ### Anillo de puntaje
 
 `92px` de lado, radio `38`, trazo `9px`, `stroke-linecap: round`, arranca en
-`rotate(-90)`. Carril en `rgba(72,45,31,.1)`. El numero al centro en Poppins `26px` peso 700.
+`rotate(-90)`. Carril en `rgba(72,45,31,.1)`. El numero al centro en Montserrat `26px` peso 700.
 
 El desglose debajo: cuatro filas, separacion `11px`, etiqueta `92px` fija, carril `8px` de
 alto con radio `4px`, valor `44px` a la derecha.

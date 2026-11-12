@@ -93,7 +93,7 @@ solo con la opacidad.
 
 ## Tipografia
 
-- **Poppins** e **Inter**.
+- **Montserrat** en titulos (alternativa libre a Gotham), **DM Sans** en subtitulos e **Inter** en el cuerpo.
 - Moderna, legible, con jerarquia visual clara.
 
 ## Principios de interfaz

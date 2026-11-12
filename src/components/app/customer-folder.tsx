@@ -225,7 +225,7 @@ const CSS = `
 .cf-hit { position: absolute; inset: 0; z-index: 1; cursor: pointer; background: none; border: 0; padding: 0; }
 .cf-label { position: absolute; left: 28px; bottom: 30px; z-index: 2; display: flex; flex-direction: column; gap: 5px; max-width: 240px; pointer-events: none; }
 .cf-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: color-mix(in srgb, var(--cf-fill) 14%, transparent); color: var(--cf-fill); }
-.cf-title { font-family: var(--font-poppins), sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: var(--cf-ink); }
+.cf-title { font-family: var(--font-titulo), sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -.012em; color: var(--cf-ink); }
 .cf-meta { font-size: 13px; color: rgb(var(--marron) / .6); white-space: nowrap; }
 
 @media (prefers-reduced-motion: reduce) {

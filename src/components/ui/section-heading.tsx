@@ -17,7 +17,7 @@ export function SectionHeading({ index, label, title, children }: SectionHeading
         <h2 className="max-w-3xl font-display text-4xl font-light leading-[1.08] tracking-[-0.03em] text-marron sm:text-5xl">
           {title}
         </h2>
-        {children && <div className="mt-5 max-w-2xl text-lg leading-relaxed text-marron/70">{children}</div>}
+        {children && <div className="mt-5 max-w-2xl font-sub text-lg leading-relaxed text-marron/70">{children}</div>}
       </div>
     </div>
   )

@@ -43,7 +43,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-poppins)", "sans-serif"],
+        display: ["var(--font-titulo)", "sans-serif"],
+        sub: ["var(--font-subtitulo)", "sans-serif"],
         sans: ["var(--font-inter)", "sans-serif"],
       },
       // La curva del sistema de Apple. Todo lo que responde a un dedo o a un cursor sale

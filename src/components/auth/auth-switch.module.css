@@ -76,7 +76,7 @@
 }
 
 .title {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-titulo), sans-serif;
   font-size: 2.1rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -249,7 +249,7 @@
 }
 
 .content h2 {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-titulo), sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 1.15;
