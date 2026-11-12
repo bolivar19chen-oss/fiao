@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Coins, Compass, Eye, HeartHandshake, KeyRound, Sparkles } from "lucide-react"
 
 import { Cta } from "@/components/landing/cta"
+import { StoreGallery } from "@/components/landing/store-gallery"
 import { IconTile } from "@/components/ui/icon-tile"
 import { PageHero } from "@/components/ui/page-hero"
 import alex from "@/assets/img/mini-market-alex.webp"
@@ -139,6 +140,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <StoreGallery />
 
       {/* Roadmap */}
       <section className="container-x py-28">
