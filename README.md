@@ -7,6 +7,8 @@ control de inventario, historial de pagos de clientes y un puntaje de credito po
 
 La libreta de la tienda, convertida en un libro contable que no se pierde ni se discute.
 
+**En linea:** https://fiao-khaki.vercel.app (cada cambio en `main` se publica solo).
+
 ---
 
 ## Puesta en marcha
@@ -92,6 +94,16 @@ python -m oracle.emit     # genera py-results.json, que lee una prueba de Vitest
 python -m pytest -q       # propiedades que deben valer siempre
 ```
 
+### El nucleo en C++
+
+La aritmetica del motor esta escrita una tercera vez en C++17 (`tools/native/credit.cpp`).
+Python la carga con `ctypes` y las pruebas exigen que C++ y el oraculo den el mismo centavo:
+
+```bash
+python -m native.build    # usa $CXX, o g++ si no esta definido
+python -m pytest -q native/tests
+```
+
 ---
 
 ## Como esta hecho
@@ -139,7 +151,7 @@ arquitectura, una por archivo, en [docs/adr/](docs/adr/).
 
 ## Estado
 
-**Funciona:** autenticacion, alta de negocio y de cliente, clientes, inventario, la venta
+**Funciona:** autenticacion con correo o con Google, alta de negocio y de cliente, clientes, inventario, la venta
 a credito con su calendario de cuotas, registro de abonos, dashboard, ajustes de terminos
 y el panel del cliente. Tres idiomas (en/es/zh) y modo oscuro.
 
