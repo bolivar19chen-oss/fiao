@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { motion, MotionConfig } from "framer-motion"
 import { ChartColumn, LayoutDashboard, LogOut, Package, ReceiptText, Search, Settings, Users } from "lucide-react"
 
+import { t, type Key, type Lang } from "@/lib/i18n"
 import { Logo } from "@/components/layout/logo"
 import { Dock, DockItem } from "@/components/ui/dock"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
@@ -19,25 +20,36 @@ import { signOut } from "./actions"
 // Se mantiene lo que ya habia y no estorba: el crossfade entre rutas, la pastilla como
 // shared element que viaja (layoutId) y la lupa del icono bajo el cursor.
 
-const GRUPOS = [
+const GRUPOS: { label: Key; items: { href: string; label: Key; icon: typeof Users }[] }[] = [
   {
-    label: "Menu",
+    label: "groupMenu",
     items: [
-      { href: "/app", label: "Dashboard", icon: LayoutDashboard },
-      { href: "/app/customers", label: "Customers", icon: Users },
-      { href: "/app/products", label: "Inventory", icon: Package },
-      { href: "/app/sales", label: "Sales", icon: ReceiptText },
+      { href: "/app", label: "navDashboard", icon: LayoutDashboard },
+      { href: "/app/customers", label: "navCustomers", icon: Users },
+      { href: "/app/products", label: "navInventory", icon: Package },
+      { href: "/app/sales", label: "navSales", icon: ReceiptText },
     ],
   },
-  { label: "Insights", items: [{ href: "/app/reports", label: "Reports", icon: ChartColumn }] },
-  { label: "Account", items: [{ href: "/app/settings", label: "Settings", icon: Settings }] },
+  { label: "groupInsights", items: [{ href: "/app/reports", label: "navReports", icon: ChartColumn }] },
+  { label: "groupAccount", items: [{ href: "/app/settings", label: "navSettings", icon: Settings }] },
 ]
 
 const TODOS = GRUPOS.flatMap((grupo) => grupo.items)
 
+const BUSCAR = { customers: "searchCustomers", products: "searchProducts", sales: "searchSales" } as const
+
 const RESORTE = { type: "spring", stiffness: 420, damping: 36 } as const
 
-export function AppShell({ businessName, children }: { businessName: string; children: React.ReactNode }) {
+export function AppShell({
+  businessName,
+  lang,
+  children,
+}: {
+  businessName: string
+  lang: Lang
+  children: React.ReactNode
+}) {
+  const tr = (key: Key) => t(lang, key)
   const pathname = usePathname()
   const router = useRouter()
   const [query, setQuery] = useState("")
@@ -49,7 +61,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
   // El buscador busca EN la pantalla donde estas. Antes decia "Search customers" en
   // todas y siempre llevaba a clientes: en Inventory era una caja que buscaba otra cosa.
   // Donde no hay lista que filtrar no se ensena.
-  const BUSQUEDA: Record<string, string> = {
+  const BUSQUEDA: Record<string, "products" | "sales" | "customers"> = {
     "/app/products": "products",
     "/app/sales": "sales",
     "/app/customers": "customers",
@@ -70,7 +82,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
       <div className="app-fondo relative isolate min-h-[100dvh]">
         {/* Lateral etiquetado, 248px, como el de la referencia. */}
         <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col border-r border-marron/10 bg-fondo px-4 py-6 md:flex">
-          <Link href="/app" aria-label="Dashboard" className="px-2">
+          <Link href="/app" aria-label={tr("navDashboard")} className="px-2">
             <Logo />
           </Link>
 
@@ -79,7 +91,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
               <div key={grupo.label}>
                 {/* Minuscula y no mayusculas tracked: es el unico tell de la referencia
                     que no copio, porque empeora la legibilidad y no aporta nada. */}
-                <p className="px-3 text-[12px] font-semibold text-marron/70">{grupo.label}</p>
+                <p className="px-3 text-[12px] font-semibold text-marron/70">{tr(grupo.label)}</p>
                 <ul className="mt-2 flex flex-col gap-0.5">
                   {grupo.items.map(({ href, label, icon: Icon }) => {
                     const active = isActive(href)
@@ -105,7 +117,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                           <motion.span whileHover={{ scale: 1.2 }} transition={RESORTE} className="relative">
                             <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden />
                           </motion.span>
-                          <span className="relative">{label}</span>
+                          <span className="relative">{tr(label)}</span>
                         </Link>
                       </li>
                     )
@@ -119,14 +131,14 @@ export function AppShell({ businessName, children }: { businessName: string; chi
               ese bloque alli es el negocio de TailGrids, no el nuestro. */}
           <div className="mt-auto rounded-xl bg-papel p-4">
             <p className="truncate text-sm font-semibold text-marron">{businessName}</p>
-            <p className="mt-0.5 text-xs text-marron/70">Owner</p>
+            <p className="mt-0.5 text-xs text-marron/70">{tr("owner")}</p>
             <form action={signOut} className="mt-3">
               <button
                 type="submit"
                 className="flex h-9 w-full items-center gap-2 rounded-lg px-2 text-sm font-medium text-marron/70 transition hover:bg-fondo hover:text-marron"
               >
                 <LogOut className="h-4 w-4" strokeWidth={1.75} aria-hidden />
-                Log out
+                {tr("logOut")}
               </button>
             </form>
           </div>
@@ -137,16 +149,16 @@ export function AppShell({ businessName, children }: { businessName: string; chi
           <header className="glass-bar sticky top-0 z-30 border-b border-marron/[0.07]">
             <div className="flex min-h-16 flex-wrap items-center gap-3 px-5 py-3 sm:px-6">
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[17px] font-semibold text-marron">{actual?.label ?? "Dashboard"}</p>
+                <p className="truncate text-[17px] font-semibold text-marron">{tr(actual?.label ?? "navDashboard")}</p>
                 <p className="truncate text-[13px] text-marron/70 md:hidden">{businessName}</p>
               </div>
 
               {/* Acceso rapido a las seis secciones sin bajar la vista al lateral. Solo desde xl:
                   por debajo no cabe junto al buscador, y ahi mandan el lateral y la barra inferior. */}
-              <nav aria-label="Quick access" className="hidden xl:block">
+              <nav aria-label={tr("quickAccess")} className="hidden xl:block">
                 <Dock>
                   {TODOS.map((item) => (
-                    <DockItem key={item.href} {...item} active={isActive(item.href)} />
+                    <DockItem key={item.href} {...item} label={tr(item.label)} active={isActive(item.href)} />
                   ))}
                 </Dock>
               </nav>
@@ -164,8 +176,8 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                       type="search"
                       value={query}
                       onChange={(event) => setQuery(event.target.value)}
-                      placeholder={`Search ${buscable}`}
-                      aria-label={`Search ${buscable}`}
+                      placeholder={tr(BUSCAR[buscable])}
+                      aria-label={tr(BUSCAR[buscable])}
                       className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-64"
                     />
                   </div>
@@ -215,7 +227,7 @@ export function AppShell({ businessName, children }: { businessName: string; chi
                 <motion.span animate={{ scale: active ? 1.12 : 1 }} transition={RESORTE} className="relative">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </motion.span>
-                <span className="relative w-full truncate text-center">{label}</span>
+                <span className="relative w-full truncate text-center">{tr(label)}</span>
               </Link>
             )
           })}

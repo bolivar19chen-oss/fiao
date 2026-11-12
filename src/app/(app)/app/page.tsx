@@ -6,6 +6,8 @@ import { requireBusiness } from "@/lib/business"
 import { addDays, eachDay } from "@/lib/credit"
 import { customerAccount, today, type SaleRow } from "@/lib/credit-account"
 import { formatCents, formatCount, kpiDelta } from "@/lib/format"
+import { t } from "@/lib/i18n"
+import { getLang } from "@/lib/lang"
 import { createClient } from "@/lib/supabase/server"
 import type { Debtor } from "@/components/app/charts"
 import { StatusDonut, TopDebtors } from "@/components/app/lazy-charts"
@@ -26,7 +28,7 @@ const dayLabel = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { day: "numeric", timeZone: "UTC" })
 
 export default async function DashboardPage() {
-  const business = await requireBusiness()
+  const [business, lang] = await Promise.all([requireBusiness(), getLang()])
   const supabase = await createClient()
   const asOf = today()
 
@@ -108,8 +110,8 @@ export default async function DashboardPage() {
       {/* El nombre del negocio y el titulo ya estan en la barra superior: aca va la
           accion, como en la referencia. */}
       <PageHeader
-        title="Dashboard"
-        description="What your customers owe you, as of today."
+        title={t(lang, "navDashboard")}
+        description={t(lang, "dashDesc")}
         action={
           <div className="flex gap-3">
             <Link href="/app/products/new" className="btn btn-glass">
@@ -126,24 +128,31 @@ export default async function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard
           icon={Wallet}
-          label="Outstanding credit"
+          label={t(lang, "kpiOutstanding")}
           value={formatCents(portfolio)}
-          since={`${formatCount(withDebt.length)} ${withDebt.length === 1 ? "customer" : "customers"} with a balance`}
+          since={t(lang, withDebt.length === 1 ? "kpiWithBalanceOne" : "kpiWithBalanceMany", {
+            n: formatCount(withDebt.length),
+          })}
         />
         <KpiCard
           icon={AlertTriangle}
-          label="Overdue"
+          label={t(lang, "kpiOverdue")}
           value={formatCents(overdue)}
 
-          since="Past the due date"
+          since={t(lang, "kpiPastDue")}
         />
-        <KpiCard icon={CalendarClock} label="Due this week" value={formatCents(dueThisWeek)} since="Next 7 days" />
+        <KpiCard
+          icon={CalendarClock}
+          label={t(lang, "kpiDueWeek")}
+          value={formatCents(dueThisWeek)}
+          since={t(lang, "kpiNext7")}
+        />
         <KpiCard
           icon={TrendingUp}
-          label="Collected this week"
+          label={t(lang, "kpiCollectedWeek")}
           value={formatCents(thisWeek)}
           delta={kpiDelta(thisWeek, priorWeek)}
-          since="vs the 7 days before"
+          since={t(lang, "kpiVsPrior")}
         />
       </div>
 
@@ -152,19 +161,19 @@ export default async function DashboardPage() {
           {/* Grafica grande a dos tercios y la dona al lado, como en la referencia. */}
           <div className="mt-4 grid gap-4 lg:grid-cols-[1.9fr_1fr]">
             <Card>
-              <CardTitle>Collected</CardTitle>
+              <CardTitle>{t(lang, "cardCollected")}</CardTitle>
               <CollectedChart days={days.map((day) => ({ label: dayLabel(day), cents: paidOn.get(day) ?? 0 }))} />
             </Card>
             <Card>
-              <CardTitle>Portfolio by status</CardTitle>
+              <CardTitle>{t(lang, "cardPortfolio")}</CardTitle>
               <StatusDonut slices={slices} />
             </Card>
           </div>
 
           <Card className="mt-4">
-            <CardTitle>Top debtors</CardTitle>
+            <CardTitle>{t(lang, "cardTopDebtors")}</CardTitle>
             {topDebtors.length === 0 ? (
-              <p className="text-[17px] leading-[22px] text-marron/70">Nobody owes you anything right now.</p>
+              <p className="text-[17px] leading-[22px] text-marron/70">{t(lang, "nobodyOwes")}</p>
             ) : (
               <TopDebtors debtors={topDebtors} />
             )}
@@ -172,12 +181,12 @@ export default async function DashboardPage() {
         </>
       ) : (
         <Card className="mt-4">
-          <CardTitle>Getting started</CardTitle>
+          <CardTitle>{t(lang, "gettingStarted")}</CardTitle>
           <EmptyState
             icon={ReceiptText}
-            title="No credit sales yet"
-            body="Add your customers and products first. Credit sales open in the next update."
-            action={{ href: "/app/customers/new", label: "Add a customer" }}
+            title={t(lang, "noSalesTitle")}
+            body={t(lang, "noSalesBody")}
+            action={{ href: "/app/customers/new", label: t(lang, "addCustomer") }}
           />
         </Card>
       )}
