@@ -81,7 +81,7 @@ export function AppShell({
     <MotionConfig reducedMotion="user">
       <div className="app-fondo relative isolate min-h-[100dvh]">
         {/* Lateral etiquetado, 248px, como el de la referencia. */}
-        <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col border-r border-marron/10 bg-fondo px-4 py-6 md:flex">
+        <aside className="app-lateral fixed inset-y-0 left-0 z-40 hidden w-[248px] flex-col border-r border-marron/10 bg-fondo px-4 py-6 md:flex">
           <Link href="/app" aria-label={tr("navDashboard")} className="px-2">
             <Logo />
           </Link>
@@ -193,7 +193,7 @@ export function AppShell({
                 opacidad en vez de aparecer de golpe. En CSS y no en framer-motion: este
                 fade corre DESPUES de esperar al servidor, y 180ms de JS encima de una
                 espera se sienten como lentitud. */}
-            <div key={pathname} className="motion-safe:animate-entrada">
+            <div key={pathname} className="app-panel motion-safe:animate-entrada">
               {children}
             </div>
           </main>

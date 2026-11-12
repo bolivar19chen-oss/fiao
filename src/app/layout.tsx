@@ -18,7 +18,7 @@ const subtitulo = DM_Sans({ subsets: ["latin"], variable: "--font-subtitulo" })
 // pantalla lee el espanol con fonetica inglesa. Se hace aca y no con cookies() en el layout
 // porque leer una cookie en el layout raiz vuelve dinamicas TODAS las rutas: la landing se
 // generaba en el servidor en cada visita (0.7 a 1.1 s) en vez de servirse ya hecha.
-const THEME_SCRIPT = `try{var d=document.documentElement,t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.classList.add(t);var l=document.cookie.match(/(?:^|; )lang=(es|zh)/);if(l)d.lang=l[1];var f=localStorage.getItem("fondo");if(f)d.dataset.fondo=f}catch(e){}`
+const THEME_SCRIPT = `try{var d=document.documentElement,t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.classList.add(t);var l=document.cookie.match(/(?:^|; )lang=(es|zh)/);if(l)d.lang=l[1];var f=localStorage.getItem("fondo");if(f)d.dataset.fondo=f;var c=localStorage.getItem("cristal");if(c)d.dataset.cristal=c}catch(e){}`
 
 export const metadata: Metadata = {
   title: "FIA'O - Credit sales for small businesses",

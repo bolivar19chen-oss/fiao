@@ -55,3 +55,6 @@ __pycache__/
 
 # Configuracion local del editor, no del proyecto
 .idea/
+
+# Grafo local del proyecto, se regenera.
+/graphify-out/

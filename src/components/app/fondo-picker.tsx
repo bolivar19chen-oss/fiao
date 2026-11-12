@@ -14,22 +14,35 @@ const FONDOS = [
   { id: "san-juan", label: "San Juan", credit: "Mitzi Valdés" },
 ] as const
 
+// Cuanta transparencia llevan el panel y las fichas cuando hay fondo (--cristal en globals.css).
+const CRISTALES = [
+  { id: "claro", label: "Clear" },
+  { id: "", label: "Frosted" },
+  { id: "solido", label: "Solid" },
+] as const
+
 // La eleccion vive en localStorage("fondo") y en data-fondo de <html>, igual que el tema: el
 // script de src/app/layout.tsx la aplica antes de pintar.
 export function FondoPicker() {
   const [fondo, setFondo] = useState("")
+  const [cristal, setCristal] = useState("")
 
-  useEffect(() => setFondo(document.documentElement.dataset.fondo ?? ""), [])
+  useEffect(() => {
+    setFondo(document.documentElement.dataset.fondo ?? "")
+    setCristal(document.documentElement.dataset.cristal ?? "")
+  }, [])
 
-  function choose(id: string) {
-    setFondo(id)
-    if (id) document.documentElement.dataset.fondo = id
-    else delete document.documentElement.dataset.fondo
+  // Las dos preferencias se guardan igual: atributo en <html> y la misma clave en localStorage.
+  function save(key: "fondo" | "cristal", id: string) {
+    if (key === "fondo") setFondo(id)
+    else setCristal(id)
+    if (id) document.documentElement.dataset[key] = id
+    else delete document.documentElement.dataset[key]
     try {
-      if (id) localStorage.setItem("fondo", id)
-      else localStorage.removeItem("fondo")
+      if (id) localStorage.setItem(key, id)
+      else localStorage.removeItem(key)
     } catch {
-      // Sin almacenamiento el fondo vale para esta visita.
+      // Sin almacenamiento la eleccion vale para esta visita.
     }
   }
 
@@ -42,7 +55,7 @@ export function FondoPicker() {
             type="button"
             role="radio"
             aria-checked={fondo === id}
-            onClick={() => choose(id)}
+            onClick={() => save("fondo", id)}
             className="group text-left focus-visible:outline-none"
           >
             <span
@@ -58,6 +71,26 @@ export function FondoPicker() {
               )}
             </span>
             <span className="mt-1.5 block text-xs font-medium text-marron/70">{label}</span>
+          </button>
+        ))}
+      </div>
+      <div
+        role="radiogroup"
+        aria-label="Glass"
+        className="mt-5 inline-flex rounded-full border border-marron/10 bg-papel p-1"
+      >
+        {CRISTALES.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            role="radio"
+            aria-checked={cristal === id}
+            // Sin fondo no hay nada que transparentar: el control se ve pero no actua.
+            disabled={!fondo}
+            onClick={() => save("cristal", id)}
+            className="h-9 rounded-full px-4 text-sm font-medium text-marron/70 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rojo disabled:opacity-50 aria-checked:bg-fondo aria-checked:text-marron"
+          >
+            {label}
           </button>
         ))}
       </div>

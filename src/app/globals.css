@@ -45,12 +45,12 @@
   }
   [data-fondo="la-confianza"] {
     --app-fondo:
-      linear-gradient(rgb(var(--papel) / 0.86), rgb(var(--papel) / 0.86)),
+      linear-gradient(rgb(var(--papel) / 0.65), rgb(var(--papel) / 0.65)),
       url("/fondos/la-confianza.webp") center / cover;
   }
   [data-fondo="san-juan"] {
     --app-fondo:
-      linear-gradient(rgb(var(--papel) / 0.86), rgb(var(--papel) / 0.86)), url("/fondos/san-juan.webp") center / cover;
+      linear-gradient(rgb(var(--papel) / 0.65), rgb(var(--papel) / 0.65)), url("/fondos/san-juan.webp") center / cover;
   }
 
   /* El texto atenuado que va directo sobre el fondo sube de 70 a 80 %: sobre la zona mas
@@ -60,10 +60,40 @@
   }
 
   /* Con fondo elegido las fichas pasan a cristal y entran escalonadas. */
-  [data-fondo] .app-card {
-    background: rgb(var(--fondo) / 0.78);
-    backdrop-filter: blur(22px) saturate(1.2);
-    -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  /* Cuanto cristal: lo elige el usuario (FondoPicker). --cristal es la opacidad del panel
+     grande; las fichas y el lateral van un escalon mas opacos para que el texto descanse
+     sobre algo mas firme que el panel. "solido" apaga el desenfoque: es la opcion para quien
+     quiere el fondo pero no la transparencia. */
+  :root {
+    --cristal: 0.6;
+    --cristal-blur: 22px;
+  }
+  [data-cristal="claro"] {
+    --cristal: 0.34;
+    --cristal-blur: 14px;
+  }
+  [data-cristal="solido"] {
+    --cristal: 0.96;
+    --cristal-blur: 0px;
+  }
+  [data-fondo] :is(.app-panel, .app-card, .app-lateral) {
+    backdrop-filter: blur(var(--cristal-blur)) saturate(1.2);
+    -webkit-backdrop-filter: blur(var(--cristal-blur)) saturate(1.2);
+  }
+  /* El panel grande que contiene la pantalla, como una ventana sobre el fondo. */
+  [data-fondo] .app-panel {
+    padding: 1.25rem;
+    border: 1px solid rgb(var(--marron) / 0.1);
+    border-radius: 2rem;
+    background: rgb(var(--fondo) / var(--cristal));
+  }
+  [data-fondo] :is(.app-card, .app-lateral) {
+    background: rgb(var(--fondo) / calc(var(--cristal) + 0.2));
+  }
+  @media (min-width: 640px) {
+    [data-fondo] .app-panel {
+      padding: 2rem;
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     .app-card {
