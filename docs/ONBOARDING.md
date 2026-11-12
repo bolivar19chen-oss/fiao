@@ -22,16 +22,11 @@ prefieren los nombres nuevos, pero los viejos no rompen nada.) Verificados en el
 `IdCard`, `Upload`, `LoaderCircle`, `ArrowLeft`, `ArrowRight`, `Check`, `CreditCard`,
 `Smartphone`, `Banknote`, `Camera`, `RefreshCw`.
 
-**No hay imagen de banner en el repo.** Donde el diseno de referencia pone una foto, va el
-degradado de marca mas una calle de mini supers dibujada en SVG (`StreetArt`, en
-`src/components/onboarding/role-art.tsx`). La del ejemplo vive en un CDN ajeno: habria que
-declarar ese dominio en `next.config.mjs` y la tarjeta dependeria de un servidor que no es
-nuestro.
-
-**Los iconos de rol no son de lucide.** `Store` y `User` se cambiaron por dos marcas
-propias, `ShopArt` y `CustomerArt`, en la paleta del proyecto. Un glifo de contorno de
-libreria se ve igual en cualquier aplicacion; estas no. Van en una insignia `bg-fondo` en
-los dos tonos, porque son de varios colores y necesitan una superficie neutra.
+**El banner es una foto real**, como en el diseno de referencia: una tienda de Cocle por
+rol (`CardBanner` en `src/components/onboarding/onboarding-card.tsx`), servida por
+`next/image` desde `src/assets/img`. Son de Mitzi Valdes, CC BY-SA 4.0, y el credito va al
+pie de la pagina de onboarding. Antes iba una calle dibujada en SVG con una insignia de rol;
+se quito para que la tarjeta quede igual a la referencia.
 
 ## 1. El flujo
 

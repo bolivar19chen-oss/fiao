@@ -16,7 +16,6 @@ import {
   FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
-import { CustomerArt } from "@/components/onboarding/role-art"
 
 import { completeCustomer, type FormState } from "./actions"
 
@@ -35,7 +34,7 @@ export function CustomerForm({ email, onBack }: { email: string; onBack: () => v
       </button>
 
       <OnboardingCard>
-        <CardBanner tone="cream" icon={<CustomerArt className="h-9 w-9" />} />
+        <CardBanner tone="cream" />
 
         <CardBody>
           <CardHeading

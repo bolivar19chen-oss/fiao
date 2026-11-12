@@ -27,7 +27,6 @@ import {
   FADE_UP,
   OnboardingCard,
 } from "@/components/onboarding/onboarding-card"
-import { ShopArt } from "@/components/onboarding/role-art"
 
 import { completeBusiness, type FormState } from "./actions"
 
@@ -49,7 +48,7 @@ export function BusinessForm({ onBack }: { onBack: () => void }) {
       </button>
 
       <OnboardingCard>
-        <CardBanner tone="red" icon={<ShopArt className="h-9 w-9" />} />
+        <CardBanner tone="red" />
 
         <CardBody>
           <motion.div variants={FADE_UP} className="flex items-center gap-3">

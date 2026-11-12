@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion"
 import { ArrowRight, IdCard, RefreshCw } from "lucide-react"
 
 import { CardBanner, CardBody, CardHeading, CardNote, OnboardingCard } from "./onboarding-card"
-import { CustomerArt, ShopArt } from "./role-art"
 
 export type Role = "business" | "customer"
 
@@ -27,7 +26,6 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Role) => void }) {
             side="front"
             hidden={flipped}
             reduced={reduced}
-            icon={<ShopArt className="h-9 w-9" />}
             title="I run a business"
             description="Track inventory, sell on credit and keep every customer's payment history in one place."
             noteTitle="You'll need your RUC"
@@ -40,7 +38,6 @@ export function RoleFlipCard({ onChoose }: { onChoose: (role: Role) => void }) {
             side="back"
             hidden={!flipped}
             reduced={reduced}
-            icon={<CustomerArt className="h-9 w-9" />}
             title="I'm a customer"
             description="See what you owe at each shop, your payment history and your credit score there."
             noteTitle="You'll need your ID number"
@@ -69,7 +66,6 @@ function CardFace({
   side,
   hidden,
   reduced,
-  icon,
   title,
   description,
   noteTitle,
@@ -81,7 +77,6 @@ function CardFace({
   side: "front" | "back"
   hidden: boolean
   reduced: boolean | null
-  icon: React.ReactNode
   title: string
   description: string
   noteTitle: string
@@ -105,7 +100,7 @@ function CardFace({
         reduced && hidden ? "opacity-0" : "",
       ].join(" ")}
     >
-      <CardBanner tone={tone} icon={icon} />
+      <CardBanner tone={tone} />
 
       <CardBody>
         <CardHeading title={title} description={description} />

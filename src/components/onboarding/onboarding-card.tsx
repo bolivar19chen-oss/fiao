@@ -1,10 +1,12 @@
 "use client"
 
 import type { ReactNode } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 
-import { StreetArt } from "./role-art"
+import laConfianza from "@/assets/img/abarroteria-alto-de-la-estancia.webp"
+import lolitas from "@/assets/img/abarroteria-san-juan-de-dios.webp"
 
 // La anatomia del diseno de referencia, con los tokens del proyecto.
 //
@@ -34,48 +36,19 @@ export const STAGGER = {
 }
 
 /**
- * Banda superior. Donde el diseno de referencia pone una foto decorativa, aca va una
- * calle de mini supers dibujada (`StreetArt`), sobre el degradado de marca y bajo la
- * trama de rejilla. El porque de dibujarla en vez de traer una imagen esta en `role-art.tsx`.
+ * Banda superior: la foto decorativa del diseno de referencia. Cada rol lleva la suya, las
+ * dos de tiendas reales de Cocle (credito en la pagina de onboarding).
  */
-export function CardBanner({ tone, icon }: { tone: "red" | "cream"; icon: ReactNode }) {
+export function CardBanner({ tone }: { tone: "red" | "cream" }) {
   return (
-    <motion.div
-      variants={FADE_UP}
-      aria-hidden
-      className={[
-        "relative h-36 w-full",
-        tone === "red"
-          ? "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.rojo.claro)_0%,theme(colors.rojo.marca)_45%,theme(colors.rojo.oscuro)_100%)]"
-          : "bg-[radial-gradient(120%_140%_at_20%_0%,theme(colors.crema.claro)_0%,theme(colors.crema.DEFAULT)_45%,theme(colors.amarillo.DEFAULT)_100%)]",
-      ].join(" ")}
-    >
-      <StreetArt tone={tone} />
-
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgb(255 255 255 / 0.18) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.18) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-          maskImage: "radial-gradient(ellipse 80% 70% at 30% 0%, black, transparent)",
-          WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 30% 0%, black, transparent)",
-        }}
+    <motion.div variants={FADE_UP} aria-hidden>
+      <Image
+        src={tone === "red" ? lolitas : laConfianza}
+        alt=""
+        priority
+        sizes="(min-width: 448px) 448px, 100vw"
+        className="h-40 w-full object-cover"
       />
-      {/*
-        Centrado, como el avatar del diseno original. La insignia va siempre en `--fondo`,
-        en los dos tonos: la marca que lleva adentro es de varios colores y necesita una
-        superficie neutra. Antes la cara crema la ponia sobre marron, que servia para un
-        glifo de un solo color y ya no.
-      */}
-      <span
-        className={[
-          "absolute -bottom-8 left-1/2 grid h-16 w-16 -translate-x-1/2 place-items-center rounded-full bg-fondo ring-4",
-          tone === "red" ? "ring-rojo/15" : "ring-amarillo/25",
-        ].join(" ")}
-      >
-        {icon}
-      </span>
     </motion.div>
   )
 }
@@ -101,8 +74,7 @@ export function OnboardingCard({
 
 /** Contenido centrado con el espaciado del diseno: space-y-6 p-8 text-center. */
 export function CardBody({ children }: { children: ReactNode }) {
-  // pt-14 y no pt-8: la insignia sobresale 32px de la banda y se come el aire de arriba.
-  return <div className="space-y-6 p-8 pt-14 text-center">{children}</div>
+  return <div className="space-y-6 p-8 text-center">{children}</div>
 }
 
 export function CardHeading({ title, description }: { title: string; description: string }) {
