@@ -34,23 +34,6 @@ export default async function OnboardingPage() {
       <Aurora />
       <Logo className="mb-10" />
       <OnboardingFlow email={email} />
-      <p className="mt-8 text-xs text-marron/70">
-        Photos:{" "}
-        <a
-          href="https://commons.wikimedia.org/wiki/File:Abarroter%C3%ADa_de_la_comunidad_de_San_Juan_De_Dios.jpg"
-          className="underline underline-offset-2"
-        >
-          Lolitas
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://commons.wikimedia.org/wiki/File:Abarroter%C3%ADa_de_la_comunidad_de_Alto_De_La_Estancia.jpg"
-          className="underline underline-offset-2"
-        >
-          La Confianza
-        </a>{" "}
-        by Mitzi Valdés, CC BY-SA 4.0. Cropped.
-      </p>
     </main>
   )
 }

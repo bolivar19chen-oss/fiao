@@ -5,8 +5,8 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 
-import laConfianza from "@/assets/img/abarroteria-alto-de-la-estancia.webp"
-import lolitas from "@/assets/img/abarroteria-san-juan-de-dios.webp"
+import aguila from "@/assets/img/aguila-harpia.webp"
+import flor from "@/assets/img/flor-espiritu-santo.webp"
 
 // La anatomia del diseno de referencia, con los tokens del proyecto.
 //
@@ -36,18 +36,22 @@ export const STAGGER = {
 }
 
 /**
- * Banda superior: la foto decorativa del diseno de referencia. Cada rol lleva la suya, las
- * dos de tiendas reales de Cocle (credito en la pagina de onboarding).
+ * Banda superior: la ilustracion pintada del diseno de referencia, con los dos simbolos
+ * nacionales de Panama. El negocio lleva el aguila harpia y el cliente la flor del Espiritu
+ * Santo. El borde de pincelada de abajo es transparente (no blanco), asi que se funde con la
+ * tarjeta tambien en modo oscuro.
  */
 export function CardBanner({ tone }: { tone: "red" | "cream" }) {
   return (
     <motion.div variants={FADE_UP} aria-hidden>
       <Image
-        src={tone === "red" ? lolitas : laConfianza}
+        src={tone === "red" ? aguila : flor}
         alt=""
         priority
         sizes="(min-width: 448px) 448px, 100vw"
-        className="h-40 w-full object-cover"
+        // Las dos ilustraciones miden casi igual; la proporcion fija evita que una cara de la
+        // tarjeta reversible quede mas alta que la otra.
+        className="aspect-[20/13] w-full object-cover object-bottom"
       />
     </motion.div>
   )
@@ -74,7 +78,7 @@ export function OnboardingCard({
 
 /** Contenido centrado con el espaciado del diseno: space-y-6 p-8 text-center. */
 export function CardBody({ children }: { children: ReactNode }) {
-  return <div className="space-y-6 p-8 text-center">{children}</div>
+  return <div className="space-y-6 p-8 pt-3 text-center">{children}</div>
 }
 
 export function CardHeading({ title, description }: { title: string; description: string }) {

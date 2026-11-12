@@ -22,11 +22,11 @@ prefieren los nombres nuevos, pero los viejos no rompen nada.) Verificados en el
 `IdCard`, `Upload`, `LoaderCircle`, `ArrowLeft`, `ArrowRight`, `Check`, `CreditCard`,
 `Smartphone`, `Banknote`, `Camera`, `RefreshCw`.
 
-**El banner es una foto real**, como en el diseno de referencia: una tienda de Cocle por
-rol (`CardBanner` en `src/components/onboarding/onboarding-card.tsx`), servida por
-`next/image` desde `src/assets/img`. Son de Mitzi Valdes, CC BY-SA 4.0, y el credito va al
-pie de la pagina de onboarding. Antes iba una calle dibujada en SVG con una insignia de rol;
-se quito para que la tarjeta quede igual a la referencia.
+**El banner es una ilustracion pintada**, como en el diseno de referencia, con los simbolos
+nacionales: el aguila harpia para el negocio y la flor del Espiritu Santo para el cliente
+(`CardBanner` en `src/components/onboarding/onboarding-card.tsx`). Son ilustraciones propias,
+servidas por `next/image` desde `src/assets/img`. El borde de pincelada inferior es
+transparente para que se funda con la tarjeta en claro y en oscuro.
 
 ## 1. El flujo
 
