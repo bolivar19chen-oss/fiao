@@ -64,3 +64,14 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
 
   redirect("/onboarding")
 }
+
+// Google devuelve a /auth/callback, que canjea el codigo por sesion. El proveedor se activa
+// en el panel de Supabase (Authentication > Sign In / Providers > Google).
+export async function signInWithGoogle() {
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: `${await siteUrl()}/auth/callback` },
+  })
+  redirect(error ? "/login" : data.url)
+}

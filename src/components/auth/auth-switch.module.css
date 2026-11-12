@@ -90,7 +90,7 @@
   height: 52px;
   margin: 0.4rem 0;
   display: grid;
-  grid-template-columns: 48px 1fr;
+  grid-template-columns: 48px 1fr auto;
   align-items: center;
   border-radius: 999px;
   background: rgb(var(--marron) / 0.04);
@@ -129,6 +129,38 @@
 .field input::placeholder {
   color: rgb(var(--marron) / 0.4);
   font-weight: 400;
+}
+
+.reveal {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: 4px;
+  border-radius: 999px;
+  color: rgb(var(--marron) / 0.6);
+}
+
+.reveal:hover,
+.reveal:focus-visible {
+  color: rgb(var(--rojo));
+}
+
+.oauth {
+  width: 100%;
+  max-width: 360px;
+  height: 48px;
+  margin-top: 0.6rem;
+  border: 1px solid rgb(var(--marron) / 0.2);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--marron));
+}
+
+.oauth:hover,
+.oauth:focus-visible {
+  border-color: rgb(var(--rojo) / 0.5);
 }
 
 .submit {

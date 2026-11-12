@@ -2,9 +2,9 @@
 
 import { useActionState, useState } from "react"
 import Link from "next/link"
-import { Lock, Mail, UserRound, type LucideIcon } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, UserRound, type LucideIcon } from "lucide-react"
 
-import { logIn, signUp, type AuthState } from "./actions"
+import { logIn, signInWithGoogle, signUp, type AuthState } from "./actions"
 import s from "./auth-switch.module.css"
 
 // Conectado a Supabase Auth via Server Actions. El aspecto es UI aprobada: no tocar el CSS.
@@ -32,6 +32,7 @@ export function AuthSwitch() {
             <button type="submit" className={s.submit} disabled={loggingIn}>
               {loggingIn ? "Logging in..." : "Log in"}
             </button>
+            <GoogleButton />
             <Notice state={logInState} />
           </form>
 
@@ -64,6 +65,7 @@ export function AuthSwitch() {
             <button type="submit" className={s.submit} disabled={signingUp}>
               {signingUp ? "Signing up..." : "Sign up"}
             </button>
+            <GoogleButton />
             <p className={s.hint}>
               By signing up you agree to our <Link href="/privacy">Privacy Policy</Link>.
             </p>
@@ -107,13 +109,37 @@ interface FieldProps {
   defaultValue?: string
 }
 
-function Field({ icon: Icon, label, ...input }: FieldProps) {
+function Field({ icon: Icon, label, type, ...input }: FieldProps) {
+  const [visible, setVisible] = useState(false)
+  const isPassword = type === "password"
+  const Toggle = visible ? EyeOff : Eye
   return (
     <label className={s.field}>
       <Icon className={s.fieldIcon} strokeWidth={1.75} aria-hidden />
       <span className="sr-only">{label}</span>
-      <input {...input} placeholder={label} required />
+      <input {...input} type={isPassword && visible ? "text" : type} placeholder={label} required />
+      {isPassword && (
+        <button
+          type="button"
+          className={s.reveal}
+          onClick={() => setVisible(!visible)}
+          aria-label={visible ? "Hide password" : "Show password"}
+          aria-pressed={visible}
+        >
+          <Toggle size={18} strokeWidth={1.75} aria-hidden />
+        </button>
+      )}
     </label>
+  )
+}
+
+// Va dentro del formulario pero con su propia action, y sin validar los campos: quien entra
+// con Google no escribe correo ni clave.
+function GoogleButton() {
+  return (
+    <button type="submit" formAction={signInWithGoogle} formNoValidate className={s.oauth}>
+      Continue with Google
+    </button>
   )
 }
 
