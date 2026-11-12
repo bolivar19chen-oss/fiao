@@ -174,3 +174,16 @@ patrones `fnmatch`, gana el primero que coincide. Sale con codigo 1 y nombra la 
 pase. En CI corre despues del build; en local `pnpm build` escribe en `.next-build`, asi que
 se pasa `--dist ../.next-build`. Para subir un limite hay que editar `budgets.json` en
 el mismo cambio, a la vista de quien revisa.
+
+## Nucleo en C++: `tools/native/`
+
+La aritmetica del motor (division con redondeo, calendario e interes sobre saldo diario)
+escrita una tercera vez, en C++17 (`credit.cpp`). Python la carga con `ctypes`, sin
+dependencias, y `native/tests` genera casos con hypothesis y exige que C++ y el oraculo den
+el mismo centavo.
+
+    python -m native.build      # usa $CXX, o g++ si no esta definido
+    python -m pytest -q native/tests
+
+No corre en produccion: es una verificacion mas, igual que el oraculo. Sin compilar, sus
+pruebas se saltan en local; en el CI se compila siempre.

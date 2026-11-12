@@ -70,6 +70,12 @@ jobs:
       # No comparan una implementacion contra la otra, sino cada una contra reglas que
       # tienen que valer siempre. Un malentendido compartido del documento pasaria el
       # contraste; estas no.
+      # El nucleo en C++ se compila aca; las propiedades de abajo lo comparan con Python.
+      - name: Nucleo en C++ - compilar
+        if: always()
+        run: python -m native.build
+        working-directory: tools
+
       - name: Oraculo - propiedades
         if: always()
         run: python -m pytest -q

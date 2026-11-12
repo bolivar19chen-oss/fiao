@@ -9,7 +9,7 @@ dependencies = []
 dev = ["pytest>=8", "hypothesis>=6", "Pillow>=10"]
 
 [tool.pytest.ini_options]
-testpaths = ["oracle/tests", "perf/tests"]
+testpaths = ["oracle/tests", "perf/tests", "native/tests"]
 
 [tool.setuptools]
-packages = ["oracle", "seed", "perf"]
+packages = ["oracle", "seed", "perf", "native"]

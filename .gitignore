@@ -45,6 +45,7 @@ __pycache__/
 .hypothesis/
 .pytest_cache/
 /tools/oracle/py-results.json
+/tools/native/fiao_credit.bin
 
 # Carpeta de trabajo de la skill de diseno (capturas, informes del inspector).
 /.taste-skill/
