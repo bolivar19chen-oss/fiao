@@ -75,10 +75,6 @@ export function AppShell({
             texto, que repetia la misma navegacion. El nombre de cada seccion sale al pasar el
             cursor o al enfocar, y siempre esta en el aria-label. */}
         <aside className="app-lateral fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-5 rounded-[2rem] border border-marron/10 bg-fondo p-3 md:flex">
-          <Link href="/app" aria-label={tr("navDashboard")}>
-            <Logo mark />
-          </Link>
-
           <nav aria-label="App">
             <Dock vertical>
               {TODOS.map((item) => (
@@ -104,6 +100,11 @@ export function AppShell({
               borde, con de quien es la cuenta y el buscador, nada mas. */}
           <header className="sticky top-3 z-30 px-5 sm:px-6">
             <div className="glass-bar flex min-h-14 flex-wrap items-center gap-3 rounded-[1.75rem] border border-marron/10 px-5 py-2">
+              {/* El logo completo y sin recortar va aca, una sola vez. En el riel iba solo la F
+                  recortada, que no es el logo, y repetia el enlace al panel. */}
+              <Link href="/app" aria-label={tr("navDashboard")} className="hidden shrink-0 md:block">
+                <Logo />
+              </Link>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[17px] font-semibold text-marron">{businessName}</p>
                 <p className="truncate text-[13px] text-marron/70">{tr("owner")}</p>
