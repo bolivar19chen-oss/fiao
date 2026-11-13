@@ -13,13 +13,15 @@ import {
 } from "framer-motion"
 import type { LucideIcon } from "lucide-react"
 
-// Dock estilo macOS (base: componente "dock" de 21st.dev), ahora en la barra superior del
-// dashboard. Cambios: los iconos crecen hacia abajo, la etiqueta sale debajo y cada item es
-// un Link. Superficie solida y no cristal: la barra de la app ya es cristal, y seis
-// circulos mas de cristal encima son la dosis que R-10 pide no pasar.
+// Dock estilo macOS (base: componente "dock" de 21st.dev). En la app va `vertical`, como
+// riel del costado: los iconos crecen hacia la derecha y la etiqueta sale a su lado. Cada item
+// es un Link. Superficie solida y no cristal: el riel ya es cristal, y seis circulos mas de
+// cristal encima son la dosis que R-10 pide no pasar.
 
 interface DockContextValue {
-  mouseX: MotionValue<number>
+  /** Posicion del cursor sobre el eje del dock: X en horizontal, Y en vertical. */
+  mouse: MotionValue<number>
+  vertical: boolean
   spring: SpringOptions
   magnification: number
   distance: number
@@ -31,6 +33,7 @@ const DockContext = createContext<DockContextValue | null>(null)
 interface DockProps {
   children: React.ReactNode
   className?: string
+  vertical?: boolean
   baseSize?: number
   magnification?: number
   distance?: number
@@ -40,21 +43,22 @@ interface DockProps {
 export function Dock({
   children,
   className = "",
+  vertical = false,
   baseSize = 38,
   magnification = 54,
   distance = 110,
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
 }: DockProps) {
-  const mouseX = useMotionValue(Infinity)
+  const mouse = useMotionValue(Infinity)
 
   return (
     <div
-      onMouseMove={(e) => mouseX.set(e.clientX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className={`flex items-start gap-2.5 ${className}`}
-      style={{ height: baseSize }}
+      onMouseMove={(e) => mouse.set(vertical ? e.clientY : e.clientX)}
+      onMouseLeave={() => mouse.set(Infinity)}
+      className={`flex items-start gap-2.5 ${vertical ? "flex-col" : ""} ${className}`}
+      style={vertical ? { width: baseSize } : { height: baseSize }}
     >
-      <DockContext.Provider value={{ mouseX, spring, magnification, distance, baseSize }}>
+      <DockContext.Provider value={{ mouse, vertical, spring, magnification, distance, baseSize }}>
         {children}
       </DockContext.Provider>
     </div>
@@ -71,15 +75,16 @@ interface DockItemProps {
 export function DockItem({ href, label, icon: Icon, active = false }: DockItemProps) {
   const dock = useContext(DockContext)
   if (!dock) throw new Error("DockItem must be used inside Dock")
-  const { mouseX, spring, magnification, distance, baseSize } = dock
+  const { mouse, vertical, spring, magnification, distance, baseSize } = dock
 
   const ref = useRef<HTMLDivElement>(null)
   const [showLabel, setShowLabel] = useState(false)
 
-  // Distancia horizontal entre el mouse y el centro del item.
-  const offset = useTransform(mouseX, (x) => {
+  // Distancia entre el cursor y el centro del item, sobre el eje del dock.
+  const offset = useTransform(mouse, (position) => {
     const rect = ref.current?.getBoundingClientRect()
-    return rect ? x - rect.x - rect.width / 2 : Infinity
+    if (!rect) return Infinity
+    return vertical ? position - rect.y - rect.height / 2 : position - rect.x - rect.width / 2
   })
   const size = useSpring(useTransform(offset, [-distance, 0, distance], [baseSize, magnification, baseSize]), spring)
   const iconSize = useTransform(size, (s) => s * 0.44)
@@ -106,18 +111,23 @@ export function DockItem({ href, label, icon: Icon, active = false }: DockItemPr
       </Link>
 
       {active && (
-        <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-rojo" aria-hidden />
+        <span
+          className={`absolute h-1 w-1 rounded-full bg-rojo ${
+            vertical ? "-left-2 top-1/2 -translate-y-1/2" : "-bottom-2 left-1/2 -translate-x-1/2"
+          }`}
+          aria-hidden
+        />
       )}
 
       <AnimatePresence>
         {showLabel && (
           <motion.span
-            initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: 1, y: 6 }}
-            exit={{ opacity: 0, y: 0 }}
+            initial={{ opacity: 0, [vertical ? "x" : "y"]: 0 }}
+            animate={{ opacity: 1, [vertical ? "x" : "y"]: 6 }}
+            exit={{ opacity: 0, [vertical ? "x" : "y"]: 0 }}
             transition={{ duration: 0.18 }}
-            style={{ x: "-50%" }}
-            className="pointer-events-none absolute left-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-marron/10 bg-fondo px-3 py-1 text-xs font-semibold text-marron shadow-sm"
+            style={vertical ? { y: "-50%" } : { x: "-50%" }}
+            className={`pointer-events-none absolute whitespace-nowrap ${vertical ? "left-full top-1/2 ml-2" : "left-1/2 top-full mt-2"} rounded-full border border-marron/10 bg-fondo px-3 py-1 text-xs font-semibold text-marron shadow-sm`}
             aria-hidden
           >
             {label}
