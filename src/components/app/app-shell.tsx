@@ -100,9 +100,10 @@ export function AppShell({
         </aside>
 
         <div className="md:pl-[92px]">
-          {/* Barra superior: de quien es la cuenta y el buscador, nada mas. */}
-          <header className="glass-bar sticky top-0 z-30 border-b border-marron/[0.07]">
-            <div className="flex min-h-16 flex-wrap items-center gap-3 px-5 py-3 sm:px-6">
+          {/* Barra superior flotante, como la de un sistema: una capsula de cristal separada del
+              borde, con de quien es la cuenta y el buscador, nada mas. */}
+          <header className="sticky top-3 z-30 px-5 sm:px-6">
+            <div className="glass-bar flex min-h-14 flex-wrap items-center gap-3 rounded-[1.75rem] border border-marron/10 px-5 py-2">
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[17px] font-semibold text-marron">{businessName}</p>
                 <p className="truncate text-[13px] text-marron/70">{tr("owner")}</p>
@@ -123,7 +124,7 @@ export function AppShell({
                       onChange={(event) => setQuery(event.target.value)}
                       placeholder={tr(BUSCAR[buscable])}
                       aria-label={tr(BUSCAR[buscable])}
-                      className="h-10 w-full rounded-lg border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-80"
+                      className="h-10 w-full rounded-full border border-marron/10 bg-papel pl-10 pr-4 text-[15px] text-marron outline-none transition duration-200 ease-apple placeholder:text-marron/70 focus:border-rojo/40 focus:bg-fondo focus:ring-4 focus:ring-rojo/10 sm:w-80"
                     />
                   </div>
                 </form>
@@ -131,7 +132,7 @@ export function AppShell({
             </div>
           </header>
 
-          <main className="px-5 pb-28 pt-6 sm:px-6 md:pb-10">
+          <main className="px-5 pb-28 pt-8 sm:px-6 md:pb-10">
             {/* Crossfade entre rutas: la clave es la ruta, asi el contenido entra con
                 opacidad en vez de aparecer de golpe. En CSS y no en framer-motion: este
                 fade corre DESPUES de esperar al servidor, y 180ms de JS encima de una

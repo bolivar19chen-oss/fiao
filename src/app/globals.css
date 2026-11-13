@@ -5,6 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Sin barra de desplazamiento a la vista: se baja con la rueda, dos dedos o el teclado. */
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   /* El scroll suave es movimiento que el usuario no dispara: con la preferencia puesta, salta. */
