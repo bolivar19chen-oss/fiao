@@ -50,6 +50,9 @@ const config: Config = {
       // La curva del sistema de Apple. Todo lo que responde a un dedo o a un cursor sale
       // con esta: arranca rapido y se asienta, sin rebote. Es la mitad de por que una
       // interfaz de iOS se siente cara.
+      // El riel lateral de la app mide ~362 px de alto y es fijo: solo se usa si ademas de ancho
+      // hay alto para verlo entero. Por debajo manda la barra inferior, igual que en movil.
+      screens: { riel: { raw: "(min-width: 768px) and (min-height: 480px)" } },
       transitionTimingFunction: { apple: "cubic-bezier(0.28, 0.11, 0.32, 1)" },
       // Crossfade de llegada entre rutas. Era framer-motion en el armazon; en CSS cuesta
       // cero JS y respeta prefers-reduced-motion sin codigo.

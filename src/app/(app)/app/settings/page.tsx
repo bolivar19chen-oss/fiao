@@ -2,9 +2,11 @@ import type { Metadata } from "next"
 
 import { requireBusiness } from "@/lib/business"
 import { basisPointsToInput, formatDate } from "@/lib/format"
+import { t } from "@/lib/i18n"
 import { getLang } from "@/lib/lang"
 import { createClient } from "@/lib/supabase/server"
 import { ActionForm } from "@/components/app/action-form"
+import { signOut } from "@/components/app/actions"
 import { FondoPicker } from "@/components/app/fondo-picker"
 import { Badge, Card, CardTitle, Field, PageHeader } from "@/components/app/ui"
 import { AvatarField } from "@/components/onboarding/avatar-field"
@@ -156,6 +158,14 @@ export default async function SettingsPage() {
           Changing these does not touch sales you already recorded: each sale keeps the terms it was made under.
         </p>
       </Card>
+
+      {/* El riel lleva la salida, pero en movil y en pantallas bajas manda la barra inferior,
+          que no la tiene: aca se alcanza desde cualquier tamano. */}
+      <form action={signOut} className="mt-6">
+        <button type="submit" className="btn btn-glass">
+          {t(lang, "logOut")}
+        </button>
+      </form>
     </div>
   )
 }

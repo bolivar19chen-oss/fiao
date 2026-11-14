@@ -74,7 +74,7 @@ export function AppShell({
         {/* Riel del costado: las seis secciones como dock vertical. Reemplaza al lateral con
             texto, que repetia la misma navegacion. El nombre de cada seccion sale al pasar el
             cursor o al enfocar, y siempre esta en el aria-label. */}
-        <aside className="app-lateral fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-5 rounded-[2rem] border border-marron/10 bg-fondo p-3 md:flex">
+        <aside className="app-lateral fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-5 rounded-[2rem] border border-marron/10 bg-fondo p-3 riel:flex">
           <nav aria-label="App">
             <Dock vertical>
               {TODOS.map((item) => (
@@ -95,7 +95,7 @@ export function AppShell({
           </form>
         </aside>
 
-        <div className="md:pl-[92px]">
+        <div className="riel:pl-[92px]">
           {/* Barra superior flotante, como la de un sistema: una capsula de cristal separada del
               borde, con de quien es la cuenta y el buscador, nada mas. */}
           <header className="sticky top-3 z-30 px-5 sm:px-6">
@@ -133,7 +133,7 @@ export function AppShell({
             </div>
           </header>
 
-          <main className="px-5 pb-28 pt-8 sm:px-6 md:pb-10">
+          <main className="px-5 pb-28 pt-8 sm:px-6 riel:pb-10">
             {/* Crossfade entre rutas: la clave es la ruta, asi el contenido entra con
                 opacidad en vez de aparecer de golpe. En CSS y no en framer-motion: este
                 fade corre DESPUES de esperar al servidor, y 180ms de JS encima de una
@@ -146,7 +146,7 @@ export function AppShell({
 
         {/* Movil: la navegacion abajo. El lateral de la referencia no cabe en un telefono. */}
         <nav
-          className="glass-bar fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 rounded-[1.5rem] p-1.5 md:hidden"
+          className="glass-bar fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 rounded-[1.5rem] p-1.5 riel:hidden"
           style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}
           aria-label="App"
         >
