@@ -11,8 +11,9 @@ import { Reveal } from "@/components/ui/reveal"
 export default function Home() {
   return (
     <main>
-      <Intro />
-      <Hero />
+      <Intro>
+        <Hero />
+      </Intro>
       <Reveal>
         <KpiBand />
       </Reveal>
